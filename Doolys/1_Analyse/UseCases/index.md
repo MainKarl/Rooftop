@@ -26,10 +26,13 @@ package "Réservation de table de billards"{
     usecase ([[#!UseCases/UC07.md UC07\nGérer Tables]]) as UC07
 
     usecase ([[#!UseCases/UC08.md UC08\nGérer Utilisateurs]]) as UC08
+
+    usecase ([[#!UseCases/UC09.md UC09\nDéconnection]]) as UC09
 }
 
 user -- UC01
 user -- UC02
+user -- UC09
 
 client -- UC03
 client -- UC04
