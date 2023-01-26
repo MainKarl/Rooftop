@@ -5,10 +5,11 @@ hide circle
 hide method
 hide attribute
 package Entité{
-    class "Patient" as patient
+    class "Dossier" as file
     class "RequetePrelevement" as sampleRequest
     class "ResultatPrelevement" as sampleResult
 }
 
-patient "1"--"*"sampleRequest
+file "1" o-- "*" sampleRequest
+sampleRequest "1" *-- "1" sampleResult
 @enduml
