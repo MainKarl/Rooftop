@@ -10,4 +10,4 @@
 
 ## Analyse
 
-* [Biomédicale](Analyse_Sanguine/index.md)
+* [Analyse sanguine](Analyse_Sanguine/index.md)
