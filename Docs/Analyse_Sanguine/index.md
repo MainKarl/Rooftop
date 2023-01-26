@@ -1,4 +1,4 @@
-# Étalonnage de pipette
+# Biomedicale
 
 ## Analyse
 
@@ -14,6 +14,5 @@
 
 ### Qualités et contraintes
 
-* Le site est utilisable tant sur ordinateur que sur mobile.
-* Le site doit être en français.
-* Le site doit être sécuritaire (https).
+* L'application est utilisable sur ordinateur.
+* L'application est en français.
