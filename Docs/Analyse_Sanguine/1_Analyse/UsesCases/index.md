@@ -18,16 +18,19 @@ package "Analyse sanguine"{
 
     usecase ([[#!UseCases/UC06.md UC06\nVisualiser une requête de prélévement]]) as UC06
 
-    usecase ([[#!UseCases/UC07.md UC07\nAjout d'analyse au dossier d'un patient]]) as UC07
+    usecase ([[#!UseCases/UC07.md UC07\nAjout du résultat d'analyse au dossier d'un patient]]) as UC07
+
+    usecase ([[#!UseCases/UC08.md UC08\nImprimer le dossier d'un patient]]) as UC08
+
+    UC02 ..> UC06 : extends
+    UC03 .> UC04 : extends
+    UC03 ..> UC05 : extends
+    UC04 ..> UC05 : extends
+    UC05 ..> UC08 : extends
+    UC02 ..> UC07 : extends
 }
 
 user --> UC01
 user --> UC02
 user --> UC03
-
-UC03 .> UC04 : extends
-UC03 .> UC05 : extends
-UC04 .> UC05 : extends
-
-UC02 .> UC06 : extends
 ```
