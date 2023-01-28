@@ -9,6 +9,7 @@ package Entité{
         string FirstName
         string LastName
         Date BirthDate
+        string Note
     }
 
     class "RequeteAnalyze" as analysisRequest{
@@ -16,13 +17,24 @@ package Entité{
         uint FileId
         uint DoctorId
         DateTime SamplingDate
+        json RequestedAnalysis
         string TechName
+        guid AccessCode
     }
     
     class "ResultatAnalyze" as analysisResult{
-
+        uint Id
+        uint RequestId
+        string Results
     }
 
-    file "1" o-- "*" analysisRequest
+    class "Medecin" as doctor{
+        uint Id
+        string FirstName
+        string LastName
+    }
+
+    file "1" *-- "*" analysisRequest
     analysisRequest "1" *-- "1" analysisResult
+    analysisRequest "*" o-- "1" doctor
 }
