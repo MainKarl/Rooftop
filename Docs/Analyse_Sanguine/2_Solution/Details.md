@@ -5,7 +5,29 @@
 hide circle
 package ElectronAnalyseSanguine {
     package UI {
-        
+        class MedecinFormPage {
+            AjouterMedecin()
+        }
+
+        class RequetePage {
+            AvoirRequeteAnalyse()
+            AjouterAnalyse()
+            ImprimerRequete()
+        }
+
+        class RequeteFormPage {
+            AjouterRequete()
+        }
+
+        class DossierPage {
+            AvoirDossierPatient()
+        }
+
+        class DossierFormPage {
+            AjouterDossier()
+        }
+
+
     }
 
     package Controller {
@@ -14,7 +36,7 @@ package ElectronAnalyseSanguine {
         }
 
         class RequeteAnalyseMgmt {
-            AjouterRequest()
+            AjouterRequete()
         }
 
         class ResultatMgmt {
@@ -64,5 +86,14 @@ Medecin <-- MedecinMgmt
 ResultatAnalyze <-- ResultatMgmt
 RequeteAnalyze <-- RequeteAnalyseMgmt
 Dossier <-- DossierMgmt
+
+MedecinMgmt <-- MedecinFormPage
+DossierMgmt <-- DossierPage
+DossierMgmt <-- DossierFormPage
+RequeteAnalyseMgmt <-- RequeteFormPage
+RequeteAnalyseMgmt <-- RequetePage
+
+DossierFormPage <-- DossierPage
+RequeteFormPage <-- RequetePage
 @enduml
 ```
