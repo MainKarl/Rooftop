@@ -12,5 +12,5 @@
 
 ## Documentation/Analyse
 
-* [Doolys](/Doolys/index.md)
-* [Étalonnage de pipette](Etalonnage_Pipette/index.md)
+* [Doolys](/Docs/Doolys/index.md)
+* [Étalonnage de pipette](/Docs/Etalonnage_Pipette/index.md)
