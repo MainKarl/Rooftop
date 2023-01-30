@@ -1,3 +1,5 @@
+# Diagramme de détails
+
 ```plantuml
 
 hide circle
@@ -10,6 +12,8 @@ package Entité{
         string LastName
         Date BirthDate
         string Note
+
+        Afficher()        
     }
 
     class "RequeteAnalyze" as analysisRequest{
@@ -20,21 +24,32 @@ package Entité{
         json RequestedAnalysis
         string TechName
         guid AccessCode
+
+        Afficher()
+        Ajouter()
     }
     
     class "ResultatAnalyze" as analysisResult{
         uint Id
         uint RequestId
         string Results
+
+        Ajouter()
+        Ajouter()
+        Imprimer()
     }
 
     class "Medecin" as doctor{
         uint Id
         string FirstName
         string LastName
+
+        Ajouter()
     }
 
     file "1" *-- "*" analysisRequest
     analysisRequest "1" *-- "1" analysisResult
     analysisRequest "*" o-- "1" doctor
 }
+
+```

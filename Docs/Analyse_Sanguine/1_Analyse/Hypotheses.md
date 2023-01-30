@@ -1,4 +1,5 @@
 # Hypothèses et dépendances
+
 ## Hypothèses
 
   1. Les machines utilisées sont capables de scanner les codes barre les plus communs.
