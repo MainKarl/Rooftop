@@ -5,12 +5,10 @@
 top to bottom direction
 
     component "AnalyseSanguine" << app >> as AS
-    component "React" << library >> as RE
-    component "Electron.js" << environment >> as DL
+    component "React native" << library >> as RE
     component "AnSanguineDB" << SQlite >> as ASDB
 
-    DL ..> RE
-    AS *-- DL
+    AS *-- RE
     AS *-- ASDB
 
 @enduml
@@ -18,20 +16,14 @@ top to bottom direction
 
 ```plantuml
 @startuml
-package WWWROOT{
+package react-native{
     package javascript {
         component analyse <<js>>
-        component jquery <<js>>
-        component bootstrap <<js>>
-        component electron <<js>>
         component react <<js>>
     }
 
     package css{
         component site <<css>>
-        component bootstrap{
-            component "boostrap.min" <<css>>
-        }
     }
 }
 @enduml

@@ -49,4 +49,4 @@ analysisRequest "1" o-- "*" analyse
 #### Médecin
 
 * Définition : Le médecin est l'individu qui émet une requête d'analyse et qui recevra les résultats par la suite.
-* Synonyme : Utilisateur (User)
+* Synonyme : N/A
