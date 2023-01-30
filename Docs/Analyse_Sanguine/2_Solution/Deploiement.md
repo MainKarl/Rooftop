@@ -5,7 +5,7 @@
 top to bottom direction
 
 node Client {
-    [Electron App]
+    [React App]
 }
 
 node Linux << Server >> {
@@ -14,7 +14,7 @@ node Linux << Server >> {
     }
 }
 
-[Electron App] -0)-- [SQLite DB] : https \n(port 5000)
+[React App] -0)-- [SQLite DB] : https \n(port 5000)
 
 @enduml
 ```
