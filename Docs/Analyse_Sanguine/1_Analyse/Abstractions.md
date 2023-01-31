@@ -11,17 +11,18 @@ package Entité{
     class "Dossier" as file
     class "RequeteAnalyse" as analysisRequest
     class "Médecin" as doctor
-    class "ResultatAnalyse" as valeurResultat
-    class "TypeValeur" as testType
-    class "TypeAnalyse" as TypeAnalyse
+    class "ResultatAnalyse" as analysistResult
+    class "Type de test" as testType
+    class "TypeAnalyse" as analysisType
+    
 }
 
 file "1" *-- "*" analysisRequest
 analysisRequest "*" o-- "1" doctor
-valeurResultat "*" --* "1" analysisRequest
-testType "1" --o "1" valeurResultat
-testType "1" --* "*" TypeAnalyse
-analysisRequest "1" o-- "*" TypeAnalyse
+analysistResult "*" --* "1" analysisRequest
+testType "1" --o "1" analysistResult
+testType "1" --* "*" analysisType
+analysisRequest "1" o-- "*" analysisType
 @enduml
 ```
 
@@ -39,15 +40,14 @@ analysisRequest "1" o-- "*" TypeAnalyse
 * Définition : Lié à une requête d'analyse sanguine, un résultat d'analyse représente les valeurs associés aux propriétés évalués lors de l'analyse de l'échantillon. Par exemple: Hémoglobine: 11.9 g/100 mL VR : 11.5 à 15.0.
 * Synonyme : N/A
 
-#### TypeAnalyse
+#### Type d'analyse
 
-* Défintion : Un type analyse représente un type de résultat suite à une analyse sanguine. Dans une requête d'analyse, les analyses représentent les cases cochées. Par exemple: FSC -> Formule sanguine complète.
+* Défintion : Dans une requête d'analyse, les types d'analyses représentent les cases cochées. Par exemple: FSC -> Formule sanguine complète.
 * Synonyme : N/A
 
-
-#### ValeurResultat
-
 #### Type de test
+
+* Définition : Un type de test est lié à un type d'analyse et il représente un type de valeur avec des unités et des valeurs de référence. Par exemple: Hémoglobine g/mL VR: 11.5 à 15.0 .
 
 #### Dossier
 
