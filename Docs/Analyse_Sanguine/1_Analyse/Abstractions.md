@@ -14,7 +14,6 @@ package Entité{
     class "ResultatAnalyse" as valeurResultat
     class "TypeValeur" as testType
     class "TypeAnalyse" as TypeAnalyse
-    
 }
 
 file "1" *-- "*" analysisRequest
