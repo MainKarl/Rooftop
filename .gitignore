@@ -1,6 +1,5 @@
-ReactNative/AnalyseSanguine/metro.config.js
-ReactNative/AnalyseSanguine/msbuild.binlog
-ReactNative/AnalyseSanguine/package-lock.json
-ReactNative/AnalyseSanguine/package.json
-ReactNative/AnalyseSanguine/yarn.lock
-ReactNative/AnalyseSanguine/windows/AnalyseSanguine/Package.appxmanifest
+
+ReactNative/Api/API_AnalyseSanguine/.vs
+ReactNative/Api/API_AnalyseSanguine/API_AnalyseSanguine/bin
+ReactNative/Api/API_AnalyseSanguine/API_AnalyseSanguine/obj
+Docs/.obsidian

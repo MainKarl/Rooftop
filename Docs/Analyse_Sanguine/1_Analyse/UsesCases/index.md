@@ -24,16 +24,20 @@ package "Analyse sanguine"{
 
     usecase ([[#!UseCases/UC09.md UC09\nCréer un médecin]]) as UC09
 
+    usecase ([[#!UseCases/UC10.md UC10\nCréer le dossier d'un patient]]) as UC10
+
     UC02 ..> UC06 : extends
     UC03 .> UC04 : extends
     UC03 ..> UC05 : extends
     UC04 ..> UC05 : extends
     UC06 ..> UC08 : extends
     UC02 ..> UC07 : extends
+    UC03 ..> UC01 : extends
+    UC03 ..> UC02 : extends
+
 }
 
-user --> UC01
-user --> UC02
 user --> UC03
-user --> UC09
+
+
 ```

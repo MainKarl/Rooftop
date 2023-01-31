@@ -10,15 +10,18 @@ hide attribute
 package Entité{
     class "Dossier" as file
     class "RequeteAnalyse" as analysisRequest
-    class "ResultatAnalyse" as analysisResult
     class "Médecin" as doctor
-    class "Analyse" as analyse
+    class "ResultatAnalyse" as valeurResultat
+    class "TypeValeur" as testType
+    class "TypeAnalyse" as TypeAnalyse
 }
 
 file "1" *-- "*" analysisRequest
-analysisRequest "1" *-- "1" analysisResult
 analysisRequest "*" o-- "1" doctor
-analysisRequest "1" o-- "*" analyse
+valeurResultat "*" --* "1" analysisRequest
+testType "1" --o "1" valeurResultat
+testType "1" --* "*" TypeAnalyse
+analysisRequest "1" o-- "*" TypeAnalyse
 @enduml
 ```
 
@@ -26,20 +29,25 @@ analysisRequest "1" o-- "*" analyse
 
 ### Entités
 
-#### Requête d'analyse sanguine
+#### Requête d'analyse sanguine (*RequeteAnalyse*)
 
 * Définition : Une requête d'analyse sanguine est une demande provenant d'un médecin qui requiert l'évaluation de certaines propriétés d'un échantillon sanguin. Voir InfoClient/Requête *.pdf pour des exemples de requête d'analyse de divers hopitaux.
 * Synonyme : N/A
 
 #### Résultat d'analyse
 
-* Définition : Lié à une requête d'analyse sanguine, un résultat d'analyse représente les valeurs associés aux propriétés évalués lors de l'analyse de l'échantillon.
+* Définition : Lié à une requête d'analyse sanguine, un résultat d'analyse représente les valeurs associés aux propriétés évalués lors de l'analyse de l'échantillon. Par exemple: Hémoglobine: 11.9 g/100 mL VR : 11.5 à 15.0.
 * Synonyme : N/A
 
-#### Analyse
+#### TypeAnalyse
 
-* Défintion : Une analyse représente un type de résultat suite à une analyse sanguine. Dans une requête d'analyse, les analyses représentent les cases cochées. Par exemple: FSC -> Formule sanguine complète.
+* Défintion : Un type analyse représente un type de résultat suite à une analyse sanguine. Dans une requête d'analyse, les analyses représentent les cases cochées. Par exemple: FSC -> Formule sanguine complète.
 * Synonyme : N/A
+
+
+#### ValeurResultat
+
+#### Type de test
 
 #### Dossier
 
