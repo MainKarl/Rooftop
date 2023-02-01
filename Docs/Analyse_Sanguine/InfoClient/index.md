@@ -10,7 +10,7 @@
 
 * Nom et prénom du patient
 * Numéro de dossier du patient (code unique par patient)
-* Sexe 
+* Sexe
 * Date de naissance du patient
 * Date et heure du prélèvement
 * Sélection dans une liste déroulante du médecin (inventer 10 MD)
@@ -54,8 +54,6 @@
 
 * Unité dans laquelle le résultat est consigné pour chaque analyse
 * Valeurs de référence pour chaque analyse
-* Possibilité pour l’étudiant, par un code de couleur, de valider chaque résultat (vert : dans les valeurs de référence, jaune : avertissement, valeurs rouge : hors norme) 
+* Possibilité pour l’étudiant, par un code de couleur, de valider chaque résultat (vert : dans les valeurs de référence, jaune : avertissement, valeurs rouge : hors norme)
 * Accès à une case supplémentaire afin de faire l’ajout d’un message au dossier
-* Possibilité d’imprimer 
-
-
+* Possibilité d’imprimer
