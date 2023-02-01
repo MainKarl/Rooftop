@@ -46,7 +46,7 @@
 * *(25)* DELETE : 15 minutes
 * *(26)* GET : 15 minutes
 
-## Front-end : 48h-58h
+## Front-end : 51h15-62h15
 
 ### Créer la requête de prélévement : 8h15 - 9h15
 
@@ -77,13 +77,19 @@
 * *(36)* Filtre de la liste : 1h30-2h
 * *(37)* Création de la barre de recherche : 3-4h
 
-### Créer un patient : 11h45-13h45
+### Créer le dossier d'un patient : 11h45-13h45
 
 * *(38)* Validation des informations rentrées : 6h-7h
 * *(39)* Création du formulaire de création d'un patient : 5h-6h
 * *(40)* Requête de l'API : 45 minutes
 
+### Modifier le dossier d'un patient : 3h15-4h15
+
+* *(41)* Validation des informations rentrées : 30 minutes
+* *(42)* Création du formulaire de modification d'un patient : 2h-3h
+* *(43)* Requête de l'API : 45 minutes
+
 ### Imprimer l'analyse d'une requête : 3h-4h30
 
-* *(41)* Création du bouton : 30 minutes
-* *(42)* Envoie de la demande d'impression : 2h30-4h
+* *(44)* Création du bouton : 30 minutes
+* *(45)* Envoie de la demande d'impression : 2h30-4h

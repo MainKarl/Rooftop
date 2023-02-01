@@ -26,6 +26,8 @@ package "Analyse sanguine"{
 
     usecase ([[#!UseCases/UC10.md UC10\nCréer le dossier d'un patient]]) as UC10
 
+    usecase ([[#!UseCases/UC11.md UC11\nModifier le dossier d'un patient]]) as UC11
+
     UC02 ..> UC06 : extends
     UC03 .> UC04 : extends
     UC03 ..> UC05 : extends
@@ -34,10 +36,11 @@ package "Analyse sanguine"{
     UC02 ..> UC07 : extends
     UC03 ..> UC01 : extends
     UC03 ..> UC02 : extends
-
+    UC05 ..> UC11 : extends
 }
 
 user --> UC03
-
-
+user --> UC09
+user --> UC10
+@enduml
 ```
