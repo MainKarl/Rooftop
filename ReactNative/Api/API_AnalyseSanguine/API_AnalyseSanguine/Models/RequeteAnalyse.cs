@@ -22,7 +22,9 @@ namespace API_AnalyseSanguine.Models
         public Dossier Dossier { get; set; }
         [Required]
         public Medecin Medecin { get; set; }
+        [Required]
         public List<ResultatAnalyse> LstResultats { get; set; }
+        [Required]
         public List<TypeAnalyse> LstTypeAnalyse { get; set; }
 
     }

@@ -13,6 +13,7 @@ namespace API_AnalyseSanguine.Models
         public string Nom { get; set; }
 
         //Lien
+        [Required]
         public TypeAnalyse TypeAnalyse { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace API_AnalyseSanguine.Models
 
 
         //Lien
+        [Required]
         public List<TypeValeur> LstValeurs { get; set; }
     }
 }
