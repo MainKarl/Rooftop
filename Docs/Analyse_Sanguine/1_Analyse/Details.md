@@ -4,52 +4,47 @@
 
 hide circle
 left to right direction
+
 package Entité{
     class "Dossier" as file{
-        uint Id
+        uint NumeroDossier
         byte Sexe
-        string FirstName
-        string LastName
-        Date BirthDate
-        string Note
-
-        Afficher()        
+        string Prenom
+        string Nom
+        Date DateNaissance
+        string Notes
     }
 
-    class "RequeteAnalyze" as analysisRequest{
-        uint Id
-        uint FileId
-        uint DoctorId
-        DateTime SamplingDate
-        json RequestedAnalysis
-        string TechName
-        guid AccessCode
-
-        Afficher()
-        Ajouter()
+    class "RequeteAnalyse" as analysisRequest{
+        DateTime DatePrelevement
+        string NomTechnicien
+        guid CodeAcces
     }
     
-    class "ResultatAnalyze" as analysisResult{
-        uint Id
-        uint RequestId
-        string Results
-
-        Ajouter()
-        Ajouter()
-        Imprimer()
+    class "Medecin" as doctor{
+        string Prenom
+        string Nom
     }
 
-    class "Medecin" as doctor{
-        uint Id
-        string FirstName
-        string LastName
+    class "ResultatAnalyse" as analysisResult{
+        float Valeur
+    }
+    
+    class "TypeValeur" as testType{
+        string Unite
+        string Nom
+    } 
 
-        Ajouter()
+    class "TypeAnalyse" as analysisType{
+        string Nom
     }
 
     file "1" *-- "*" analysisRequest
-    analysisRequest "1" *-- "1" analysisResult
     analysisRequest "*" o-- "1" doctor
+    analysisResult "*" --* "1" analysisRequest
+    testType "1" --o "1" analysisResult
+    testType "1" --* "*" analysisType 
+    analysisRequest "1" o-- "*" analysisType
 }
 
 ```
