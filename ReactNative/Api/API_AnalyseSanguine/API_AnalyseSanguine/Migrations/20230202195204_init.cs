@@ -138,9 +138,45 @@ namespace API_AnalyseSanguine.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Medecins",
+                columns: new[] { "IdMedecin", "Nom", "Prenom" },
+                values: new object[,]
+                {
+                    { 1, "Banville", "Zacharie" },
+                    { 2, "Bourque", "Yannick" },
+                    { 3, "Langlais", "Jonathan" },
+                    { 4, "Jetté", "Antony" },
+                    { 5, "Denis", "Lucas" },
+                    { 6, "Lagacé", "Mathilde" },
+                    { 7, "Néron", "Alicia" },
+                    { 8, "Godin", "Raphaelle" },
+                    { 9, "Martinez", "Leonie" },
+                    { 10, "Daneau", "Rose" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "TypeAnalyses",
                 columns: new[] { "IdTypeAnalyse", "Nom", "RequeteAnalyseIdRequete" },
-                values: new object[] { 1, "test", null });
+                values: new object[,]
+                {
+                    { 1, "Albumine", null },
+                    { 2, "ALT", null },
+                    { 3, "Bilan lipidique", null },
+                    { 4, "Bilirubine totale", null },
+                    { 5, "Calcium total", null },
+                    { 6, "Cortisol", null },
+                    { 7, "Cortisol post-dexaméthasone", null },
+                    { 8, "Créatinine", null },
+                    { 9, "Créatinine kinase", null },
+                    { 10, "Électrolytes", null },
+                    { 11, "Ferritine", null },
+                    { 12, "Magnésium", null },
+                    { 13, "Phosphatase alcaline", null },
+                    { 14, "Phosphore", null },
+                    { 15, "Protéine C réactive", null },
+                    { 16, "Protéines totales", null },
+                    { 17, "TSH et algorithme T4L et T3L", null }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_RequeteAnalyses_DossierIdDossier",
