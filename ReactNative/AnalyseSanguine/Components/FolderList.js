@@ -8,6 +8,7 @@ import {
   TextInput,
   Touchable,
 } from 'react-native';
+import PatientFolder from './PatientFolder';
 
 const FolderList = () => {
   const [patientFolders, setpatientFolders] = useState([
@@ -26,20 +27,11 @@ const FolderList = () => {
       <FlatList
         data={patientFolders}
         renderItem={({item}) => (
-          <View style={styles.item}>
-            <Text>
-              {item.key} - {item.LastName}, {item.FirstName}
-            </Text>
-            <View
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{
-                borderColor: '#808080',
-                borderBottomWidth: 1,
-                paddingLeft: 10,
-                paddingRight: 10,
-              }}
-            />
-          </View>
+          <PatientFolder
+            folderkey={item.key}
+            FirstName={item.FirstName}
+            LastName={item.LastName}
+          />
         )}
       />
     </View>
