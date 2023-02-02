@@ -24,6 +24,70 @@ namespace API_AnalyseSanguine.Context.Data
                     IdTypeAnalyse = 1,
                     Nom = "test"
                 });
+
+            #region Mecedin
+            builder.Entity<Medecin>().HasData(
+                new Medecin
+                {
+                    IdMedecin = 1,
+                    Prenom = "Zacharie",
+                    Nom = "Banville"
+                },
+                new Medecin
+                {
+                    IdMedecin = 2,
+                    Prenom = "Yannick",
+                    Nom = "Bourque"
+                },
+                new Medecin
+                {
+                    IdMedecin = 3,
+                    Prenom = "Jonathan",
+                    Nom = "Langlais"
+                },
+                new Medecin
+                {
+                    IdMedecin = 4,
+                    Prenom = "Antony",
+                    Nom = "Jetté"
+                },
+                new Medecin
+                {
+                    IdMedecin = 5,
+                    Prenom = "Lucas",
+                    Nom = "Denis"
+                },
+                new Medecin
+                {
+                    IdMedecin = 6,
+                    Prenom = "Mathilde",
+                    Nom = "Lagacé"
+                },
+                new Medecin
+                {
+                    IdMedecin = 7,
+                    Prenom = "Alicia",
+                    Nom = "Néron"
+                },
+                new Medecin
+                {
+                    IdMedecin = 8,
+                    Prenom = "Raphaelle",
+                    Nom = "Godin"
+                },
+                new Medecin
+                {
+                    IdMedecin = 9,
+                    Prenom = "Leonie",
+                    Nom = "Martinez"
+                },
+                new Medecin
+                {
+                    IdMedecin = 10,
+                    Prenom = "Rose",
+                    Nom = "Daneau"
+                });
+            #endregion
         }
     }
 }
