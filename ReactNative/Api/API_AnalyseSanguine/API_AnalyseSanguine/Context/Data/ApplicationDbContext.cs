@@ -18,8 +18,8 @@ namespace API_AnalyseSanguine.Context.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            #region Type Analyse
             builder.Entity<TypeAnalyse>().HasData(
-                #region Biochimie
                 new TypeAnalyse { IdTypeAnalyse = 1, Nom = "Albumine"   },
                 new TypeAnalyse { IdTypeAnalyse = 2, Nom = "ALT"},
                 new TypeAnalyse { IdTypeAnalyse = 3, Nom = "Bilan lipidique"},
@@ -37,8 +37,8 @@ namespace API_AnalyseSanguine.Context.Data
                 new TypeAnalyse { IdTypeAnalyse = 15, Nom = "Protéine C réactive" },
                 new TypeAnalyse { IdTypeAnalyse = 16, Nom = "Protéines totales" },
                 new TypeAnalyse { IdTypeAnalyse = 17, Nom = "TSH et algorithme T4L et T3L" }
-                #endregion
                 );
+            #endregion
                 
             #region Mecedin
             builder.Entity<Medecin>().HasData(
