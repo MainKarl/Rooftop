@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 
 namespace API_AnalyseSanguine.Models
 {
@@ -27,5 +28,16 @@ namespace API_AnalyseSanguine.Models
         [Required]
         public List<TypeAnalyse> LstTypeAnalyse { get; set; }
 
+    }
+
+    public class RequeteValidator : AbstractValidator<RequeteAnalyse>
+    {
+        public RequeteValidator()
+        {
+            RuleFor(x => x.IdRequete).NotEmpty();
+            RuleFor(x => x.CodeAcces).NotEmpty().WithMessage("Veuillez spécifier un code");
+            RuleFor(x => x.DateEchantillon).LessThan(DateTime.Now).WithMessage("Veuillez sélectionner une date valide");
+            RuleFor(x => x.NomTechnicien).NotEmpty().WithMessage("Veuillez spécifier un technicien");
+        }
     }
 }
