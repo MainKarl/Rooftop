@@ -7,20 +7,26 @@ import {
   FlatList,
   TextInput,
   Touchable,
+  useColorScheme,
+  PlatformColor,
 } from 'react-native';
 import FolderList from './Components/FolderList';
+import FolderDetails from './Components/FolderDetails';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
   const [count, setCount] = useState(0);
+  const [selectedFolder, setselectedFolder] = useState('');
 
+  const onSelectedFolder = selectedFolderId => {
+    setselectedFolder(selectedFolderId);
+  };
+  const isDarkMode = useColorScheme() === 'dark';
   return (
     // eslint-disable-next-line no-undef
     <View style={styles.container}>
-      <FolderList />
-      <View style={{flex: 0.8, margin: 5}}>
-        <Text style={styles.textCounter}>You clicked {count} times</Text>
-        <Button onPress={() => setCount(count + 1)} title="Click me!" />
-      </View>
+      <FolderList onSelectedFolder={onSelectedFolder} />
+      <FolderDetails selectedFolder={selectedFolder} />
     </View>
   );
 };

@@ -7,10 +7,11 @@ import {
   FlatList,
   TextInput,
   Touchable,
+  PlatformColor,
 } from 'react-native';
 import PatientFolder from './PatientFolder';
 
-const FolderList = () => {
+const FolderList = props => {
   const [patientFolders, setpatientFolders] = useState([
     {key: '8761', FirstName: 'Victor', LastName: 'Turgeon', active: false},
     {key: '8321', FirstName: 'Louis', LastName: 'Garceau', active: false},
@@ -37,6 +38,7 @@ const FolderList = () => {
       }
     });
     setpatientFolders(part_patientFolders);
+    props.onSelectedFolder(activeFolderId);
   };
 
   return (
