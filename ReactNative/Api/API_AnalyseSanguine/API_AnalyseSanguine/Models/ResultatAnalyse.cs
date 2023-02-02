@@ -25,7 +25,7 @@ namespace API_AnalyseSanguine.Models
         {
             RuleFor(e => e.Valeur)
                 .NotEmpty()
-                .WithMessage("La valeur ne peut pas être vide!");
+                .WithMessage("Veuillez spécifier une valeur");
         }
 
     }

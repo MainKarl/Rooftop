@@ -23,11 +23,11 @@ namespace API_AnalyseSanguine.Models
         {
             RuleFor(e => e.Prenom)
                 .NotEmpty()
-                .WithMessage("Le prénom ne peut pas être vide!");
+                .WithMessage("Veuillez spécifier un prénom");
 
             RuleFor(e => e.Nom)
                 .NotEmpty()
-                .WithMessage("Le nom ne peut pas être vide!");
+                .WithMessage("Veuillez spécifier un nom");
         }
 
     }
