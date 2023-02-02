@@ -9,6 +9,7 @@ import {
   Touchable,
   TouchableHighlight,
   TouchableOpacity,
+  PlatformColor,
 } from 'react-native';
 
 const PatientFolder = props => {
@@ -22,7 +23,9 @@ const PatientFolder = props => {
       <View
         // eslint-disable-next-line react-native/no-inline-styles
         style={{
-          borderColor: '#808080',
+          borderColor: props.isActive
+            ? PlatformColor('SystemAccentColor')
+            : '#808080',
           borderBottomWidth: 1,
           paddingLeft: 10,
           paddingRight: 10,
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 15,
     paddingRight: 15,
-    backgroundColor: '#808080',
+    backgroundColor: PlatformColor('SystemAccentColor'),
   },
 });
 

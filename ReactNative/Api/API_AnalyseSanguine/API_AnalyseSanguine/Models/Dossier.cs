@@ -30,22 +30,22 @@ namespace API_AnalyseSanguine.Models
         {
             RuleFor(e => e.Prenom)
                 .NotEmpty()
-                .WithMessage("Le prénom ne peut pas être vide!");
+                .WithMessage("Veuillez spécifier un prénom");
 
             RuleFor(e => e.Nom)
                 .NotEmpty()
-                .WithMessage("Le nom ne peut pas être vide!");
+                .WithMessage("Veuillez spécifier un nom");
 
             RuleFor(e => e.Sexe)
                 .NotEmpty()
-                .WithMessage("Le sexe ne peut pas être vide!");
+                .WithMessage("Veuillez spécifier un sexe");
 
             RuleFor(e => e.DateNaissance)
                 .NotEmpty()
-                .WithMessage("La date de naissance ne peut pas être vide!");
+                .WithMessage("Veuillez spécifier une date de naissance");
 
             RuleFor(e => e.DateNaissance)
-               .LessThan(DateTime.Now).WithMessage("La date de naissance ne peut pas être après aujour'hui!");
+               .LessThan(DateTime.Now).WithMessage("Veuillez sélectionner une date valide");
         }
 
     }
