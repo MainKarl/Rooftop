@@ -7,11 +7,11 @@ namespace API_AnalyseSanguine.Controllers
     [ApiController]
     [Route("api/dossier")]
     [Produces("application/json")]
-    public class ToDoController : ControllerBase
+    public class DossierController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public ToDoController(ApplicationDbContext context)
+        public DossierController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -110,7 +110,7 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpDelete("clear")]
-        public ActionResult DeleteAll()
+        public ActionResult DeleteAllDossier()
         {
             try
             {
