@@ -157,6 +157,13 @@ namespace API_AnalyseSanguine.Migrations
                     b.HasIndex("RequeteAnalyseIdRequete");
 
                     b.ToTable("TypeAnalyses");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTypeAnalyse = 1,
+                            Nom = "test"
+                        });
                 });
 
             modelBuilder.Entity("API_AnalyseSanguine.Models.TypeValeur", b =>

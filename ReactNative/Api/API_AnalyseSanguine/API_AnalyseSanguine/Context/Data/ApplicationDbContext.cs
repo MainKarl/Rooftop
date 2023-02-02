@@ -16,5 +16,14 @@ namespace API_AnalyseSanguine.Context.Data
         public DbSet<TypeAnalyse> TypeAnalyses { get; set; }
         public DbSet<TypeValeur> TypeValeurs { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<TypeAnalyse>().HasData(
+                new TypeAnalyse
+                {
+                    IdTypeAnalyse = 1,
+                    Nom = "test"
+                });
+        }
     }
 }
