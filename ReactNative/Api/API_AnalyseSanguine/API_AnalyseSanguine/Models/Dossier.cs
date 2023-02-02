@@ -1,4 +1,5 @@
 ﻿
+using FluentValidation;
 using System.ComponentModel.DataAnnotations;
 
 namespace API_AnalyseSanguine.Models
@@ -20,6 +21,32 @@ namespace API_AnalyseSanguine.Models
 
         //lien
         public List<RequeteAnalyse> LstRequetes { get; set; }
+
+    }
+
+    public class DossierValidator : AbstractValidator<Dossier>
+    {
+        public DossierValidator()
+        {
+            RuleFor(e => e.Prenom)
+                .NotEmpty()
+                .WithMessage("Le prénom ne peut pas être vide!");
+
+            RuleFor(e => e.Nom)
+                .NotEmpty()
+                .WithMessage("Le nom ne peut pas être vide!");
+
+            RuleFor(e => e.Sexe)
+                .NotEmpty()
+                .WithMessage("Le sexe ne peut pas être vide!");
+
+            RuleFor(e => e.DateNaissance)
+                .NotEmpty()
+                .WithMessage("La date de naissance ne peut pas être vide!");
+
+            RuleFor(e => e.DateNaissance)
+               .LessThan(DateTime.Now).WithMessage("La date de naissance ne peut pas être après aujour'hui!");
+        }
 
     }
 }
