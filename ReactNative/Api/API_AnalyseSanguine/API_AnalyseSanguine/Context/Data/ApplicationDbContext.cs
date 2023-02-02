@@ -37,8 +37,72 @@ namespace API_AnalyseSanguine.Context.Data
                 new TypeAnalyse { IdTypeAnalyse = 15, Nom = "Protéine C réactive" },
                 new TypeAnalyse { IdTypeAnalyse = 16, Nom = "Protéines totales" },
                 new TypeAnalyse { IdTypeAnalyse = 17, Nom = "TSH et algorithme T4L et T3L" }
-            #endregion
+                #endregion
                 );
+                
+            #region Mecedin
+            builder.Entity<Medecin>().HasData(
+                new Medecin
+                {
+                    IdMedecin = 1,
+                    Prenom = "Zacharie",
+                    Nom = "Banville"
+                },
+                new Medecin
+                {
+                    IdMedecin = 2,
+                    Prenom = "Yannick",
+                    Nom = "Bourque"
+                },
+                new Medecin
+                {
+                    IdMedecin = 3,
+                    Prenom = "Jonathan",
+                    Nom = "Langlais"
+                },
+                new Medecin
+                {
+                    IdMedecin = 4,
+                    Prenom = "Antony",
+                    Nom = "Jetté"
+                },
+                new Medecin
+                {
+                    IdMedecin = 5,
+                    Prenom = "Lucas",
+                    Nom = "Denis"
+                },
+                new Medecin
+                {
+                    IdMedecin = 6,
+                    Prenom = "Mathilde",
+                    Nom = "Lagacé"
+                },
+                new Medecin
+                {
+                    IdMedecin = 7,
+                    Prenom = "Alicia",
+                    Nom = "Néron"
+                },
+                new Medecin
+                {
+                    IdMedecin = 8,
+                    Prenom = "Raphaelle",
+                    Nom = "Godin"
+                },
+                new Medecin
+                {
+                    IdMedecin = 9,
+                    Prenom = "Leonie",
+                    Nom = "Martinez"
+                },
+                new Medecin
+                {
+                    IdMedecin = 10,
+                    Prenom = "Rose",
+                    Nom = "Daneau"
+                });
+            #endregion
         }
     }
 }
