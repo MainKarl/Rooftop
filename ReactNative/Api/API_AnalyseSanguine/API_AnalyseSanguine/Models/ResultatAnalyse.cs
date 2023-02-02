@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 
 namespace API_AnalyseSanguine.Models
 {
@@ -16,5 +17,16 @@ namespace API_AnalyseSanguine.Models
         public RequeteAnalyse RequeteAnalyse { get; set; }
         [Required]
         public TypeValeur TypeValeur { get; set; }
+    }
+
+    public class ResultatAnalyseValidator : AbstractValidator<ResultatAnalyse>
+    {
+        public ResultatAnalyseValidator()
+        {
+            RuleFor(e => e.Valeur)
+                .NotEmpty()
+                .WithMessage("Veuillez spécifier une valeur");
+        }
+
     }
 }
