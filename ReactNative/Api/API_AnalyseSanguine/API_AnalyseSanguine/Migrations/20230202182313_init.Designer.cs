@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_AnalyseSanguine.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230131213435_initial")]
-    partial class initial
+    [Migration("20230202182313_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,6 +159,13 @@ namespace API_AnalyseSanguine.Migrations
                     b.HasIndex("RequeteAnalyseIdRequete");
 
                     b.ToTable("TypeAnalyses");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTypeAnalyse = 1,
+                            Nom = "test"
+                        });
                 });
 
             modelBuilder.Entity("API_AnalyseSanguine.Models.TypeValeur", b =>

@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="7e0be36e-93d5-4ccd-9357-dff99701d402"
-    Publisher="CN=jpbel"
+    Name="cfb7d84a-cc46-4884-827d-0ad36720b90b"
+    Publisher="CN=KarlAdmin"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="7e0be36e-93d5-4ccd-9357-dff99701d402" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="cfb7d84a-cc46-4884-827d-0ad36720b90b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>AnalyseSanguine</DisplayName>
-    <PublisherDisplayName>jpbel</PublisherDisplayName>
+    <PublisherDisplayName>KarlAdmin</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

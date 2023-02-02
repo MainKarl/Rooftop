@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API_AnalyseSanguine.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -136,6 +136,11 @@ namespace API_AnalyseSanguine.Migrations
                         principalColumn: "IdTypeValeur",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "TypeAnalyses",
+                columns: new[] { "IdTypeAnalyse", "Nom", "RequeteAnalyseIdRequete" },
+                values: new object[] { 1, "test", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_RequeteAnalyses_DossierIdDossier",
