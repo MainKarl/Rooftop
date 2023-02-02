@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_AnalyseSanguine.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230202182313_init")]
+    [Migration("20230202195204_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,6 +74,68 @@ namespace API_AnalyseSanguine.Migrations
                     b.HasKey("IdMedecin");
 
                     b.ToTable("Medecins");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMedecin = 1,
+                            Nom = "Banville",
+                            Prenom = "Zacharie"
+                        },
+                        new
+                        {
+                            IdMedecin = 2,
+                            Nom = "Bourque",
+                            Prenom = "Yannick"
+                        },
+                        new
+                        {
+                            IdMedecin = 3,
+                            Nom = "Langlais",
+                            Prenom = "Jonathan"
+                        },
+                        new
+                        {
+                            IdMedecin = 4,
+                            Nom = "Jetté",
+                            Prenom = "Antony"
+                        },
+                        new
+                        {
+                            IdMedecin = 5,
+                            Nom = "Denis",
+                            Prenom = "Lucas"
+                        },
+                        new
+                        {
+                            IdMedecin = 6,
+                            Nom = "Lagacé",
+                            Prenom = "Mathilde"
+                        },
+                        new
+                        {
+                            IdMedecin = 7,
+                            Nom = "Néron",
+                            Prenom = "Alicia"
+                        },
+                        new
+                        {
+                            IdMedecin = 8,
+                            Nom = "Godin",
+                            Prenom = "Raphaelle"
+                        },
+                        new
+                        {
+                            IdMedecin = 9,
+                            Nom = "Martinez",
+                            Prenom = "Leonie"
+                        },
+                        new
+                        {
+                            IdMedecin = 10,
+                            Nom = "Daneau",
+                            Prenom = "Rose"
+                        });
                 });
 
             modelBuilder.Entity("API_AnalyseSanguine.Models.RequeteAnalyse", b =>
@@ -164,7 +226,87 @@ namespace API_AnalyseSanguine.Migrations
                         new
                         {
                             IdTypeAnalyse = 1,
-                            Nom = "test"
+                            Nom = "Albumine"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 2,
+                            Nom = "ALT"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 3,
+                            Nom = "Bilan lipidique"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 4,
+                            Nom = "Bilirubine totale"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 5,
+                            Nom = "Calcium total"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 6,
+                            Nom = "Cortisol"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 7,
+                            Nom = "Cortisol post-dexaméthasone"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 8,
+                            Nom = "Créatinine"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 9,
+                            Nom = "Créatinine kinase"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 10,
+                            Nom = "Électrolytes"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 11,
+                            Nom = "Ferritine"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 12,
+                            Nom = "Magnésium"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 13,
+                            Nom = "Phosphatase alcaline"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 14,
+                            Nom = "Phosphore"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 15,
+                            Nom = "Protéine C réactive"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 16,
+                            Nom = "Protéines totales"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 17,
+                            Nom = "TSH et algorithme T4L et T3L"
                         });
                 });
 

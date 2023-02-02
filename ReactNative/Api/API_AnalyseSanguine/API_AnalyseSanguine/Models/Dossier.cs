@@ -1,4 +1,5 @@
 ﻿
+using FluentValidation;
 using System.ComponentModel.DataAnnotations;
 
 namespace API_AnalyseSanguine.Models
@@ -20,6 +21,32 @@ namespace API_AnalyseSanguine.Models
 
         //lien
         public List<RequeteAnalyse> LstRequetes { get; set; }
+
+    }
+
+    public class DossierValidator : AbstractValidator<Dossier>
+    {
+        public DossierValidator()
+        {
+            RuleFor(e => e.Prenom)
+                .NotEmpty()
+                .WithMessage("Veuillez spécifier un prénom");
+
+            RuleFor(e => e.Nom)
+                .NotEmpty()
+                .WithMessage("Veuillez spécifier un nom");
+
+            RuleFor(e => e.Sexe)
+                .NotEmpty()
+                .WithMessage("Veuillez spécifier un sexe");
+
+            RuleFor(e => e.DateNaissance)
+                .NotEmpty()
+                .WithMessage("Veuillez spécifier une date de naissance");
+
+            RuleFor(e => e.DateNaissance)
+               .LessThan(DateTime.Now).WithMessage("Veuillez sélectionner une date valide");
+        }
 
     }
 }

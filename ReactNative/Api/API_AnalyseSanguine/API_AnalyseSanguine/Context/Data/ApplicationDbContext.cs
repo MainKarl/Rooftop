@@ -18,13 +18,28 @@ namespace API_AnalyseSanguine.Context.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            #region Type Analyse
             builder.Entity<TypeAnalyse>().HasData(
-                new TypeAnalyse
-                {
-                    IdTypeAnalyse = 1,
-                    Nom = "test"
-                });
-
+                new TypeAnalyse { IdTypeAnalyse = 1, Nom = "Albumine"   },
+                new TypeAnalyse { IdTypeAnalyse = 2, Nom = "ALT"},
+                new TypeAnalyse { IdTypeAnalyse = 3, Nom = "Bilan lipidique"},
+                new TypeAnalyse { IdTypeAnalyse = 4, Nom = "Bilirubine totale" },
+                new TypeAnalyse { IdTypeAnalyse = 5, Nom = "Calcium total" },
+                new TypeAnalyse { IdTypeAnalyse = 6, Nom = "Cortisol" },
+                new TypeAnalyse { IdTypeAnalyse = 7, Nom = "Cortisol post-dexaméthasone" },
+                new TypeAnalyse { IdTypeAnalyse = 8, Nom = "Créatinine" },
+                new TypeAnalyse { IdTypeAnalyse = 9, Nom = "Créatinine kinase" },
+                new TypeAnalyse { IdTypeAnalyse = 10, Nom = "Électrolytes" },
+                new TypeAnalyse { IdTypeAnalyse = 11, Nom = "Ferritine" },
+                new TypeAnalyse { IdTypeAnalyse = 12, Nom = "Magnésium" },
+                new TypeAnalyse { IdTypeAnalyse = 13, Nom = "Phosphatase alcaline" },
+                new TypeAnalyse { IdTypeAnalyse = 14, Nom = "Phosphore" },
+                new TypeAnalyse { IdTypeAnalyse = 15, Nom = "Protéine C réactive" },
+                new TypeAnalyse { IdTypeAnalyse = 16, Nom = "Protéines totales" },
+                new TypeAnalyse { IdTypeAnalyse = 17, Nom = "TSH et algorithme T4L et T3L" }
+                );
+            #endregion
+                
             #region Mecedin
             builder.Entity<Medecin>().HasData(
                 new Medecin
