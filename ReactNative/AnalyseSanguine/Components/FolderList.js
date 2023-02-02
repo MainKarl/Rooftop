@@ -9,6 +9,7 @@ import {
   Touchable,
 } from 'react-native';
 import PatientFolder from './PatientFolder';
+import CustomButton from './Button';
 
 const FolderList = () => {
   const [patientFolders, setpatientFolders] = useState([
@@ -54,6 +55,7 @@ const FolderList = () => {
           />
         )}
       />
+      <CustomButton />
     </View>
   );
 };
