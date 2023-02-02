@@ -7,11 +7,12 @@ import {
   FlatList,
   TextInput,
   Touchable,
+  InteractionManager,
 } from 'react-native';
 import PatientFolder from './PatientFolder';
 
 const FolderList = () => {
-  const [patientFolders, setpatientFolders] = useState([
+  const initialData = [
     {key: '8761', FirstName: 'Victor', LastName: 'Turgeon', active: false},
     {key: '8321', FirstName: 'Louis', LastName: 'Garceau', active: false},
     {key: '1761', FirstName: 'Maxime', LastName: 'Aubin', active: false},
@@ -24,10 +25,13 @@ const FolderList = () => {
     },
     {key: '5461', FirstName: 'Laurent', LastName: 'Brochu', active: false},
     {key: '7651', FirstName: 'Maxime', LastName: 'Lefebvre', active: false},
-  ]);
+  ];
+
+  const [filteredData, setfilteredData] = useState(initialData);
+  const [currentActive, setcurrentActive] = useState(null);
 
   const changeActiveFolder = activeFolderId => {
-    const part_patientFolders = patientFolders.map((v, i) => {
+    const part_filteredFolder = filteredData.map((v, i) => {
       if (v.key === activeFolderId) {
         v.active = true;
         return v;
@@ -36,14 +40,38 @@ const FolderList = () => {
         return v;
       }
     });
-    setpatientFolders(part_patientFolders);
+    setcurrentActive(activeFolderId);
+    setfilteredData(part_filteredFolder);
   };
+
+  const filterFolders = (searchTerm) => {
+    searchTerm = searchTerm.toLowerCase().trim();
+    const newFilteredFolders = initialData.filter(v => 
+    v.key.toLowerCase().includes(searchTerm) ||
+    v.FirstName.toLowerCase().includes(searchTerm) ||
+    v.LastName.toLowerCase().includes(searchTerm) ||
+    (v.FirstName + " " + v.LastName).toLowerCase().includes(searchTerm) ||
+    (v.LastName + " " + v.FirstName).toLowerCase().includes(searchTerm)).map(v =>{
+        if(v.key == currentActive)
+        {
+          v.active = true;
+          return v;
+        }
+        else{
+          v.active = false;
+          return v;
+        }
+    });
+
+    setfilteredData(newFilteredFolders);
+  }
 
   return (
     <View style={styles.searchFolderList}>
-      <TextInput style={styles.searchBarInput} placeholder="Rechercher" />
+      <TextInput onChangeText={searchTerm => filterFolders(searchTerm)} style={styles.searchBarInput} placeholder="Rechercher" />
       <FlatList
-        data={patientFolders}
+      data={filteredData}
+      extraData={filteredData}
         renderItem={({item}) => (
           <PatientFolder
             folderkey={item.key}
