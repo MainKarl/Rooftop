@@ -7,11 +7,15 @@ import {
   FlatList,
   TextInput,
   Touchable,
+  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 
 const PatientFolder = props => {
   return (
-    <View style={styles.item}>
+    <TouchableOpacity
+      onPress={() => props.changeActiveEvent(props.folderkey)}
+      style={props.isActive ? styles.currentItem : styles.item}>
       <Text>
         {props.folderkey} - {props.LastName}, {props.FirstName}
       </Text>
@@ -24,34 +28,24 @@ const PatientFolder = props => {
           paddingRight: 10,
         }}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    height: '100%',
-  },
-  searchFolderList: {
-    borderColor: '#808080',
-    borderWidth: 2,
-    borderRadius: 5,
-    borderStyle: 'solid',
-    flex: 0.2,
-    margin: 5,
-  },
-  textCounter: {
-    padding: 5,
-  },
   item: {
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 15,
     paddingRight: 15,
   },
-  searchBarInput: {},
+  currentItem: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    backgroundColor: '#808080',
+  },
 });
 
 export default PatientFolder;
