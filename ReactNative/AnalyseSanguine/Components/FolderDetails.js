@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
+import RequestList from './RequestList';
 
 const FolderDetails = props => {
   const [patientInfo, setpatientInfo] = useState({
@@ -71,7 +72,9 @@ const FolderDetails = props => {
               </View>
             </View>
           </View>
-          <View style={styles.requetesEtResultat}></View>
+          <View style={styles.requetesEtResultat}>
+          <RequestList updateVisible={props.updateVisible} />
+          </View>
         </View>
       </View>
     );
