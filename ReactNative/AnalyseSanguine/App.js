@@ -18,11 +18,19 @@ import RequestDetails from './Components/RequestDetails';
 const App = () => {
   const [count, setCount] = useState(0);
   const [selectedFolder, setselectedFolder] = useState('');
+  const [selectedRequest, setselectedRequest] = useState({key: '',
+  FirstNameTechnician: '',
+  LastNameTechnician: '',
+  AccessCode: '',
+  SamplingDate: '',
+  FirstNameDoctor: '',
+  LastNameDoctor: '',});
   const [elementVisible, setElementVisible] = useState(true);
 
-  function updateVisible()
+  function updateVisible(request)
   {
     setElementVisible(!elementVisible)
+    setselectedRequest(request)
   }
 
   const onSelectedFolder = selectedFolderId => {
@@ -35,19 +43,15 @@ const App = () => {
       <View>
         {elementVisible ? (
           <View style={styles.container}>
-          <FolderList onSelectedFolder={onSelectedFolder} />
-        <FolderDetails selectedFolder={selectedFolder} updateVisible={updateVisible} />
-        </View>
+            <FolderList onSelectedFolder={onSelectedFolder} />
+            <FolderDetails selectedFolder={selectedFolder} updateVisible={updateVisible} />
+          </View>
         ) : null}
       </View>
       <View style={styles.container}>
-      {elementVisible ? null : (
-        <View>
-          <RequestDetails></RequestDetails>
-            <Button
-          title={elementVisible ? 'Hide Element' : 'Show Element'}
-          onPress={() => setElementVisible(true)}
-        />
+        {elementVisible ? null : (
+          <View>
+            <RequestDetails updateVisible={updateVisible} selectedRequest={selectedRequest} />
           </View>
         )}
       </View>

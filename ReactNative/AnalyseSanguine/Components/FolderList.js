@@ -11,6 +11,7 @@ import {
   PlatformColor,
 } from 'react-native';
 import PatientFolder from './PatientFolder';
+import CustomButton from './AddButton';
 
 const FolderList = props => {
   const initialData = [
@@ -26,6 +27,19 @@ const FolderList = props => {
     },
     {key: '5461', FirstName: 'Laurent', LastName: 'Brochu', active: false},
     {key: '7651', FirstName: 'Maxime', LastName: 'Lefebvre', active: false},
+    {key: '3422', FirstName: 'Kevin', LastName: 'Gauvin', active: false},
+    {key: '1268', FirstName: 'Raphaël', LastName: 'Seyer', active: false},
+    {key: '8963', FirstName: 'Samuel', LastName: 'Guérin', active: false},
+    {key: '0942', FirstName: 'Justin', LastName: 'Leblanc', active: false},
+    {key: '2479', FirstName: 'Loïc', LastName: 'Brunet', active: false},
+    {key: '4768', FirstName: 'Marie Claire', LastName: 'Uwambajimana', active: false},
+    {key: '2368', FirstName: 'Mercedes', LastName: 'Siandja Nana', active: false},
+    {key: '3421', FirstName: 'Simon', LastName: 'Dénommé', active: false},
+    {key: '7677', FirstName: 'Tristan', LastName: 'Bousquet', active: false},
+    {key: '8989', FirstName: 'Zachary', LastName: 'Cloutier-Cyr', active: false},
+    {key: '6532', FirstName: 'Nicolas', LastName: 'St-Arnault', active: false},
+    {key: '7022', FirstName: 'Stéphane', LastName: 'Denis', active: false},
+    {key: '2003', FirstName: 'Martin', LastName: 'Beauregard', active: false},
   ];
 
   const [filteredData, setfilteredData] = useState(initialData);
@@ -80,6 +94,7 @@ const FolderList = props => {
       <FlatList
         data={filteredData}
         extraData={filteredData}
+        style={styles.listStyle}
         renderItem={({item}) => (
           <PatientFolder
             folderkey={item.key}
@@ -88,8 +103,8 @@ const FolderList = props => {
             isActive={item.active}
             changeActiveEvent={changeActiveFolder}
           />
-        )}
-      />
+        )}  />
+        <CustomButton style={styles.button} />
     </View>
   );
 };
@@ -107,6 +122,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     flex: 0.2,
     margin: 5,
+    position: 'relative'
   },
   textCounter: {
     padding: 5,
@@ -117,7 +133,17 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
   },
-  searchBarInput: {},
+  listStyle: {
+    width:'100%',
+    height: '100%',
+    marginBottom: 0,
+    marginTop: 30,
+    position: 'absolute'
+  },
+  searchBarInput: {
+    width: '100%'
+  },
+  button: { position: 'absolute' }
 });
 
 export default FolderList;
