@@ -13,10 +13,17 @@ import {
 import FolderList from './Components/FolderList';
 import FolderDetails from './Components/FolderDetails';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import RequestDetails from './Components/RequestDetails';
 
 const App = () => {
   const [count, setCount] = useState(0);
   const [selectedFolder, setselectedFolder] = useState('');
+  const [elementVisible, setElementVisible] = useState(true);
+
+  function updateVisible()
+  {
+    setElementVisible(!elementVisible)
+  }
 
   const onSelectedFolder = selectedFolderId => {
     setselectedFolder(selectedFolderId);
@@ -24,9 +31,26 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     // eslint-disable-next-line no-undef
-    <View style={styles.container}>
-      <FolderList onSelectedFolder={onSelectedFolder} />
-      <FolderDetails selectedFolder={selectedFolder} />
+    <View>
+      <View>
+        {elementVisible ? (
+          <View style={styles.container}>
+          <FolderList onSelectedFolder={onSelectedFolder} />
+        <FolderDetails selectedFolder={selectedFolder} updateVisible={updateVisible} />
+        </View>
+        ) : null}
+      </View>
+      <View style={styles.container}>
+      {elementVisible ? null : (
+        <View>
+          <RequestDetails></RequestDetails>
+            <Button
+          title={elementVisible ? 'Hide Element' : 'Show Element'}
+          onPress={() => setElementVisible(true)}
+        />
+          </View>
+        )}
+      </View>
     </View>
   );
 };

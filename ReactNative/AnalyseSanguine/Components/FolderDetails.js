@@ -71,7 +71,11 @@ const FolderDetails = props => {
               </View>
             </View>
           </View>
-          <View style={styles.requetesEtResultat}></View>
+          <View style={styles.requetesEtResultat}>
+          <Button
+          title={'Show Element'}
+          onPress={() => props.updateVisible()}></Button>
+          </View>
         </View>
       </View>
     );
