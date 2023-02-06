@@ -19,18 +19,17 @@ const App = () => {
 const styles = StyleSheet.create({
     container: {
         marginLeft: 'auto',
+        marginTop: 'auto',
         margin: 15,
-        height:35,
+        height: 35,
         aspectRatio:1/1,
         backgroundColor: 'rgb(119, 186, 153)',
         borderRadius: 150,
-        display: 'flex'
     },
     customIcon: {
         marginLeft: 1,
         marginRight: 0,
-        marginTop: 0,
-        border: 0
+        marginTop: 0
     }
 });
 

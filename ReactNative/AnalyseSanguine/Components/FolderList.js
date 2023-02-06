@@ -104,6 +104,7 @@ const FolderList = props => {
       <FlatList
         data={filteredData}
         extraData={filteredData}
+        style={styles.listStyle}
         renderItem={({ item }) => (
           <PatientFolder
             folderkey={item.key}
@@ -112,9 +113,8 @@ const FolderList = props => {
             isActive={item.active}
             changeActiveEvent={changeActiveFolder}
           />
-        )}
-      />
-      <CustomButton />
+        )} />
+      <CustomButton style={styles.button} />
     </View>
   );
 };
@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     flex: 0.2,
     margin: 5,
+    position: 'relative'
   },
   textCounter: {
     padding: 5,
@@ -142,7 +143,17 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
   },
-  searchBarInput: {},
+  listStyle: {
+    width: '100%',
+    height: '100%',
+    marginBottom: 0,
+    marginTop: 30,
+    position: 'absolute'
+  },
+  searchBarInput: {
+    width: '100%'
+  },
+  button: { position: 'absolute' }
 });
 
 export default FolderList;
