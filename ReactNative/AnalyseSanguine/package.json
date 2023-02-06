@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@react-native-community/checkbox": "^0.5.14",
+    "@react-native-community/datetimepicker": "^6.7.3",
     "react": "18.2.0",
     "react-native": "0.71.0",
     "react-native-vector-icons": "^9.2.0",

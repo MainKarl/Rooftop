@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,55 +9,86 @@ import {
   Touchable,
   InteractionManager,
   PlatformColor,
+  Alert,
 } from 'react-native';
 import PatientFolder from './PatientFolder';
-import CustomButton from './AddButton';
+import AddButton from './AddButton';
+import AnalyseConfig from '../analyseConfig.json';
 
 const FolderList = props => {
-  const initialData = [
-    {key: '8761', FirstName: 'Victor', LastName: 'Turgeon', active: false},
-    {key: '8321', FirstName: 'Louis', LastName: 'Garceau', active: false},
-    {key: '1761', FirstName: 'Maxime', LastName: 'Aubin', active: false},
-    {key: '6561', FirstName: 'Karl', LastName: 'Mainville', active: false},
-    {
-      key: '8431',
-      FirstName: 'Jean-Philippe',
-      LastName: 'Belval',
-      active: false,
-    },
-    {key: '5461', FirstName: 'Laurent', LastName: 'Brochu', active: false},
-    {key: '7651', FirstName: 'Maxime', LastName: 'Lefebvre', active: false},
-    {key: '3422', FirstName: 'Kevin', LastName: 'Gauvin', active: false},
-    {key: '1268', FirstName: 'Raphaël', LastName: 'Seyer', active: false},
-    {key: '8963', FirstName: 'Samuel', LastName: 'Guérin', active: false},
-    {key: '0942', FirstName: 'Justin', LastName: 'Leblanc', active: false},
-    {key: '2479', FirstName: 'Loïc', LastName: 'Brunet', active: false},
-    {key: '4768', FirstName: 'Marie Claire', LastName: 'Uwambajimana', active: false},
-    {key: '2368', FirstName: 'Mercedes', LastName: 'Siandja Nana', active: false},
-    {key: '3421', FirstName: 'Simon', LastName: 'Dénommé', active: false},
-    {key: '7677', FirstName: 'Tristan', LastName: 'Bousquet', active: false},
-    {key: '8989', FirstName: 'Zachary', LastName: 'Cloutier-Cyr', active: false},
-    {key: '6532', FirstName: 'Nicolas', LastName: 'St-Arnault', active: false},
-    {key: '7022', FirstName: 'Stéphane', LastName: 'Denis', active: false},
-    {key: '2003', FirstName: 'Martin', LastName: 'Beauregard', active: false},
-  ];
-
-  const [filteredData, setfilteredData] = useState(initialData);
+  const [initialData, setInitialData] = useState([]);
+  const [filteredData, setfilteredData] = useState();
   const [currentActive, setcurrentActive] = useState(null);
 
+
+  useEffect(() => {
+    const url = AnalyseConfig.API_URL + 'dossier/getsimple';
+    fetch(url)
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
+            data.map((x) => {
+              x.active = false;
+            });
+            setInitialData(data);
+            setfilteredData(data);
+          });
+        }
+        else {
+          console.log(response);
+        }
+
+      }).catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+
   const changeActiveFolder = activeFolderId => {
-    const part_filteredFolder = filteredData.map((v, i) => {
-      if (v.key === activeFolderId) {
-        v.active = true;
-        return v;
-      } else {
-        v.active = false;
-        return v;
-      }
-    });
-    props.onSelectedFolder(activeFolderId);
-    setcurrentActive(activeFolderId);
-    setfilteredData(part_filteredFolder);
+    if (props.actualState !== 0) {
+      Alert.alert('Quitter la page', 'Est-ce que vous êtes sur de changer de page?', [
+        {
+          text: 'Annuler'
+        },
+        {
+          text: 'Confirmer',
+          onPress: () => {
+            const part_filteredFolder = filteredData.map((v, i) => {
+              if (v.idDossier === activeFolderId) {
+                v.active = true;
+                return v;
+              } else {
+                v.active = false;
+                return v;
+              }
+            });
+            props.onSelectedFolder(activeFolderId);
+            setcurrentActive(activeFolderId);
+            setfilteredData(part_filteredFolder);
+        
+            // Permet de changer entre detail de folder et création de folder
+            props.onChangeState(0);
+          }
+        }
+      ]);
+    }
+    else {
+      const part_filteredFolder = filteredData.map((v, i) => {
+        if (v.idDossier === activeFolderId) {
+          v.active = true;
+          return v;
+        } else {
+          v.active = false;
+          return v;
+        }
+      });
+      props.onSelectedFolder(activeFolderId);
+      setcurrentActive(activeFolderId);
+      setfilteredData(part_filteredFolder);
+  
+      // Permet de changer entre detail de folder et création de folder
+      props.onChangeState(0);
+    }
   };
 
   const filterFolders = searchTerm => {
@@ -65,11 +96,11 @@ const FolderList = props => {
     const newFilteredFolders = initialData
       .filter(
         v =>
-          v.key.toLowerCase().includes(searchTerm) ||
-          v.FirstName.toLowerCase().includes(searchTerm) ||
-          v.LastName.toLowerCase().includes(searchTerm) ||
-          (v.FirstName + ' ' + v.LastName).toLowerCase().includes(searchTerm) ||
-          (v.LastName + ' ' + v.FirstName).toLowerCase().includes(searchTerm),
+          String(v.idDossier).toLowerCase().includes(searchTerm) ||
+          v.prenom.toLowerCase().includes(searchTerm) ||
+          v.nom.toLowerCase().includes(searchTerm) ||
+          (v.prenom + ' ' + v.nom).toLowerCase().includes(searchTerm) ||
+          (v.nom + ' ' + v.prenom).toLowerCase().includes(searchTerm),
       )
       .map(v => {
         if (v.key == currentActive) {
@@ -84,6 +115,10 @@ const FolderList = props => {
     setfilteredData(newFilteredFolders);
   };
 
+  const callCreateForm = () => {
+    props.onChangeState(1);
+  }
+
   return (
     <View style={styles.searchFolderList}>
       <TextInput
@@ -95,16 +130,17 @@ const FolderList = props => {
         data={filteredData}
         extraData={filteredData}
         style={styles.listStyle}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <PatientFolder
-            folderkey={item.key}
-            FirstName={item.FirstName}
-            LastName={item.LastName}
+            key={item.idDossier}
+            folderkey={item.idDossier}
+            prenom={item.prenom}
+            nom={item.nom}
             isActive={item.active}
             changeActiveEvent={changeActiveFolder}
           />
-        )}  />
-        <CustomButton style={styles.button} />
+        )} />
+      <AddButton style={styles.button} onClick={callCreateForm} />
     </View>
   );
 };
@@ -134,7 +170,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   listStyle: {
-    width:'100%',
+    width: '100%',
     height: '100%',
     marginBottom: 0,
     marginTop: 30,

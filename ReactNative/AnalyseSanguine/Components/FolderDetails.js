@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,19 +13,35 @@ import {
 } from 'react-native';
 import RequestList from './RequestList';
 import ModalAddRequete from './AddRequete';
+import AnalyseConfig from '../analyseConfig.json';
+
 
 const FolderDetails = props => {
-  const [patientInfo, setpatientInfo] = useState({
-    key: '8761',
-    FirstName: 'Victor',
-    LastName: 'Turgeon',
-    Gender: 'M',
-    BirthDate: '2003-02-02',
-    NumAssMaladie: 'TURV 0000 0000',
-    Note: '',
-  });
+  const [patientInfo, setpatientInfo] = useState(null);
   const [DetailVisible, setDetailVisible] = useState(true);
   const [formAddRequeteVisible, setformAddRequeteVisible] = useState(false);
+
+  useEffect(() => {
+
+    if (props.selectedFolder != "") {
+
+      const url = AnalyseConfig.API_URL + 'dossier/getdetaille?id=' + props.selectedFolder;
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((data) => {
+              setpatientInfo(data);
+            });
+          }
+          else {
+            console.log(response);
+          }
+
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [props.selectedFolder])
 
   function updateformAddRequeteVisible()
   {
@@ -36,39 +52,39 @@ const FolderDetails = props => {
 
   if (DetailVisible){
 
-    if (patientInfo.key === props.selectedFolder) {
+    if (patientInfo && patientInfo.idDossier === props.selectedFolder) {
       return (
         <View style={{flex: 0.8, margin: 5}}>
           <View style={styles.detailsDisplay}>
             <View style={styles.patientInfo}>
-              <View style={styles.flexHalf}>
-                <Text style={styles.infoText}>
-                  Numéro de dossier:{' '}
-                  <Text style={styles.actualInfo}>{patientInfo.key}</Text>
+            <View style={styles.flexHalf}>
+              <Text style={styles.infoText}>
+                Numéro de dossier:{' '}
+                <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
+              </Text>
+              <Text style={styles.infoText}>
+                Nom:{' '}
+                <Text style={styles.actualInfo}>{patientInfo.nom}</Text>
+              </Text>
+              <Text style={styles.infoText}>
+                Prénom:{' '}
+                <Text style={styles.actualInfo}>{patientInfo.prenom}</Text>
+              </Text>
+              <Text style={styles.infoText}>
+                Sexe:{' '}
+                <Text style={styles.actualInfo}>{patientInfo.sexe}</Text>
+              </Text>
+              <Text style={styles.infoText}>
+                Date de naissance:{' '}
+                <Text style={styles.actualInfo}>{patientInfo.dateNaissance}</Text>
+              </Text>
+              {/* <Text>
+                Numéro d'assurance maladie:{' '}
+                <Text style={styles.actualInfo}>
+                  {patientInfo.NumAssMaladie}
                 </Text>
-                <Text style={styles.infoText}>
-                  Nom:{' '}
-                  <Text style={styles.actualInfo}>{patientInfo.LastName}</Text>
-                </Text>
-                <Text style={styles.infoText}>
-                  Prénom:{' '}
-                  <Text style={styles.actualInfo}>{patientInfo.FirstName}</Text>
-                </Text>
-                <Text style={styles.infoText}>
-                  Sexe:{' '}
-                  <Text style={styles.actualInfo}>{patientInfo.Gender}</Text>
-                </Text>
-                <Text style={styles.infoText}>
-                  Date de naissance:{' '}
-                  <Text style={styles.actualInfo}>{patientInfo.BirthDate}</Text>
-                </Text>
-                <Text>
-                  Numéro d'assurance maladie:{' '}
-                  <Text style={styles.actualInfo}>
-                    {patientInfo.NumAssMaladie}
-                  </Text>
-                </Text>
-              </View>
+              </Text>*/}
+            </View>
               <View style={styles.flexHalf}>
                 <Text style={styles.infoText}>Notes:</Text>
                 <TextInput
@@ -86,26 +102,26 @@ const FolderDetails = props => {
               </View>
             </View>
             <View style={styles.requetesEtResultat}>
-              <View style={styles.addButton}>
-                <Button
+            <View style={styles.addButton}>
+              <Button
                 style={{}} 
-                  title='+'
-                  onPress={() => updateformAddRequeteVisible()}
-                />
-              </View>
-              <RequestList updateVisible={props.updateVisible} />
+                title='+'
+                onPress={() => updateformAddRequeteVisible()}
+              />
             </View>
+            <RequestList requests={patientInfo.lstRequetes} onChangeState={props.onChangeState} />
+          </View>
           </View>
         </View>
       );
     } else {
       return (
-        <View style={{flex: 0.8, margin: 5}}>
+        <View style={{ flex: 0.8, margin: 5 }}>
           <Text style={styles.texteErreur}>
-              L'information du patient n'a pas été trouvée!
+            L'information du patient n'a pas été trouvée!
           </Text>
         </View>
-      );
+      )
     }
   }
   else if (formAddRequeteVisible){{
@@ -113,10 +129,9 @@ const FolderDetails = props => {
       <View style={{flex: 0.8, margin: 5}}>
         <ModalAddRequete updateformAddRequeteVisible={updateformAddRequeteVisible}/>
       </View>
-    )
-  }
-  }
-};
+  )}
+  };
+}
 
 const styles = StyleSheet.create({
   texteErreur: {

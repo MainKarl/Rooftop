@@ -4,6 +4,7 @@ using API_AnalyseSanguine.Context.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_AnalyseSanguine.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230206175504_seedDossier1")]
+    partial class seedDossier1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,14 +60,6 @@ namespace API_AnalyseSanguine.Migrations
                             DateNaissance = new DateTime(2001, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Nom = "Turgeon",
                             Prenom = "Victor",
-                            Sexe = (byte)0
-                        },
-                        new
-                        {
-                            IdDossier = 2,
-                            DateNaissance = new DateTime(2002, 11, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Nom = "Belval",
-                            Prenom = "Jean-Philippe",
                             Sexe = (byte)0
                         });
                 });

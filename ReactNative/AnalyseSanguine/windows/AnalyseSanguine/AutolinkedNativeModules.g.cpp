@@ -6,6 +6,9 @@
 // Includes from @react-native-community/checkbox
 #include <winrt/CheckboxWindows.h>
 
+// Includes from @react-native-community/datetimepicker
+#include <winrt/DateTimePicker.h>
+
 namespace winrt::Microsoft::ReactNative
 {
 
@@ -13,6 +16,8 @@ void RegisterAutolinkedNativeModulePackages(winrt::Windows::Foundation::Collecti
 { 
     // IReactPackageProviders from @react-native-community/checkbox
     packageProviders.Append(winrt::CheckboxWindows::ReactPackageProvider());
+    // IReactPackageProviders from @react-native-community/datetimepicker
+    packageProviders.Append(winrt::DateTimePicker::ReactPackageProvider());
 }
 
 }

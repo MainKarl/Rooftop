@@ -12,25 +12,32 @@ import {
 } from 'react-native';
 import FolderList from './Components/FolderList';
 import FolderDetails from './Components/FolderDetails';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import RequestDetails from './Components/RequestDetails';
-import ModalAddRequete from './Components/AddRequete';
+import FolderCreate from './Components/FolderCreateForm';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
   const [count, setCount] = useState(0);
   const [selectedFolder, setselectedFolder] = useState('');
-  const [selectedRequest, setselectedRequest] = useState({key: '',
-  FirstNameTechnician: '',
-  LastNameTechnician: '',
-  AccessCode: '',
-  SamplingDate: '',
-  FirstNameDoctor: '',
-  LastNameDoctor: '',});
+  const [selectedRequest, setselectedRequest] = useState({
+    key: '',
+    FirstNameTechnician: '',
+    LastNameTechnician: '',
+    AccessCode: '',
+    SamplingDate: '',
+    FirstNameDoctor: '',
+    LastNameDoctor: '',
+  });
   const [elementVisible, setElementVisible] = useState(true);
+  const [informationState, setInformationState] = useState(0);
+
+  const onChangeInformationState = (informationState) => {
+    setInformationState(informationState);
+  }
 
   function updateVisible(request)
   {
-    setElementVisible(!elementVisible)
+    setInformationState(0)
     setselectedRequest(request)
   }
 
@@ -38,24 +45,16 @@ const App = () => {
     setselectedFolder(selectedFolderId);
   };
   const isDarkMode = useColorScheme() === 'dark';
+
+  let rightDetail;
+  if (informationState === 0) { rightDetail = <FolderDetails onChangeState={onChangeInformationState}  selectedFolder={selectedFolder} />; }
+  else if (informationState === 1) { rightDetail = <FolderCreate onChangeState={onChangeInformationState} />; }
+  else if (informationState === 2) { rightDetail = <RequestDetails onChangeState={onChangeInformationState} />; }
   return (
     // eslint-disable-next-line no-undef
-    <View>
-      <View>
-        {elementVisible ? (
-          <View style={styles.container}>
-            <FolderList onSelectedFolder={onSelectedFolder} />
-            <FolderDetails selectedFolder={selectedFolder} updateVisible={updateVisible} />
-          </View>
-        ) : null}
-      </View>
-      <View style={styles.container}>
-        {elementVisible ? null : (
-          <View>
-            <RequestDetails updateVisible={updateVisible} selectedRequest={selectedRequest} />
-          </View>
-        )}
-      </View>
+    <View style={styles.container}>
+      <FolderList actualState={informationState} onChangeState={onChangeInformationState} onSelectedFolder={onSelectedFolder} />
+      {rightDetail}
     </View>
   );
 };
