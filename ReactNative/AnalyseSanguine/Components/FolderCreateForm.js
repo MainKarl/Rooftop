@@ -7,6 +7,7 @@ import {
     Button,
     Alert
 } from 'react-native';
+import DatetimePicker from '@react-native-community/datetimepicker';
 import CustomRadioButton from './CustomRadioButton';
 
 const FolderCreateForm = props => {
@@ -78,6 +79,7 @@ const FolderCreateForm = props => {
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Date de naissance du patient:</Text>
+                <DatetimePicker mode="date" value={ new Date() } />
             </View>
             <Button title="Créer" onPress={onSubmit}></Button>
         </View>
@@ -98,9 +100,7 @@ const styles = StyleSheet.create({
         paddingRight: '5%',
     },
     title: {
-        fontSize: 20,
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        fontSize: 50,
         marginBottom: 20,
     },
     formRow: {

@@ -53,7 +53,7 @@ const App = () => {
   return (
     // eslint-disable-next-line no-undef
     <View style={styles.container}>
-      <FolderList onChangeState={onChangeInformationState} onSelectedFolder={onSelectedFolder} />
+      <FolderList actualState={informationState} onChangeState={onChangeInformationState} onSelectedFolder={onSelectedFolder} />
       {rightDetail}
     </View>
   );

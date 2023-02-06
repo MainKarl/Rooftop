@@ -9,6 +9,7 @@ import {
   Touchable,
   InteractionManager,
   PlatformColor,
+  Alert,
 } from 'react-native';
 import PatientFolder from './PatientFolder';
 import AddButton from './AddButton';
@@ -44,21 +45,50 @@ const FolderList = props => {
 
 
   const changeActiveFolder = activeFolderId => {
-    const part_filteredFolder = filteredData.map((v, i) => {
-      if (v.idDossier === activeFolderId) {
-        v.active = true;
-        return v;
-      } else {
-        v.active = false;
-        return v;
-      }
-    });
-    props.onSelectedFolder(activeFolderId);
-    setcurrentActive(activeFolderId);
-    setfilteredData(part_filteredFolder);
-
-    // Permet de changer entre detail de folder et création de folder
-    props.onChangeState(0);
+    if (props.actualState !== 0) {
+      Alert.alert('Quitter la page', 'Est-ce que vous êtes sur de changer de page?', [
+        {
+          text: 'Annuler'
+        },
+        {
+          text: 'Confirmer',
+          onPress: () => {
+            const part_filteredFolder = filteredData.map((v, i) => {
+              if (v.idDossier === activeFolderId) {
+                v.active = true;
+                return v;
+              } else {
+                v.active = false;
+                return v;
+              }
+            });
+            props.onSelectedFolder(activeFolderId);
+            setcurrentActive(activeFolderId);
+            setfilteredData(part_filteredFolder);
+        
+            // Permet de changer entre detail de folder et création de folder
+            props.onChangeState(0);
+          }
+        }
+      ]);
+    }
+    else {
+      const part_filteredFolder = filteredData.map((v, i) => {
+        if (v.idDossier === activeFolderId) {
+          v.active = true;
+          return v;
+        } else {
+          v.active = false;
+          return v;
+        }
+      });
+      props.onSelectedFolder(activeFolderId);
+      setcurrentActive(activeFolderId);
+      setfilteredData(part_filteredFolder);
+  
+      // Permet de changer entre detail de folder et création de folder
+      props.onChangeState(0);
+    }
   };
 
   const filterFolders = searchTerm => {
