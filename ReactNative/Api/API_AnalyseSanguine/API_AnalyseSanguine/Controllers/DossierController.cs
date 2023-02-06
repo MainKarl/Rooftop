@@ -1,4 +1,5 @@
 ﻿using API_AnalyseSanguine.Context.Data;
+using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,13 +17,52 @@ namespace API_AnalyseSanguine.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Dossier>> GetAllDossier()
+        [HttpGet("getsimple")]
+        public ActionResult<IEnumerable<DossierSimpleDto>> GetDossierSimple()
         {
             try
             {
-                var item = _context.Dossiers.ToList();
-                return Ok(item);
+                List<Dossier> item = _context.Dossiers.ToList();
+                return Ok(item.Select(item => new DossierSimpleDto(
+                    item.IdDossier,
+                    item.Prenom,
+                    item.Nom
+                    )));
+            }
+            catch
+            {
+                return Problem();
+            }
+        }
+
+        [HttpGet("getdetaille")]
+        public ActionResult<IEnumerable<DossierDetailleDto>> GetDossierDetaille(int id)
+        {
+            try
+            {
+                Dossier item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
+
+                if (item == null)
+                    return NotFound();
+
+                List<RequeteAnalyseDto> lstRequetes = new List<RequeteAnalyseDto>();
+                if (item.LstRequetes != null)
+                {
+                    foreach (var requete in item.LstRequetes)
+                    {
+                        lstRequetes.Add(new RequeteAnalyseDto(requete.IdRequete, requete.CodeAcces, requete.DateEchantillon, requete.Medecin.Prenom + ", " + requete.Medecin.Prenom));
+                    }
+                }
+
+                return Ok(new DossierDetailleDto(
+                    item.IdDossier,
+                    item.Prenom,
+                    item.Nom,
+                    item.DateNaissance,
+                    item.Sexe,
+                    item.Note,
+                    lstRequetes
+                ));
             }
             catch
             {
@@ -39,24 +79,6 @@ namespace API_AnalyseSanguine.Controllers
                 _context.SaveChanges();
 
                 return Ok(dossier);
-            }
-            catch
-            {
-                return Problem();
-            }
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<Dossier> GetDossier(long id)
-        {
-            try
-            {
-                var item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
-
-                if (item == null)
-                    return NotFound();
-
-                return Ok(item);
             }
             catch
             {
