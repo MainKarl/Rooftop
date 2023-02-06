@@ -56,6 +56,9 @@ const FolderList = props => {
     props.onSelectedFolder(activeFolderId);
     setcurrentActive(activeFolderId);
     setfilteredData(part_filteredFolder);
+
+    // Permet de changer entre detail de folder et création de folder
+    props.onChangeState(0);
   };
 
   const filterFolders = searchTerm => {
@@ -82,6 +85,10 @@ const FolderList = props => {
     setfilteredData(newFilteredFolders);
   };
 
+  const callCreateForm = () => {
+    props.onChangeState(1);
+  }
+
   return (
     <View style={styles.searchFolderList}>
       <TextInput
@@ -102,7 +109,7 @@ const FolderList = props => {
             changeActiveEvent={changeActiveFolder}
           />
         )} />
-      <AddButton style={styles.button} />
+      <AddButton style={styles.button} onClick={callCreateForm} />
     </View>
   );
 };

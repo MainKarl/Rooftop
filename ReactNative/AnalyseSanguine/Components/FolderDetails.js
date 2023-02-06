@@ -91,7 +91,7 @@ const FolderDetails = props => {
             </View>
           </View>
           <View style={styles.requetesEtResultat}>
-            <RequestList updateVisible={props.updateVisible} />
+          <RequestList onChangeState={props.onChangeState} />
           </View>
         </View>
       </View>

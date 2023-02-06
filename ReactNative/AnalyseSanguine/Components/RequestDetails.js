@@ -19,7 +19,7 @@ const RequestDetails = props => {
         <View style={styles.returnButton}>
           <Button
             title={'Retourner à la liste de requêtes'}
-            onPress={() => props.updateVisible(props.selectedRequest)}></Button>
+            onPress={() => props.onChangeState(0)}></Button>
         </View>
         <View style={styles.detailsBox}>
           <View style={styles.detailsBoxInside}>
@@ -42,7 +42,7 @@ const RequestDetails = props => {
             <View style={styles.printButton}>
               <Button
                 title={'Imprimer la requête'}
-                onPress={() => props.updateVisible(props.selectedRequest)}></Button>
+                onPress={() => props.onChangeState(0)}></Button>
                 {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
             </View>
           </View>
