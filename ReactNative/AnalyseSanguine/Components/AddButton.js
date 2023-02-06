@@ -8,9 +8,9 @@ import {
     Text,
 } from 'react-native';
  
-const App = () => {
+const App = props => {
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={props.onClick}>
             <Icon name="add" color="white" size={36} style={styles.customIcon} />
         </TouchableOpacity>
     );
