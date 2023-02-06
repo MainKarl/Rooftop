@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -12,23 +12,24 @@ import {
 } from 'react-native';
 import FolderList from './Components/FolderList';
 import FolderDetails from './Components/FolderDetails';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import RequestDetails from './Components/RequestDetails';
 
 const App = () => {
   const [count, setCount] = useState(0);
   const [selectedFolder, setselectedFolder] = useState('');
-  const [selectedRequest, setselectedRequest] = useState({key: '',
-  FirstNameTechnician: '',
-  LastNameTechnician: '',
-  AccessCode: '',
-  SamplingDate: '',
-  FirstNameDoctor: '',
-  LastNameDoctor: '',});
+  const [selectedRequest, setselectedRequest] = useState({
+    key: '',
+    FirstNameTechnician: '',
+    LastNameTechnician: '',
+    AccessCode: '',
+    SamplingDate: '',
+    FirstNameDoctor: '',
+    LastNameDoctor: '',
+  });
   const [elementVisible, setElementVisible] = useState(true);
 
-  function updateVisible(request)
-  {
+  function updateVisible(request) {
     setElementVisible(!elementVisible)
     setselectedRequest(request)
   }

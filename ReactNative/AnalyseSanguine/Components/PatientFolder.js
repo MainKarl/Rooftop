@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ const PatientFolder = props => {
       onPress={() => props.changeActiveEvent(props.folderkey)}
       style={props.isActive ? styles.currentItem : styles.item}>
       <Text>
-        {props.folderkey} - {props.LastName}, {props.FirstName}
+        {props.folderkey} - {props.nom}, {props.prenom}
       </Text>
       <View
         // eslint-disable-next-line react-native/no-inline-styles
