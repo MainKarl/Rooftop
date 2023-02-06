@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,35 +12,47 @@ import {
 } from 'react-native';
 import PatientFolder from './PatientFolder';
 import CustomButton from './Button';
+import AnalyseConfig from '../analyseConfig.json';
 
 const FolderList = props => {
-  const initialData = [
-    {key: '8761', FirstName: 'Victor', LastName: 'Turgeon', active: false},
-    {key: '8321', FirstName: 'Louis', LastName: 'Garceau', active: false},
-    {key: '1761', FirstName: 'Maxime', LastName: 'Aubin', active: false},
-    {key: '6561', FirstName: 'Karl', LastName: 'Mainville', active: false},
+  const [initialData, setInitialData] = useState([
+    { key: '8761', FirstName: 'Victor', LastName: 'Turgeon', active: false },
+    { key: '8321', FirstName: 'Louis', LastName: 'Garceau', active: false },
+    { key: '1761', FirstName: 'Maxime', LastName: 'Aubin', active: false },
+    { key: '6561', FirstName: 'Karl', LastName: 'Mainville', active: false },
     {
       key: '8431',
       FirstName: 'Jean-Philippe',
       LastName: 'Belval',
       active: false,
     },
-    {key: '5461', FirstName: 'Laurent', LastName: 'Brochu', active: false},
-    {key: '7651', FirstName: 'Maxime', LastName: 'Lefebvre', active: false},
-  ];
-
-  const [filteredData, setfilteredData] = useState(initialData);
+    { key: '5461', FirstName: 'Laurent', LastName: 'Brochu', active: false },
+    { key: '7651', FirstName: 'Maxime', LastName: 'Lefebvre', active: false },
+  ]);
+  const [filteredData, setfilteredData] = useState();
   const [currentActive, setcurrentActive] = useState(null);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("Entered useEffect...");
+    const url = AnalyseConfig.API_URL + 'dossier';
+    fetch(url)
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
+            console.log(data);
+            setInitialData(data);
+            setfilteredData(data);
+          });
+        }
+        else {
+          console.log(response);
+        }
 
-    fetch("http://127.0.0.2:7000/api/dossier")
-    .then((response)=>{
-      console.log(response);
-    });
-  });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
 
   const changeActiveFolder = activeFolderId => {
@@ -92,7 +104,7 @@ const FolderList = props => {
       <FlatList
         data={filteredData}
         extraData={filteredData}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <PatientFolder
             folderkey={item.key}
             FirstName={item.FirstName}
