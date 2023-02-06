@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
+import Icon from "react-native-vector-icons/Ionicons";
 
 const RequestDetails = props => {
   return (
@@ -32,20 +33,18 @@ const RequestDetails = props => {
             </Text>
             <Text style={styles.infoText}>
               Nom du médecin:{' '}
-              <Text style={styles.actualInfo}>{props.selectedRequest.LastNameDoctor}</Text>
-            </Text>
-            <Text style={styles.infoText}>
-              Prénom du médecin:{' '}
-              <Text style={styles.actualInfo}>{props.selectedRequest.FirstNameDoctor}</Text>
+              <Text style={styles.actualInfo}>{props.selectedRequest.LastNameDoctor + ", " + props.selectedRequest.FirstNameDoctor}</Text>
             </Text>
             <Text style={styles.infoText}>
               Nom du technicien:{' '}
-              <Text style={styles.actualInfo}>{props.selectedRequest.LastNameTechnician}</Text>
+              <Text style={styles.actualInfo}>{props.selectedRequest.LastNameTechnician + ", " + props.selectedRequest.FirstNameTechnician}</Text>
             </Text>
-            <Text style={styles.infoText}>
-              Prénom du technicien:{' '}
-              <Text style={styles.actualInfo}>{props.selectedRequest.FirstNameTechnician}</Text>
-            </Text>
+            <View style={styles.printButton}>
+              <Button
+                title={'Imprimer la requête'}
+                onPress={() => props.updateVisible(props.selectedRequest)}></Button>
+                {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
+            </View>
           </View>
         </View>
       </View>
@@ -61,11 +60,13 @@ const styles = StyleSheet.create({
   },
   detailsPadding: {
     paddingLeft: 80,
-    paddingTop: 80,
+    paddingTop: 60,
   },
   detailsBox: {
     borderColor: '#808080',
-    borderWidth: 1,
+    borderWidth: 2,
+    borderRadius: 5,
+    borderStyle: 'solid',
     marginTop: 20,
     width: 1200,
     height: 600,
@@ -83,6 +84,14 @@ const styles = StyleSheet.create({
   actualInfo: {
     fontWeight: 'bold',
   },
+  printButton: {
+    width: 250
+  },
+  customIcon: {
+    marginLeft: 1,
+    marginRight: 0,
+    marginTop: 0
+}
 });
 
 export default RequestDetails;

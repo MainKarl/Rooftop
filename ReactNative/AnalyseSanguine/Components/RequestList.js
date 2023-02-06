@@ -47,9 +47,10 @@ const RequestList = props => {
 
   return (
     <View>
+      <Text style={styles.detailsBoxInside}>Requêtes du patient:</Text>
         {initialData.map(request => (
             <Button
-            title={request.key + ', ' + request.SamplingDate}
+            title={"Numéro de requête: " + request.key + ', Date de prélèvement: ' + request.SamplingDate + ", Médecin: " + request.LastNameDoctor + ", " + request.FirstNameDoctor}
             onPress={() => props.updateVisible(request)}></Button>
         ))}
     </View>
@@ -57,7 +58,11 @@ const RequestList = props => {
 };
 
 const styles = StyleSheet.create({
-  
+  detailsBoxInside: {
+    paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15
+  },
 });
 
 export default RequestList;
