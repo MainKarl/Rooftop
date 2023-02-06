@@ -20,8 +20,7 @@ const FolderDetails = props => {
 
     if (props.selectedFolder != "") {
 
-      const url = AnalyseConfig.API_URL + 'dossier/' + props.selectedFolder;
-      console.log(url);
+      const url = AnalyseConfig.API_URL + 'dossier/getdetaille?id=' + props.selectedFolder;
       fetch(url)
         .then((response) => {
           if (response.ok) {
@@ -91,7 +90,7 @@ const FolderDetails = props => {
             </View>
           </View>
           <View style={styles.requetesEtResultat}>
-            <RequestList selectedFolder={patientInfo.idDossier} onChangeState={props.onChangeState} />
+            <RequestList requests={patientInfo.lstRequetes} onChangeState={props.onChangeState} />
           </View>
         </View>
       </View>

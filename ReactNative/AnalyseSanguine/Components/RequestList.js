@@ -12,19 +12,13 @@ import {
 } from 'react-native';
 import PatientFolder from './PatientFolder';
 import CustomButton from './AddButton';
-import AnalyseConfig from '../analyseConfig.json';
 
 const RequestList = props => {
-  const [initialData, setInitialData] = useState(null);
-
-  useEffect(() => {
-    const url = AnalyseConfig.API_URL + "";
-  }, [props.selectedFolder])
 
   return (
     <View>
       <Text style={styles.detailsBoxInside}>Requêtes du patient:</Text>
-      {initialData && initialData.length > 0 && initialData.map(request => (
+      {props.requests && props.requests.length > 0 && props.requests.map(request => (
         <Button
           title={"Numéro de requête: " + request.key + ', Date de prélèvement: ' + request.SamplingDate + ", Médecin: " + request.LastNameDoctor + ", " + request.FirstNameDoctor}
           onPress={() => props.onChangeState(2)}></Button>
