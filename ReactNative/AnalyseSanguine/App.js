@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Component, useState} from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import FolderList from './Components/FolderList';
 import FolderDetails from './Components/FolderDetails';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import RequestDetails from './Components/RequestDetails';
+import ModalAddRequete from './Components/AddRequete';
 
 const App = () => {
   const [count, setCount] = useState(0);

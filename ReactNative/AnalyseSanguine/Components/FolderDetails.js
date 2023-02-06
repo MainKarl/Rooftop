@@ -9,8 +9,10 @@ import {
   Touchable,
   TouchableHighlight,
   TouchableOpacity,
+  PlatformColor,
 } from 'react-native';
 import RequestList from './RequestList';
+import ModalAddRequete from './AddRequete';
 
 const FolderDetails = props => {
   const [patientInfo, setpatientInfo] = useState({
@@ -22,70 +24,97 @@ const FolderDetails = props => {
     NumAssMaladie: 'TURV 0000 0000',
     Note: '',
   });
+  const [DetailVisible, setDetailVisible] = useState(true);
+  const [formAddRequeteVisible, setformAddRequeteVisible] = useState(false);
 
-  if (patientInfo.key === props.selectedFolder) {
-    return (
-      <View style={{flex: 0.8, margin: 5}}>
-        <View style={styles.detailsDisplay}>
-          <View style={styles.patientInfo}>
-            <View style={styles.flexHalf}>
-              <Text style={styles.infoText}>
-                Numéro de dossier:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.key}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Nom:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.LastName}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Prénom:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.FirstName}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Sexe:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.Gender}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Date de naissance:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.BirthDate}</Text>
-              </Text>
-              <Text>
-                Numéro d'assurance maladie:{' '}
-                <Text style={styles.actualInfo}>
-                  {patientInfo.NumAssMaladie}
+  function updateformAddRequeteVisible()
+  {
+    setformAddRequeteVisible(!formAddRequeteVisible)
+    setDetailVisible(!DetailVisible)
+    console.log(formAddRequeteVisible)
+  }
+
+  if (DetailVisible){
+
+    if (patientInfo.key === props.selectedFolder) {
+      return (
+        <View style={{flex: 0.8, margin: 5}}>
+          <View style={styles.detailsDisplay}>
+            <View style={styles.patientInfo}>
+              <View style={styles.flexHalf}>
+                <Text style={styles.infoText}>
+                  Numéro de dossier:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.key}</Text>
                 </Text>
-              </Text>
-            </View>
-            <View style={styles.flexHalf}>
-              <Text style={styles.infoText}>Notes:</Text>
-              <TextInput
-                style={{height: '70%'}}
-                multiline
-                scrollEnabled></TextInput>
-              <View style={{display: 'flex', flexDirection: 'row'}}>
-                <View style={{flex: 0.7}}>
-                  <Button title="Sauvegarder" disabled></Button>
-                </View>
-                <View style={{flex: 0.3}}>
-                  <Button style={{flex: 0.3}} title="Annuler" disabled></Button>
+                <Text style={styles.infoText}>
+                  Nom:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.LastName}</Text>
+                </Text>
+                <Text style={styles.infoText}>
+                  Prénom:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.FirstName}</Text>
+                </Text>
+                <Text style={styles.infoText}>
+                  Sexe:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.Gender}</Text>
+                </Text>
+                <Text style={styles.infoText}>
+                  Date de naissance:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.BirthDate}</Text>
+                </Text>
+                <Text>
+                  Numéro d'assurance maladie:{' '}
+                  <Text style={styles.actualInfo}>
+                    {patientInfo.NumAssMaladie}
+                  </Text>
+                </Text>
+              </View>
+              <View style={styles.flexHalf}>
+                <Text style={styles.infoText}>Notes:</Text>
+                <TextInput
+                  style={{height: '70%'}}
+                  multiline
+                  scrollEnabled></TextInput>
+                <View style={{display: 'flex', flexDirection: 'row'}}>
+                  <View style={{flex: 0.7}}>
+                    <Button title="Sauvegarder" disabled></Button>
+                  </View>
+                  <View style={{flex: 0.3}}>
+                    <Button style={{flex: 0.3}} title="Annuler" disabled></Button>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
-          <View style={styles.requetesEtResultat}>
-          <RequestList updateVisible={props.updateVisible} />
+            <View style={styles.requetesEtResultat}>
+              <View style={styles.addButton}>
+                <Button
+                style={{}} 
+                  title='+'
+                  onPress={() => updateformAddRequeteVisible()}
+                />
+              </View>
+              <RequestList updateVisible={props.updateVisible} />
+            </View>
           </View>
         </View>
-      </View>
-    );
-  } else {
-    return (
+      );
+    } else {
+      return (
+        <View style={{flex: 0.8, margin: 5}}>
+          <Text style={styles.texteErreur}>
+              L'information du patient n'a pas été trouvée!
+          </Text>
+        </View>
+      );
+    }
+  }
+  else if (formAddRequeteVisible){{
+    return(
       <View style={{flex: 0.8, margin: 5}}>
-        <Text style={styles.texteErreur}>
-          L'information du patient n'a pas été trouvée!
-        </Text>
+        <ModalAddRequete updateformAddRequeteVisible={updateformAddRequeteVisible}/>
       </View>
-    );
+    )
+  }
   }
 };
 
@@ -93,6 +122,10 @@ const styles = StyleSheet.create({
   texteErreur: {
     textAlign: 'center',
     marginTop: 300,
+  },
+  addButton: {
+    backgroundColor: PlatformColor('SystemAccentColor'),
+    marginBottom: 0
   },
   detailsDisplay: {
     display: 'flex',
