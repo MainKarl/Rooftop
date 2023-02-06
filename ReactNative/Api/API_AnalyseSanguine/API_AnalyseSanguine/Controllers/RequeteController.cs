@@ -18,7 +18,7 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Dossier>> GetAllRequete(int idDossier)
+        public ActionResult<IEnumerable<RequeteAnalyse>> GetAllRequete(int idDossier)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<Dossier>> GetRequete(int id)
+        public ActionResult<IEnumerable<RequeteAnalyse>> GetRequete(int id)
         {
             try
             {
