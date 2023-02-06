@@ -11,7 +11,7 @@ import {
   PlatformColor,
 } from 'react-native';
 import PatientFolder from './PatientFolder';
-import CustomButton from './Button';
+import AddButton from './AddButton';
 import AnalyseConfig from '../analyseConfig.json';
 
 const FolderList = props => {
@@ -114,7 +114,7 @@ const FolderList = props => {
             changeActiveEvent={changeActiveFolder}
           />
         )} />
-      <CustomButton style={styles.button} />
+      <AddButton style={styles.button} />
     </View>
   );
 };
