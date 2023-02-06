@@ -21,7 +21,7 @@ const FolderList = props => {
 
 
   useEffect(() => {
-    const url = AnalyseConfig.API_URL + 'dossier';
+    const url = AnalyseConfig.API_URL + 'dossier/getsimple';
     fetch(url)
       .then((response) => {
         if (response.ok) {
@@ -66,7 +66,7 @@ const FolderList = props => {
     const newFilteredFolders = initialData
       .filter(
         v =>
-          v.idDossier.toLowerCase().includes(searchTerm) ||
+          String(v.idDossier).toLowerCase().includes(searchTerm) ||
           v.prenom.toLowerCase().includes(searchTerm) ||
           v.nom.toLowerCase().includes(searchTerm) ||
           (v.prenom + ' ' + v.nom).toLowerCase().includes(searchTerm) ||
