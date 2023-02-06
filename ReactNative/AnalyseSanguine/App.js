@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -19,13 +19,15 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 const App = () => {
   const [count, setCount] = useState(0);
   const [selectedFolder, setselectedFolder] = useState('');
-  const [selectedRequest, setselectedRequest] = useState({key: '',
-  FirstNameTechnician: '',
-  LastNameTechnician: '',
-  AccessCode: '',
-  SamplingDate: '',
-  FirstNameDoctor: '',
-  LastNameDoctor: '',});
+  const [selectedRequest, setselectedRequest] = useState({
+    key: '',
+    FirstNameTechnician: '',
+    LastNameTechnician: '',
+    AccessCode: '',
+    SamplingDate: '',
+    FirstNameDoctor: '',
+    LastNameDoctor: '',
+  });
   const [elementVisible, setElementVisible] = useState(true);
   const [informationState, setInformationState] = useState(0);
 

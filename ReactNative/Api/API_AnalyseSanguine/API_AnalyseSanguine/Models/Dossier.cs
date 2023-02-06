@@ -17,10 +17,10 @@ namespace API_AnalyseSanguine.Models
         public DateTime DateNaissance { get; set; }
         [Required]
         public byte Sexe { get; set; }
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
         //lien
-        public List<RequeteAnalyse> LstRequetes { get; set; }
+        public List<RequeteAnalyse>? LstRequetes { get; set; }
 
     }
 
