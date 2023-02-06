@@ -18,12 +18,12 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Dossier>> GetAllRequete()
+        public ActionResult<IEnumerable<Dossier>> GetAllRequete(int idDossier)
         {
             try
             {
                 //Potentiellement ajouter les includes
-                var list = _context.RequeteAnalyses.ToList();
+                var list = _context.RequeteAnalyses.Where(c => c.Dossier.IdDossier == idDossier).ToList();
                 return Ok(list);
             }
             catch
