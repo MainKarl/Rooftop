@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,47 +12,23 @@ import {
 } from 'react-native';
 import PatientFolder from './PatientFolder';
 import CustomButton from './AddButton';
+import AnalyseConfig from '../analyseConfig.json';
 
 const RequestList = props => {
-  const initialData = [
-    {key: '5346',
-    FirstNameTechnician: 'Raymond',
-    LastNameTechnician: 'Dupré',
-    AccessCode: 'ASFH3ASGH65ASFHHDJ',
-    SamplingDate: '2020-02-02',
-    FirstNameDoctor: 'José',
-    LastNameDoctor: 'Laplante',},
-    {key: '1245',
-    FirstNameTechnician: 'Raymond',
-    LastNameTechnician: 'Dupré',
-    AccessCode: 'ASFH3ASGH65ASFHHDJ',
-    SamplingDate: '2015-02-02',
-    FirstNameDoctor: 'José',
-    LastNameDoctor: 'Laplante',},
-    {key: '3257',
-    FirstNameTechnician: 'Raymond',
-    LastNameTechnician: 'Dupré',
-    AccessCode: 'ASFH3ASGH65ASFHHDJ',
-    SamplingDate: '2004-02-02',
-    FirstNameDoctor: 'José',
-    LastNameDoctor: 'Laplante',},
-    {key: '5676',
-    FirstNameTechnician: 'Raymond',
-    LastNameTechnician: 'Dupré',
-    AccessCode: 'ASFH3ASGH65ASFHHDJ',
-    SamplingDate: '2012-02-02',
-    FirstNameDoctor: 'José',
-    LastNameDoctor: 'Laplante',},
-  ];
+  const [initialData, setInitialData] = useState(null);
+
+  useEffect(() => {
+    const url = AnalyseConfig.API_URL + "";
+  }, [props.selectedFolder])
 
   return (
     <View>
       <Text style={styles.detailsBoxInside}>Requêtes du patient:</Text>
-        {initialData.map(request => (
-            <Button
-            title={"Numéro de requête: " + request.key + ', Date de prélèvement: ' + request.SamplingDate + ", Médecin: " + request.LastNameDoctor + ", " + request.FirstNameDoctor}
-            onPress={() => props.onChangeState(2)}></Button>
-        ))}
+      {initialData && initialData.length > 0 && initialData.map(request => (
+        <Button
+          title={"Numéro de requête: " + request.key + ', Date de prélèvement: ' + request.SamplingDate + ", Médecin: " + request.LastNameDoctor + ", " + request.FirstNameDoctor}
+          onPress={() => props.onChangeState(2)}></Button>
+      ))}
     </View>
   );
 };

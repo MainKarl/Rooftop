@@ -102,6 +102,7 @@ const FolderList = props => {
         style={styles.listStyle}
         renderItem={({ item }) => (
           <PatientFolder
+            key={item.idDossier}
             folderkey={item.idDossier}
             prenom={item.prenom}
             nom={item.nom}

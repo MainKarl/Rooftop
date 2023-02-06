@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API_AnalyseSanguine.Controllers
 {
     [ApiController]
-    [Route("api/Requete")]
+    [Route("api/requete")]
     [Produces("application/json")]
     public class RequeteController : ControllerBase
     {

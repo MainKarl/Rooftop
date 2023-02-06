@@ -91,7 +91,7 @@ const FolderDetails = props => {
             </View>
           </View>
           <View style={styles.requetesEtResultat}>
-          <RequestList onChangeState={props.onChangeState} />
+            <RequestList selectedFolder={patientInfo.idDossier} onChangeState={props.onChangeState} />
           </View>
         </View>
       </View>
