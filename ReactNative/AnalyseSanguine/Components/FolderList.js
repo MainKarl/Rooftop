@@ -15,32 +15,20 @@ import AddButton from './AddButton';
 import AnalyseConfig from '../analyseConfig.json';
 
 const FolderList = props => {
-  const [initialData, setInitialData] = useState([
-    { key: '8761', FirstName: 'Victor', LastName: 'Turgeon', active: false },
-    { key: '8321', FirstName: 'Louis', LastName: 'Garceau', active: false },
-    { key: '1761', FirstName: 'Maxime', LastName: 'Aubin', active: false },
-    { key: '6561', FirstName: 'Karl', LastName: 'Mainville', active: false },
-    {
-      key: '8431',
-      FirstName: 'Jean-Philippe',
-      LastName: 'Belval',
-      active: false,
-    },
-    { key: '5461', FirstName: 'Laurent', LastName: 'Brochu', active: false },
-    { key: '7651', FirstName: 'Maxime', LastName: 'Lefebvre', active: false },
-  ]);
+  const [initialData, setInitialData] = useState([]);
   const [filteredData, setfilteredData] = useState();
   const [currentActive, setcurrentActive] = useState(null);
 
 
   useEffect(() => {
-    console.log("Entered useEffect...");
     const url = AnalyseConfig.API_URL + 'dossier';
     fetch(url)
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {
-            console.log(data);
+            data.map((x) => {
+              x.active = false;
+            });
             setInitialData(data);
             setfilteredData(data);
           });
@@ -57,7 +45,7 @@ const FolderList = props => {
 
   const changeActiveFolder = activeFolderId => {
     const part_filteredFolder = filteredData.map((v, i) => {
-      if (v.key === activeFolderId) {
+      if (v.idDossier === activeFolderId) {
         v.active = true;
         return v;
       } else {
@@ -68,6 +56,9 @@ const FolderList = props => {
     props.onSelectedFolder(activeFolderId);
     setcurrentActive(activeFolderId);
     setfilteredData(part_filteredFolder);
+
+    // Permet de changer entre detail de folder et création de folder
+    props.onChangeState(0);
   };
 
   const filterFolders = searchTerm => {
@@ -75,11 +66,11 @@ const FolderList = props => {
     const newFilteredFolders = initialData
       .filter(
         v =>
-          v.key.toLowerCase().includes(searchTerm) ||
-          v.FirstName.toLowerCase().includes(searchTerm) ||
-          v.LastName.toLowerCase().includes(searchTerm) ||
-          (v.FirstName + ' ' + v.LastName).toLowerCase().includes(searchTerm) ||
-          (v.LastName + ' ' + v.FirstName).toLowerCase().includes(searchTerm),
+          v.idDossier.toLowerCase().includes(searchTerm) ||
+          v.prenom.toLowerCase().includes(searchTerm) ||
+          v.nom.toLowerCase().includes(searchTerm) ||
+          (v.prenom + ' ' + v.nom).toLowerCase().includes(searchTerm) ||
+          (v.nom + ' ' + v.prenom).toLowerCase().includes(searchTerm),
       )
       .map(v => {
         if (v.key == currentActive) {
@@ -94,6 +85,10 @@ const FolderList = props => {
     setfilteredData(newFilteredFolders);
   };
 
+  const callCreateForm = () => {
+    props.onChangeState(1);
+  }
+
   return (
     <View style={styles.searchFolderList}>
       <TextInput
@@ -107,14 +102,14 @@ const FolderList = props => {
         style={styles.listStyle}
         renderItem={({ item }) => (
           <PatientFolder
-            folderkey={item.key}
-            FirstName={item.FirstName}
-            LastName={item.LastName}
+            folderkey={item.idDossier}
+            prenom={item.prenom}
+            nom={item.nom}
             isActive={item.active}
             changeActiveEvent={changeActiveFolder}
           />
         )} />
-      <AddButton style={styles.button} />
+      <AddButton style={styles.button} onClick={callCreateForm} />
     </View>
   );
 };

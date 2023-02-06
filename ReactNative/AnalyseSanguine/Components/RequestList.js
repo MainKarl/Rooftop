@@ -51,7 +51,7 @@ const RequestList = props => {
         {initialData.map(request => (
             <Button
             title={"Numéro de requête: " + request.key + ', Date de prélèvement: ' + request.SamplingDate + ", Médecin: " + request.LastNameDoctor + ", " + request.FirstNameDoctor}
-            onPress={() => props.updateVisible(request)}></Button>
+            onPress={() => props.onChangeState(2)}></Button>
         ))}
     </View>
   );

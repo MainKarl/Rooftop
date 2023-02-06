@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,76 +11,94 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import RequestList from './RequestList';
+import AnalyseConfig from '../analyseConfig.json';
 
 const FolderDetails = props => {
-  const [patientInfo, setpatientInfo] = useState({
-    key: '8761',
-    FirstName: 'Victor',
-    LastName: 'Turgeon',
-    Gender: 'M',
-    BirthDate: '2003-02-02',
-    NumAssMaladie: 'TURV 0000 0000',
-    Note: '',
-  });
+  const [patientInfo, setpatientInfo] = useState(null);
 
-  if (patientInfo.key === props.selectedFolder) {
+  useEffect(() => {
+
+    if (props.selectedFolder != "") {
+
+      const url = AnalyseConfig.API_URL + 'dossier/' + props.selectedFolder;
+      console.log(url);
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((data) => {
+              setpatientInfo(data);
+            });
+          }
+          else {
+            console.log(response);
+          }
+
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [props.selectedFolder])
+
+  if (patientInfo && patientInfo.idDossier === props.selectedFolder) {
     return (
-      <View style={{flex: 0.8, margin: 5}}>
+      <View style={{ flex: 0.8, margin: 5 }}>
         <View style={styles.detailsDisplay}>
           <View style={styles.patientInfo}>
             <View style={styles.flexHalf}>
               <Text style={styles.infoText}>
                 Numéro de dossier:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.key}</Text>
+                <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
               </Text>
               <Text style={styles.infoText}>
                 Nom:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.LastName}</Text>
+                <Text style={styles.actualInfo}>{patientInfo.nom}</Text>
               </Text>
               <Text style={styles.infoText}>
                 Prénom:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.FirstName}</Text>
+                <Text style={styles.actualInfo}>{patientInfo.prenom}</Text>
               </Text>
               <Text style={styles.infoText}>
                 Sexe:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.Gender}</Text>
+                <Text style={styles.actualInfo}>{patientInfo.sexe}</Text>
               </Text>
               <Text style={styles.infoText}>
                 Date de naissance:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.BirthDate}</Text>
+                <Text style={styles.actualInfo}>{patientInfo.dateNaissance}</Text>
               </Text>
-              <Text>
+              {/* <Text>
                 Numéro d'assurance maladie:{' '}
                 <Text style={styles.actualInfo}>
                   {patientInfo.NumAssMaladie}
                 </Text>
-              </Text>
+              </Text>*/}
             </View>
             <View style={styles.flexHalf}>
               <Text style={styles.infoText}>Notes:</Text>
               <TextInput
-                style={{height: '70%'}}
+                style={{ height: '70%' }}
                 multiline
-                scrollEnabled></TextInput>
-              <View style={{display: 'flex', flexDirection: 'row'}}>
-                <View style={{flex: 0.7}}>
+                scrollEnabled
+                value={patientInfo.note}
+              ></TextInput>
+              <View style={{ display: 'flex', flexDirection: 'row' }}>
+                <View style={{ flex: 0.7 }}>
                   <Button title="Sauvegarder" disabled></Button>
                 </View>
-                <View style={{flex: 0.3}}>
-                  <Button style={{flex: 0.3}} title="Annuler" disabled></Button>
+                <View style={{ flex: 0.3 }}>
+                  <Button style={{ flex: 0.3 }} title="Annuler" disabled></Button>
                 </View>
               </View>
             </View>
           </View>
           <View style={styles.requetesEtResultat}>
-          <RequestList updateVisible={props.updateVisible} />
+          <RequestList onChangeState={props.onChangeState} />
           </View>
         </View>
       </View>
     );
   } else {
     return (
-      <View style={{flex: 0.8, margin: 5}}>
+      <View style={{ flex: 0.8, margin: 5 }}>
         <Text style={styles.texteErreur}>
           L'information du patient n'a pas été trouvée!
         </Text>

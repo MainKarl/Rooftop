@@ -103,6 +103,27 @@ namespace API_AnalyseSanguine.Context.Data
                     Nom = "Daneau"
                 });
             #endregion
+
+            #region Dossier
+            builder.Entity<Dossier>().HasData(
+                new Dossier
+                {
+                    IdDossier = 1,
+                    DateNaissance = new DateTime(2001, 02, 13),
+                    Nom = "Turgeon",
+                    Prenom = "Victor",
+                    Sexe = 0
+                },
+                new Dossier
+                {
+                    IdDossier = 2,
+                    DateNaissance = new DateTime(2002, 11, 14),
+                    Nom = "Belval",
+                    Prenom = "Jean-Philippe",
+                    Sexe = 0
+                }
+                ) ;
+            #endregion
         }
     }
 }
