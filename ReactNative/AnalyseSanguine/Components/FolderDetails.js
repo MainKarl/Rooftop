@@ -17,26 +17,29 @@ const FolderDetails = props => {
   const [patientInfo, setpatientInfo] = useState(null);
 
   useEffect(() => {
-    const url = AnalyseConfig.API_URL + 'dossier/' + props.selectedFolder;
-    console.log(url);
-    fetch(url)
-      .then((response) => {
-        if (response.ok) {
-          response.json().then((data) => {
-            console.log(data);
-          });
-        }
-        else {
-          console.log(response);
-        }
 
-      }).catch((error) => {
-        console.log(error);
-      });
+    if (props.selectedFolder != "") {
 
-  }, [])
+      const url = AnalyseConfig.API_URL + 'dossier/' + props.selectedFolder;
+      console.log(url);
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((data) => {
+              setpatientInfo(data);
+            });
+          }
+          else {
+            console.log(response);
+          }
 
-  if (patientInfo && patientInfo.key === props.selectedFolder) {
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [props.selectedFolder])
+
+  if (patientInfo && patientInfo.idDossier === props.selectedFolder) {
     return (
       <View style={{ flex: 0.8, margin: 5 }}>
         <View style={styles.detailsDisplay}>
@@ -44,7 +47,7 @@ const FolderDetails = props => {
             <View style={styles.flexHalf}>
               <Text style={styles.infoText}>
                 Numéro de dossier:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.key}</Text>
+                <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
               </Text>
               <Text style={styles.infoText}>
                 Nom:{' '}
@@ -56,25 +59,27 @@ const FolderDetails = props => {
               </Text>
               <Text style={styles.infoText}>
                 Sexe:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.Gender}</Text>
+                <Text style={styles.actualInfo}>{patientInfo.sexe}</Text>
               </Text>
               <Text style={styles.infoText}>
                 Date de naissance:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.BirthDate}</Text>
+                <Text style={styles.actualInfo}>{patientInfo.dateNaissance}</Text>
               </Text>
-              <Text>
+              {/* <Text>
                 Numéro d'assurance maladie:{' '}
                 <Text style={styles.actualInfo}>
                   {patientInfo.NumAssMaladie}
                 </Text>
-              </Text>
+              </Text>*/}
             </View>
             <View style={styles.flexHalf}>
               <Text style={styles.infoText}>Notes:</Text>
               <TextInput
                 style={{ height: '70%' }}
                 multiline
-                scrollEnabled></TextInput>
+                scrollEnabled
+                value={patientInfo.note}
+              ></TextInput>
               <View style={{ display: 'flex', flexDirection: 'row' }}>
                 <View style={{ flex: 0.7 }}>
                   <Button title="Sauvegarder" disabled></Button>
