@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -31,6 +31,17 @@ const FolderList = props => {
 
   const [filteredData, setfilteredData] = useState(initialData);
   const [currentActive, setcurrentActive] = useState(null);
+
+
+  useEffect(()=>{
+    console.log("Entered useEffect...");
+
+    fetch("http://127.0.0.2:7000/api/dossier")
+    .then((response)=>{
+      console.log(response);
+    });
+  });
+
 
   const changeActiveFolder = activeFolderId => {
     const part_filteredFolder = filteredData.map((v, i) => {
