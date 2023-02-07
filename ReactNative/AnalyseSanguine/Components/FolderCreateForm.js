@@ -45,12 +45,7 @@ const FolderCreateForm = props => {
             {
                 text: 'Confirmer',
                 onPress: () => {
-                    let verification = true;
                     
-
-                    if (verification) {
-
-                    }
                 }
             }
         ]);
@@ -86,6 +81,8 @@ const FolderCreateForm = props => {
                  onChange={ (event, value) => { setDate(value); }} />
             </View>
             <Button title="Créer" onPress={onSubmit}></Button>
+            <Text style={ styles.button}></Text>
+            <Button title="Annuler" onPress={() => props.onChangeState(0) }></Button>
         </View>
     );
 }
@@ -122,7 +119,10 @@ const styles = StyleSheet.create({
         width: '85%',
     },
     radioButton: {
-        marginBottom: '1%'
+        marginBottom: '2%'
+    },
+    button: {
+        marginBottom: '30px'
     }
 });
 
