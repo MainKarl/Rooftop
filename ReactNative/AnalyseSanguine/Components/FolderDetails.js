@@ -105,7 +105,7 @@ const FolderDetails = props => {
             <View style={styles.addButton}>
               <Button
                 style={{}} 
-                title='+'
+                title='Créer une requête'
                 onPress={() => updateformAddRequeteVisible()}
               />
             </View>
