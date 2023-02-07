@@ -21,7 +21,10 @@ const RequestList = props => {
       {props.requests && props.requests.length > 0 && props.requests.map(request => (
         <Button
           title={"Numéro de requête: " + request.codeAcces + ', Date de prélèvement: ' + request.dateEchantillon + ", Médecin: " + request.nomMedecin}
-          onPress={() => props.onChangeState(2)}></Button>
+          onPress={() => {
+            props.onSelectedRequest(request.idRequete);
+            props.onChangeState(2);
+          }}></Button>
       ))}
     </View>
   );

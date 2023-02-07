@@ -20,7 +20,7 @@ const RequestDetails = props => {
   useEffect(() => {
 
     if (props.requestId != "") {
-      const url = AnalyseConfig.API_URL + 'requete/' + props.requestId;
+      const url = AnalyseConfig.API_URL + 'requete/' + props.selectedRequest;
       fetch(url)
         .then((response) => {
           if (response.ok) {
@@ -46,36 +46,37 @@ const RequestDetails = props => {
             title={'Retourner à la liste de requêtes'}
             onPress={() => props.onChangeState(0)}></Button>
         </View>
-        <View style={styles.detailsBox}>
-          <View style={styles.detailsBoxInside}>
-            <Text style={styles.infoText}>
-              Code d'accès:{' '}
-              <Text style={styles.actualInfo}>{request.key}</Text>
-            </Text>
-            <Text style={styles.infoText}>
-              Date de prélèvement:{' '}
-              <Text style={styles.actualInfo}>{request.SamplingDate}</Text>
-            </Text>
-            <Text style={styles.infoText}>
-              Nom du médecin:{' '}
-              <Text style={styles.actualInfo}>{request.LastNameDoctor + ", " + request.FirstNameDoctor}</Text>
-            </Text>
-            <Text style={styles.infoText}>
-              Nom du technicien:{' '}
-              <Text style={styles.actualInfo}>{request.LastNameTechnician + ", " + request.FirstNameTechnician}</Text>
-            </Text>
-            <View style={styles.printButton}>
-              <Button
-                title={'Imprimer la requête'}
-                onPress={() => props.onChangeState(0)}></Button>
-              {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
+        {request && (
+          <View style={styles.detailsBox}>
+            <View style={styles.detailsBoxInside}>
+              <Text style={styles.infoText}>
+                Code d'accès:{' '}
+                <Text style={styles.actualInfo}>{request.codeAcces}</Text>
+              </Text>
+              <Text style={styles.infoText}>
+                Date de prélèvement:{' '}
+                <Text style={styles.actualInfo}>{request.dateEchantillon}</Text>
+              </Text>
+              <Text style={styles.infoText}>
+                Nom du médecin:{' '}
+                <Text style={styles.actualInfo}>{ }</Text>
+              </Text>
+              <Text style={styles.infoText}>
+                Nom du technicien:{' '}
+                <Text style={styles.actualInfo}>{request.nomTechnicien}</Text>
+              </Text>
+              <View style={styles.printButton}>
+                <Button
+                  title={'Imprimer la requête'}
+                  onPress={() => props.onChangeState(0)}></Button>
+                {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
+              </View>
             </View>
           </View>
-        </View>
+        )}
       </View>
     </View>
   );
-
 };
 
 const styles = StyleSheet.create({

@@ -30,7 +30,6 @@ const FolderDetails = props => {
         .then((response) => {
           if (response.ok) {
             response.json().then((data) => {
-              console.log(data);
               setpatientInfo(data);
             });
           }
@@ -109,7 +108,7 @@ const FolderDetails = props => {
                   onPress={() => updateformAddRequeteVisible()}
                 />
               </View>
-              <RequestList requests={patientInfo.lstRequetes} onChangeState={props.onChangeState} />
+              <RequestList requests={patientInfo.lstRequetes} onSelectedRequest={props.onSelectedRequest} onChangeState={props.onChangeState} />
             </View>
           </View>
         </View>
