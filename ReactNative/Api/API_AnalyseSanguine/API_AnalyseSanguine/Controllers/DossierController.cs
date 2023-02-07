@@ -52,7 +52,7 @@ namespace API_AnalyseSanguine.Controllers
                     foreach (var requete in lstRequetes)
                     {
                         Medecin medecin = _context.Medecins.Where(a => a.IdMedecin == requete.MedecinIdMedecin).FirstOrDefault();
-                        lstRequetesDto.Add(new RequeteAnalyseDto(requete.IdRequete, requete.CodeAcces, requete.DateEchantillon, medecin.Prenom + ", " + medecin.Prenom));
+                        lstRequetesDto.Add(new RequeteAnalyseDto(requete.IdRequete, requete.CodeAcces, requete.DateEchantillon, medecin.Nom + ", " + medecin.Prenom));
                     }
                 }
 
