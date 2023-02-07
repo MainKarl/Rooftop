@@ -9,17 +9,18 @@ import {
 } from 'react-native';
 import DatetimePicker from '@react-native-community/datetimepicker';
 import CustomRadioButton from './CustomRadioButton';
+import AnalyseConfig from '../analyseConfig.json';
 
 const FolderCreateForm = props => {
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [sexe, setSexe] = useState(0)
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [sexe, setSexe] = useState(0);
     const [isLiked, setIsLiked] = useState([
         { value: 0, label: 'Homme', selected: false },
         { value: 1, label: 'Femme', selected: false },
         { value: 2, label: 'Autres', selected: false }
-    ])
-    
+    ]);
+
     const onFirstNameChange = (newFirstName) => {
         setFirstName(newFirstName);
     }
@@ -30,9 +31,9 @@ const FolderCreateForm = props => {
 
     const onSexeChange = (newSexe) => {
         let updatedState = isLiked.map((isLikedItem) =>
-            isLikedItem.value === newSexe 
-            ? { ...isLikedItem, selected: true }
-            : { ...isLikedItem, selected: false }
+            isLikedItem.value === newSexe
+                ? { ...isLikedItem, selected: true }
+                : { ...isLikedItem, selected: false }
         );
         setIsLiked(updatedState);
         setSexe(newSexe);
@@ -43,16 +44,36 @@ const FolderCreateForm = props => {
             {
                 text: 'Annuler',
                 onPress: () => {
-                    
+
                 }
             },
             {
                 text: 'Confirmer',
                 onPress: () => {
-                    
+                    sendFormToAPI();
                 }
             }
         ]);
+    }
+
+    const sendFormToAPI = () => {
+        const url = AnalyseConfig.API_URL + "dossier/create";
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                accept: 'application.json',
+                'Content-Type': 'application/json'
+            },
+            body: body,
+            Cache: 'default'
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
+
+
     }
 
     return (
@@ -60,26 +81,26 @@ const FolderCreateForm = props => {
             <Text style={styles.title}>Création d'un dossier de patient</Text>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Prénom du patient:</Text>
-                <TextInput style={styles.formInput} onChangeText={ newName => onFirstNameChange(newName) } />
+                <TextInput style={styles.formInput} onChangeText={newName => onFirstNameChange(newName)} />
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Nom du patient:</Text>
-                <TextInput style={styles.formInput} onChangeText={ newName => onLastNameChange(newName) } />
+                <TextInput style={styles.formInput} onChangeText={newName => onLastNameChange(newName)} />
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Sexe du patient:</Text>
                 <View style={styles.formInput}>
                     {isLiked.map((item) => (
                         <CustomRadioButton
-                            onSelect={ () => onSexeChange(item.value) }
+                            onSelect={() => onSexeChange(item.value)}
                             key={item.value}
                             item={item} />
                     ))}
-                </View> 
+                </View>
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Date de naissance du patient:</Text>
-                <DatetimePicker mode="date" value={ new Date() } />
+                <DatetimePicker mode="date" value={new Date()} />
             </View>
             <Button title="Créer" onPress={onSubmit}></Button>
         </View>
