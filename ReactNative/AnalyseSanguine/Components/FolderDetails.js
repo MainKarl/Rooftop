@@ -31,6 +31,7 @@ const FolderDetails = props => {
         .then(response => {
           if (response.ok) {
             response.json().then(data => {
+              console.log(data);
               setpatientInfo(data);
             });
           } else {
@@ -77,6 +78,12 @@ const FolderDetails = props => {
                     {patientInfo.dateNaissance}
                   </Text>
                 </Text>
+                {/* <Text>
+                Numéro d'assurance maladie:{' '}
+                <Text style={styles.actualInfo}>
+                  {patientInfo.NumAssMaladie}
+                </Text>
+              </Text>*/}
               </View>
               <View style={styles.flexHalf}>
                 <Text style={styles.infoText}>Notes:</Text>
@@ -128,6 +135,16 @@ const FolderDetails = props => {
         <View style={{flex: 0.8, margin: 5}}>
           <ModalAddRequete
             patientInfo={patientInfo}
+            updateformAddRequeteVisible={updateformAddRequeteVisible}
+          />
+        </View>
+      );
+    }
+  } else if (formAddRequeteVisible) {
+    {
+      return (
+        <View style={{flex: 0.8, margin: 5}}>
+          <ModalAddRequete
             updateformAddRequeteVisible={updateformAddRequeteVisible}
           />
         </View>
