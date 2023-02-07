@@ -14,6 +14,7 @@ const FolderCreateForm = props => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [sexe, setSexe] = useState(0)
+    const [date, setDate] = useState(new Date())
     const [isLiked, setIsLiked] = useState([
         { value: 0, label: 'Homme', selected: false },
         { value: 1, label: 'Femme', selected: false },
@@ -40,16 +41,16 @@ const FolderCreateForm = props => {
 
     const onSubmit = () => {
         Alert.alert('Création de dossier de patient', 'Voulez-vous vraiment créer le patient \n' + firstName + ' ' + lastName + ' ?', [
-            {
-                text: 'Annuler',
-                onPress: () => {
-                    
-                }
-            },
+            { text: 'Annuler' },
             {
                 text: 'Confirmer',
                 onPress: () => {
+                    let verification = true;
                     
+
+                    if (verification) {
+
+                    }
                 }
             }
         ]);
@@ -79,7 +80,10 @@ const FolderCreateForm = props => {
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Date de naissance du patient:</Text>
-                <DatetimePicker mode="date" value={ new Date() } />
+                <DatetimePicker 
+                 mode="date" 
+                 value={ date }
+                 onChange={ (event, value) => { setDate(value); }} />
             </View>
             <Button title="Créer" onPress={onSubmit}></Button>
         </View>
