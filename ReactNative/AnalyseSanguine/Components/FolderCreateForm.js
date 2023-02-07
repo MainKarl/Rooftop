@@ -7,11 +7,12 @@ import AnalyseConfig from '../analyseConfig.json';
 const FolderCreateForm = props => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [sexe, setSexe] = useState(0);
+  const [sexe, setSexe] = useState(2);
+  const [date, setDate] = useState(new Date());
   const [isLiked, setIsLiked] = useState([
     {value: 0, label: 'Homme', selected: false},
     {value: 1, label: 'Femme', selected: false},
-    {value: 2, label: 'Autres', selected: false},
+    {value: 2, label: 'Autres', selected: true},
   ]);
 
   const onFirstNameChange = newFirstName => {
@@ -47,10 +48,53 @@ const FolderCreateForm = props => {
         },
         {
           text: 'Confirmer',
-          onPress: () => {},
+          onPress: () => {
+            sendFormToAPI();
+          },
         },
       ],
     );
+  };
+
+  const sendFormToAPI = () => {
+    const url = AnalyseConfig.API_URL + 'dossier/create';
+    const formObj = {
+      prenom: firstName,
+      nom: lastName,
+      dateNaissance: date,
+      sexe: sexe,
+    };
+
+    const body = JSON.stringify(formObj);
+
+    fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        accept: 'application.json',
+        'Content-Type': 'application/json',
+      },
+      body: body,
+      Cache: 'default',
+    })
+      .then(response => {
+        if (response.ok) {
+          props.onChangeState(0);
+        } else {
+          Alert.alert(
+            'Erreur de connexion',
+            "Un erreur s'est produite lors de la connexion au serveur.",
+            [
+              {
+                text: 'Ok',
+              },
+            ],
+          );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
@@ -84,9 +128,17 @@ const FolderCreateForm = props => {
       </View>
       <View style={styles.formRow}>
         <Text style={styles.formLabel}>Date de naissance du patient:</Text>
-        <DatetimePicker mode="date" value={new Date()} />
+        <DatetimePicker
+          mode="date"
+          value={date}
+          onChange={(event, value) => {
+            setDate(value);
+          }}
+        />
       </View>
       <Button title="Créer" onPress={onSubmit}></Button>
+      <Text style={styles.button}></Text>
+      <Button title="Annuler" onPress={() => props.onChangeState(0)}></Button>
     </View>
   );
 };
@@ -123,7 +175,10 @@ const styles = StyleSheet.create({
     width: '85%',
   },
   radioButton: {
-    marginBottom: '1%',
+    marginBottom: '2%',
+  },
+  button: {
+    marginBottom: 30,
   },
 });
 
