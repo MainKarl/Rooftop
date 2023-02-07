@@ -20,7 +20,7 @@ const RequestDetails = props => {
   useEffect(() => {
 
     if (props.requestId != "") {
-      const url = AnalyseConfig.API_URL + 'dossier/getdetaille?id=' + props.requestId;
+      const url = AnalyseConfig.API_URL + 'requete/' + props.requestId;
       fetch(url)
         .then((response) => {
           if (response.ok) {
