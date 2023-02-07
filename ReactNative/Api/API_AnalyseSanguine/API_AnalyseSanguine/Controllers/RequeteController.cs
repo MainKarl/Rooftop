@@ -115,23 +115,5 @@ namespace API_AnalyseSanguine.Controllers
                 return Problem();
             }
         }
-
-        [HttpDelete("clear")]
-        public ActionResult DeleteAll()
-        {
-            try
-            {
-                var RequeteAnalyses = _context.RequeteAnalyses.ToList();
-
-                _context.RequeteAnalyses.RemoveRange(RequeteAnalyses);
-                _context.SaveChanges();
-
-                return Ok();
-            }
-            catch
-            {
-                return Problem();
-            }
-        }
     }
 }

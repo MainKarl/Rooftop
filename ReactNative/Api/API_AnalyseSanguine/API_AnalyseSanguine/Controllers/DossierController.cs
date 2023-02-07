@@ -132,23 +132,5 @@ namespace API_AnalyseSanguine.Controllers
                 return Problem();
             }
         }
-
-        [HttpDelete("clear")]
-        public ActionResult DeleteAllDossier()
-        {
-            try
-            {
-                var dossiers = _context.Dossiers.ToList();
-
-                _context.Dossiers.RemoveRange(dossiers);
-                _context.SaveChanges();
-
-                return Ok();
-            }
-            catch
-            {
-                return Problem();
-            }
-        }
     }
 }

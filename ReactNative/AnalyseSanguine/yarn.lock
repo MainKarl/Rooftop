@@ -1519,9 +1519,9 @@
   "version" "1.9.1"
 
 "@react-native-community/checkbox@^0.5.14":
-  version "0.5.14"
-  resolved "https://registry.npmjs.org/@react-native-community/checkbox/-/checkbox-0.5.14.tgz"
-  integrity sha512-UmGf3wBpoCXLmVRKIDZyzOG+QR1fOhm0FOw4KzxHTCXpsBvZgIn5wbJ+MWk4io5RohQdY8GSX2MYFmkPJeJpeA==
+  "integrity" "sha512-UmGf3wBpoCXLmVRKIDZyzOG+QR1fOhm0FOw4KzxHTCXpsBvZgIn5wbJ+MWk4io5RohQdY8GSX2MYFmkPJeJpeA=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/checkbox/-/checkbox-0.5.14.tgz"
+  "version" "0.5.14"
 
 "@react-native-community/cli-clean@^10.0.0":
   "integrity" "sha512-iNsrjzjIRv9yb5y309SWJ8NDHdwYtnCpmxZouQDyOljUdC9MwdZ4ChbtA4rwQyAwgOVfS9F/j56ML3Cslmvrxg=="
@@ -6440,7 +6440,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
-"react-native-windows@0.71.0":
+"react-native-windows@>=0.62", "react-native-windows@0.71.0":
   "integrity" "sha512-k56CKEJpIFA50LAT2JZJxz4EkTx1hkZLcQL/g3aMTAu9hwnKptQVaAMs8okhP1fgMoUbbZ1lQB+deYyHyJAr7Q=="
   "resolved" "https://registry.npmjs.org/react-native-windows/-/react-native-windows-0.71.0.tgz"
   "version" "0.71.0"
@@ -6483,7 +6483,7 @@
     "whatwg-fetch" "^3.0.0"
     "ws" "^6.2.2"
 
-"react-native@*", "react-native@0.71.0":
+"react-native@*", "react-native@>= 0.62", "react-native@0.71.0":
   "integrity" "sha512-b5oCS/cPVqXT5E2K+0CfQMERAoRu6/6g1no9XRAcjQ4b5JG608WgDh5QgXPHaMSVhAvsJ1DuRoU8C/xqTjQITA=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.71.0.tgz"
   "version" "0.71.0"
@@ -6545,7 +6545,7 @@
     "react-shallow-renderer" "^16.15.0"
     "scheduler" "^0.23.0"
 
-"react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@18.2.0":
+"react@*", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
