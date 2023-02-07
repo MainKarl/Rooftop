@@ -104,16 +104,11 @@ const FolderDetails = props => {
               </View>
             </View>
             <View style={styles.requetesEtResultat}>
-              <View style={styles.addButton}>
-                <Button
-                  style={{}}
-                  title="+"
-                  onPress={() => updateformAddRequeteVisible()}
-                />
-              </View>
-              <RequestList
-                requests={patientInfo.lstRequetes}
-                onChangeState={props.onChangeState}
+            <View style={styles.addButton}>
+              <Button
+                style={{}} 
+                title='Créer une requête'
+                onPress={() => updateformAddRequeteVisible()}
               />
             </View>
           </View>

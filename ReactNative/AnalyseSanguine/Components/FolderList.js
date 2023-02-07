@@ -41,7 +41,7 @@ const FolderList = props => {
       }).catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [props.actualState]);
 
 
   const changeActiveFolder = activeFolderId => {
@@ -65,7 +65,7 @@ const FolderList = props => {
             props.onSelectedFolder(activeFolderId);
             setcurrentActive(activeFolderId);
             setfilteredData(part_filteredFolder);
-        
+
             // Permet de changer entre detail de folder et création de folder
             props.onChangeState(0);
           }
@@ -85,7 +85,7 @@ const FolderList = props => {
       props.onSelectedFolder(activeFolderId);
       setcurrentActive(activeFolderId);
       setfilteredData(part_filteredFolder);
-  
+
       // Permet de changer entre detail de folder et création de folder
       props.onChangeState(0);
     }

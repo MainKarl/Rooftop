@@ -2,12 +2,14 @@
 using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace API_AnalyseSanguine.Controllers
 {
     [ApiController]
     [Route("api/dossier")]
     [Produces("application/json")]
+    [EnableCors("_myAllowSpecificOrigins")]
     public class DossierController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -41,16 +43,18 @@ namespace API_AnalyseSanguine.Controllers
             try
             {
                 Dossier item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
+                List<RequeteAnalyse> lstRequetes = _context.RequeteAnalyses.Where(c => c.DossierIdDossier == id).ToList();
 
                 if (item == null)
                     return NotFound();
 
-                List<RequeteAnalyseDto> lstRequetes = new List<RequeteAnalyseDto>();
+                List<RequeteAnalyseDto> lstRequetesDto = new List<RequeteAnalyseDto>();
                 if (item.LstRequetes != null)
                 {
-                    foreach (var requete in item.LstRequetes)
+                    foreach (var requete in lstRequetes)
                     {
-                        lstRequetes.Add(new RequeteAnalyseDto(requete.IdRequete, requete.CodeAcces, requete.DateEchantillon, requete.Medecin.Prenom + ", " + requete.Medecin.Prenom));
+                        Medecin medecin = _context.Medecins.Where(a => a.IdMedecin == requete.MedecinIdMedecin).FirstOrDefault();
+                        lstRequetesDto.Add(new RequeteAnalyseDto(requete.IdRequete, requete.CodeAcces, requete.DateEchantillon, medecin.Prenom + ", " + medecin.Prenom));
                     }
                 }
 
@@ -61,7 +65,7 @@ namespace API_AnalyseSanguine.Controllers
                     item.DateNaissance,
                     item.Sexe,
                     item.Note,
-                    lstRequetes
+                    lstRequetesDto
                 ));
             }
             catch
@@ -71,6 +75,7 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpPost("create")]
+        [EnableCors("_myAllowSpecificOrigins")]
         public ActionResult CreateDossier(Dossier dossier)
         {
             try
