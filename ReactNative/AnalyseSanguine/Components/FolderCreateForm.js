@@ -71,11 +71,11 @@ const FolderCreateForm = props => {
       method: 'POST',
       mode: 'cors',
       headers: {
-        accept: 'application.json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: body,
-      Cache: 'default',
+      cache: 'default',
     })
       .then(response => {
         if (response.ok) {
