@@ -20,7 +20,7 @@ const RequestList = props => {
       <Text style={styles.detailsBoxInside}>Requêtes du patient:</Text>
       {props.requests && props.requests.length > 0 && props.requests.map(request => (
         <Button
-          title={"Numéro de requête: " + request.key + ', Date de prélèvement: ' + request.SamplingDate + ", Médecin: " + request.LastNameDoctor + ", " + request.FirstNameDoctor}
+          title={"Numéro de requête: " + request.codeAcces + ', Date de prélèvement: ' + request.dateEchantillon + ", Médecin: " + request.nomMedecin}
           onPress={() => props.onChangeState(2)}></Button>
       ))}
     </View>

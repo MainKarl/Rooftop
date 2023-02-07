@@ -30,6 +30,7 @@ const FolderDetails = props => {
         .then((response) => {
           if (response.ok) {
             response.json().then((data) => {
+              console.log(data);
               setpatientInfo(data);
             });
           }
@@ -43,74 +44,73 @@ const FolderDetails = props => {
     }
   }, [props.selectedFolder])
 
-  function updateformAddRequeteVisible()
-  {
+  function updateformAddRequeteVisible() {
     setformAddRequeteVisible(!formAddRequeteVisible)
     setDetailVisible(!DetailVisible)
     console.log(formAddRequeteVisible)
   }
 
-  if (DetailVisible){
+  if (DetailVisible) {
 
     if (patientInfo && patientInfo.idDossier === props.selectedFolder) {
       return (
-        <View style={{flex: 0.8, margin: 5}}>
+        <View style={{ flex: 0.8, margin: 5 }}>
           <View style={styles.detailsDisplay}>
             <View style={styles.patientInfo}>
-            <View style={styles.flexHalf}>
-              <Text style={styles.infoText}>
-                Numéro de dossier:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Nom:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.nom}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Prénom:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.prenom}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Sexe:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.sexe}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Date de naissance:{' '}
-                <Text style={styles.actualInfo}>{patientInfo.dateNaissance}</Text>
-              </Text>
-              {/* <Text>
+              <View style={styles.flexHalf}>
+                <Text style={styles.infoText}>
+                  Numéro de dossier:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
+                </Text>
+                <Text style={styles.infoText}>
+                  Nom:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.nom}</Text>
+                </Text>
+                <Text style={styles.infoText}>
+                  Prénom:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.prenom}</Text>
+                </Text>
+                <Text style={styles.infoText}>
+                  Sexe:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.sexe}</Text>
+                </Text>
+                <Text style={styles.infoText}>
+                  Date de naissance:{' '}
+                  <Text style={styles.actualInfo}>{patientInfo.dateNaissance}</Text>
+                </Text>
+                {/* <Text>
                 Numéro d'assurance maladie:{' '}
                 <Text style={styles.actualInfo}>
                   {patientInfo.NumAssMaladie}
                 </Text>
               </Text>*/}
-            </View>
+              </View>
               <View style={styles.flexHalf}>
                 <Text style={styles.infoText}>Notes:</Text>
                 <TextInput
-                  style={{height: '70%'}}
+                  style={{ height: '70%' }}
                   multiline
                   scrollEnabled></TextInput>
-                <View style={{display: 'flex', flexDirection: 'row'}}>
-                  <View style={{flex: 0.7}}>
+                <View style={{ display: 'flex', flexDirection: 'row' }}>
+                  <View style={{ flex: 0.7 }}>
                     <Button title="Sauvegarder" disabled></Button>
                   </View>
-                  <View style={{flex: 0.3}}>
-                    <Button style={{flex: 0.3}} title="Annuler" disabled></Button>
+                  <View style={{ flex: 0.3 }}>
+                    <Button style={{ flex: 0.3 }} title="Annuler" disabled></Button>
                   </View>
                 </View>
               </View>
             </View>
             <View style={styles.requetesEtResultat}>
-            <View style={styles.addButton}>
-              <Button
-                style={{}} 
-                title='Créer une requête'
-                onPress={() => updateformAddRequeteVisible()}
-              />
+              <View style={styles.addButton}>
+                <Button
+                  style={{}}
+                  title='Créer une requête'
+                  onPress={() => updateformAddRequeteVisible()}
+                />
+              </View>
+              <RequestList requests={patientInfo.lstRequetes} onChangeState={props.onChangeState} />
             </View>
-            <RequestList requests={patientInfo.lstRequetes} onChangeState={props.onChangeState} />
-          </View>
           </View>
         </View>
       );
@@ -124,12 +124,14 @@ const FolderDetails = props => {
       )
     }
   }
-  else if (formAddRequeteVisible){{
-    return(
-      <View style={{flex: 0.8, margin: 5}}>
-        <ModalAddRequete updateformAddRequeteVisible={updateformAddRequeteVisible}/>
-      </View>
-  )}
+  else if (formAddRequeteVisible) {
+    {
+      return (
+        <View style={{ flex: 0.8, margin: 5 }}>
+          <ModalAddRequete updateformAddRequeteVisible={updateformAddRequeteVisible} />
+        </View>
+      )
+    }
   };
 }
 
