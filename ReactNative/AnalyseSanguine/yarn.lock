@@ -1518,6 +1518,11 @@
   "resolved" "https://registry.npmjs.org/@opentelemetry/semantic-conventions/-/semantic-conventions-1.9.1.tgz"
   "version" "1.9.1"
 
+"@react-native-community/checkbox@^0.5.14":
+  version "0.5.14"
+  resolved "https://registry.npmjs.org/@react-native-community/checkbox/-/checkbox-0.5.14.tgz"
+  integrity sha512-UmGf3wBpoCXLmVRKIDZyzOG+QR1fOhm0FOw4KzxHTCXpsBvZgIn5wbJ+MWk4io5RohQdY8GSX2MYFmkPJeJpeA==
+
 "@react-native-community/cli-clean@^10.0.0":
   "integrity" "sha512-iNsrjzjIRv9yb5y309SWJ8NDHdwYtnCpmxZouQDyOljUdC9MwdZ4ChbtA4rwQyAwgOVfS9F/j56ML3Cslmvrxg=="
   "resolved" "https://registry.npmjs.org/@react-native-community/cli-clean/-/cli-clean-10.1.1.tgz"
