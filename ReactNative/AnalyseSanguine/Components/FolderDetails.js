@@ -77,12 +77,6 @@ const FolderDetails = props => {
                     {patientInfo.dateNaissance}
                   </Text>
                 </Text>
-                {/* <Text>
-                Numéro d'assurance maladie:{' '}
-                <Text style={styles.actualInfo}>
-                  {patientInfo.NumAssMaladie}
-                </Text>
-              </Text>*/}
               </View>
               <View style={styles.flexHalf}>
                 <Text style={styles.infoText}>Notes:</Text>
@@ -104,11 +98,16 @@ const FolderDetails = props => {
               </View>
             </View>
             <View style={styles.requetesEtResultat}>
-            <View style={styles.addButton}>
-              <Button
-                style={{}} 
-                title='Créer une requête'
-                onPress={() => updateformAddRequeteVisible()}
+              <View style={styles.addButton}>
+                <Button
+                  style={{}}
+                  title="Créer une requête"
+                  onPress={() => updateformAddRequeteVisible()}
+                />
+              </View>
+              <RequestList
+                requests={patientInfo.lstRequetes}
+                onChangeState={props.onChangeState}
               />
             </View>
           </View>
