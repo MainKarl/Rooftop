@@ -36,7 +36,7 @@ namespace API_AnalyseSanguine.Models
                 .WithMessage("Veuillez spécifier un nom");
 
             RuleFor(e => e.Sexe)
-                .NotEmpty()
+                .NotNull()
                 .WithMessage("Veuillez spécifier un sexe");
 
             RuleFor(e => e.DateNaissance)

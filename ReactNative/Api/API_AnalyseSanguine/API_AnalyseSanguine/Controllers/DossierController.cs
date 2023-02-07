@@ -2,12 +2,14 @@
 using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace API_AnalyseSanguine.Controllers
 {
     [ApiController]
     [Route("api/dossier")]
     [Produces("application/json")]
+    [EnableCors("_myAllowSpecificOrigins")]
     public class DossierController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -73,6 +75,7 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpPost("create")]
+        [EnableCors("_myAllowSpecificOrigins")]
         public ActionResult CreateDossier(Dossier dossier)
         {
             try
