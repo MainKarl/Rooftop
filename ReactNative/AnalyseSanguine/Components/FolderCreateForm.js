@@ -12,9 +12,10 @@ import CustomRadioButton from './CustomRadioButton';
 import AnalyseConfig from '../analyseConfig.json';
 
 const FolderCreateForm = props => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [sexe, setSexe] = useState(0);
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [sexe, setSexe] = useState(0)
+    const [date, setDate] = useState(new Date())
     const [isLiked, setIsLiked] = useState([
         { value: 0, label: 'Homme', selected: false },
         { value: 1, label: 'Femme', selected: false },
@@ -100,9 +101,14 @@ const FolderCreateForm = props => {
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Date de naissance du patient:</Text>
-                <DatetimePicker mode="date" value={new Date()} />
+                <DatetimePicker
+                    mode="date"
+                    value={date}
+                    onChange={(event, value) => { setDate(value); }} />
             </View>
             <Button title="Créer" onPress={onSubmit}></Button>
+            <Text style={styles.button}></Text>
+            <Button title="Annuler" onPress={() => props.onChangeState(0)}></Button>
         </View>
     );
 }
@@ -139,7 +145,10 @@ const styles = StyleSheet.create({
         width: '85%',
     },
     radioButton: {
-        marginBottom: '1%'
+        marginBottom: '2%'
+    },
+    button: {
+        marginBottom: '30px'
     }
 });
 

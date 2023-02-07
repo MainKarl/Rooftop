@@ -4,6 +4,7 @@ using API_AnalyseSanguine.Context.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_AnalyseSanguine.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230207174805_requetes")]
+    partial class requetes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,68 +190,6 @@ namespace API_AnalyseSanguine.Migrations
                     b.HasIndex("MedecinIdMedecin");
 
                     b.ToTable("RequeteAnalyses");
-
-                    b.HasData(
-                        new
-                        {
-                            IdRequete = 1,
-                            AnalyseDemande = "",
-                            CodeAcces = new Guid("3b59dc03-483d-4042-8d0a-1069f47acb12"),
-                            DateEchantillon = new DateTime(2022, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DossierIdDossier = 1,
-                            MedecinIdMedecin = 1,
-                            NomTechnicien = "Matheo Boudreau"
-                        },
-                        new
-                        {
-                            IdRequete = 2,
-                            AnalyseDemande = "",
-                            CodeAcces = new Guid("f352bcce-2180-4ba2-83b1-f16554b8cb10"),
-                            DateEchantillon = new DateTime(2017, 8, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DossierIdDossier = 1,
-                            MedecinIdMedecin = 7,
-                            NomTechnicien = "Jerome Frenette"
-                        },
-                        new
-                        {
-                            IdRequete = 3,
-                            AnalyseDemande = "",
-                            CodeAcces = new Guid("94629f47-ac04-440c-9569-4cd0c9e67543"),
-                            DateEchantillon = new DateTime(2001, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DossierIdDossier = 1,
-                            MedecinIdMedecin = 3,
-                            NomTechnicien = "Clara Faubert"
-                        },
-                        new
-                        {
-                            IdRequete = 4,
-                            AnalyseDemande = "",
-                            CodeAcces = new Guid("2c859aaf-a17d-4785-baef-b4251cb9c1e7"),
-                            DateEchantillon = new DateTime(2014, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DossierIdDossier = 2,
-                            MedecinIdMedecin = 10,
-                            NomTechnicien = "Louis Truchon"
-                        },
-                        new
-                        {
-                            IdRequete = 5,
-                            AnalyseDemande = "",
-                            CodeAcces = new Guid("72f47943-b843-410d-a2c8-7650e8a5fa34"),
-                            DateEchantillon = new DateTime(2006, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DossierIdDossier = 2,
-                            MedecinIdMedecin = 4,
-                            NomTechnicien = "Andreanne Pearson"
-                        },
-                        new
-                        {
-                            IdRequete = 6,
-                            AnalyseDemande = "",
-                            CodeAcces = new Guid("bc3368f6-9aa4-4d00-b910-a090472b0fa7"),
-                            DateEchantillon = new DateTime(2009, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DossierIdDossier = 2,
-                            MedecinIdMedecin = 9,
-                            NomTechnicien = "Sabrina Beauvais"
-                        });
                 });
 
             modelBuilder.Entity("API_AnalyseSanguine.Models.ResultatAnalyse", b =>
