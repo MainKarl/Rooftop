@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,33 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
+import AnalyseConfig from "../analyseConfig.json";
 
 const RequestDetails = props => {
+
+  const [request, setRequest] = useState(null);
+
+  useEffect(() => {
+
+    if (props.requestId != "") {
+      const url = AnalyseConfig.API_URL + 'requete/' + props.requestId;
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((data) => {
+              setRequest(data);
+            });
+          }
+          else {
+            console.log(response);
+          }
+
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [props.requestId]);
+
   return (
     <View style={styles.container}>
       <View style={styles.detailsPadding}>
@@ -25,25 +50,25 @@ const RequestDetails = props => {
           <View style={styles.detailsBoxInside}>
             <Text style={styles.infoText}>
               Code d'accès:{' '}
-              <Text style={styles.actualInfo}>{props.selectedRequest.key}</Text>
+              <Text style={styles.actualInfo}>{request.key}</Text>
             </Text>
             <Text style={styles.infoText}>
               Date de prélèvement:{' '}
-              <Text style={styles.actualInfo}>{props.selectedRequest.SamplingDate}</Text>
+              <Text style={styles.actualInfo}>{request.SamplingDate}</Text>
             </Text>
             <Text style={styles.infoText}>
               Nom du médecin:{' '}
-              <Text style={styles.actualInfo}>{props.selectedRequest.LastNameDoctor + ", " + props.selectedRequest.FirstNameDoctor}</Text>
+              <Text style={styles.actualInfo}>{request.LastNameDoctor + ", " + request.FirstNameDoctor}</Text>
             </Text>
             <Text style={styles.infoText}>
               Nom du technicien:{' '}
-              <Text style={styles.actualInfo}>{props.selectedRequest.LastNameTechnician + ", " + props.selectedRequest.FirstNameTechnician}</Text>
+              <Text style={styles.actualInfo}>{request.LastNameTechnician + ", " + request.FirstNameTechnician}</Text>
             </Text>
             <View style={styles.printButton}>
               <Button
                 title={'Imprimer la requête'}
                 onPress={() => props.onChangeState(0)}></Button>
-                {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
+              {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
             </View>
           </View>
         </View>
@@ -91,7 +116,7 @@ const styles = StyleSheet.create({
     marginLeft: 1,
     marginRight: 0,
     marginTop: 0
-}
+  }
 });
 
 export default RequestDetails;

@@ -11,6 +11,8 @@ namespace API_AnalyseSanguine.Models
         public DateTime DateEchantillon { get; set; } = DateTime.Now;
         public string AnalyseDemande { get; set; }
         public string NomTechnicien { get; set; }
+        public int DossierIdDossier { get; set; }
+        public int MedecinIdMedecin { get; set; }
 
 
         //Lien
