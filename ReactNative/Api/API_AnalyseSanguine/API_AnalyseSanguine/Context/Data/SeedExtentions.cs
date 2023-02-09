@@ -41,7 +41,7 @@ namespace API_AnalyseSanguine.Context.Data
             {
                 IdTypeAnalyse = id,
                 Nom = nom,
-                Category = category,
+                CategoryId = category.Id,
             };
         }
 
@@ -253,6 +253,7 @@ namespace API_AnalyseSanguine.Context.Data
                 CreateTypeValeur(13, "Prt S", typesAnalyse.First(x=>x.Nom == "Prt S"), "70-130 %"),
                 CreateTypeValeur(14, "PLG", typesAnalyse.First(x=>x.Nom == "PLG"), "80-120 %"),
                 CreateTypeValeur(15, "AP", typesAnalyse.First(x=>x.Nom == "AP"), "80-120 %"),
+                //Hématologie
 
                 // Hémotologie
 
