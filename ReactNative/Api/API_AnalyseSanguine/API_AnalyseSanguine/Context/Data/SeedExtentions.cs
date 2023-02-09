@@ -41,7 +41,7 @@ namespace API_AnalyseSanguine.Context.Data
             {
                 IdTypeAnalyse = id,
                 Nom = nom,
-                Category = category,
+                CategoryId = category.Id,
             };
         }
 
@@ -184,6 +184,7 @@ namespace API_AnalyseSanguine.Context.Data
             #region TypeValeur
             List<TypeValeur> typeValeurs = new List<TypeValeur>()
             {
+                //Hémostase
                 CreateTypeValeur(1, "TS", typesAnalyse.First(x=>x.Nom == "TS"), "4-8 min"),
                 CreateTypeValeur(2, "To", typesAnalyse.First(x=>x.Nom == "To"), "EPI: 80-150 secs,ADP: 60-100 secs"),
                 CreateTypeValeur(3, "PTT", typesAnalyse.First(x=>x.Nom == "PTT"), "22.0-40.0 secs"),
@@ -199,6 +200,7 @@ namespace API_AnalyseSanguine.Context.Data
                 CreateTypeValeur(13, "Prt S", typesAnalyse.First(x=>x.Nom == "Prt S"), "70-130 %"),
                 CreateTypeValeur(14, "PLG", typesAnalyse.First(x=>x.Nom == "PLG"), "80-120 %"),
                 CreateTypeValeur(15, "AP", typesAnalyse.First(x=>x.Nom == "AP"), "80-120 %"),
+                //Hématologie
 
             };
             #endregion
