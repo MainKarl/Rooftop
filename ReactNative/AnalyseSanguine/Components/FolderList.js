@@ -15,26 +15,12 @@ import {
 import PatientFolder from './PatientFolder';
 import AddButton from './AddButton';
 import AnalyseConfig from '../analyseConfig.json';
+import AlertConnectionFailed from './AlertConnectionFailed';
 
 const FolderList = props => {
   const [initialData, setInitialData] = useState([]);
   const [filteredData, setfilteredData] = useState();
   const [currentActive, setcurrentActive] = useState(null);
-
-  const alertConnectionFailed = () => {
-    Alert.alert(
-      'Erreur de connexion au serveur',
-      'Voulez-vous réessayer?',
-      [
-        {
-          text: 'Réessayer',
-          onPress: () => {
-            fetchDossiersSimples();
-          },
-        }
-      ]
-    );
-  }
 
   const fetchDossiersSimples = () => {
     const url = AnalyseConfig.API_URL + 'dossier/getsimple';
@@ -50,10 +36,10 @@ const FolderList = props => {
           });
         }
         else {
-          alertConnectionFailed();
+          AlertConnectionFailed(fetchDossiersSimples);
         }
       }).catch((error) => {
-        alertConnectionFailed();
+        AlertConnectionFailed(fetchDossiersSimples);
       });
   }
 
