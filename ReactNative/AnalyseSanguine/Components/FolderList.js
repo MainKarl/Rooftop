@@ -10,18 +10,19 @@ import {
   InteractionManager,
   PlatformColor,
   Alert,
+  BackHandler
 } from 'react-native';
 import PatientFolder from './PatientFolder';
 import AddButton from './AddButton';
 import AnalyseConfig from '../analyseConfig.json';
+import AlertConnectionFailed from './AlertConnectionFailed';
 
 const FolderList = props => {
   const [initialData, setInitialData] = useState([]);
   const [filteredData, setfilteredData] = useState();
   const [currentActive, setcurrentActive] = useState(null);
 
-
-  useEffect(() => {
+  const fetchDossiersSimples = () => {
     const url = AnalyseConfig.API_URL + 'dossier/getsimple';
     fetch(url)
       .then((response) => {
@@ -35,12 +36,15 @@ const FolderList = props => {
           });
         }
         else {
-          console.log(response);
+          AlertConnectionFailed(fetchDossiersSimples);
         }
-
       }).catch((error) => {
-        console.log(error);
+        AlertConnectionFailed(fetchDossiersSimples);
       });
+  }
+
+  useEffect(() => {
+    fetchDossiersSimples();
   }, [props.actualState]);
 
 

@@ -1222,7 +1222,7 @@ namespace API_AnalyseSanguine.Migrations
                         .IsRequired();
 
                     b.HasOne("API_AnalyseSanguine.Models.Medecin", "Medecin")
-                        .WithMany("LstRequetes")
+                        .WithMany()
                         .HasForeignKey("MedecinIdMedecin")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1289,11 +1289,6 @@ namespace API_AnalyseSanguine.Migrations
                 });
 
             modelBuilder.Entity("API_AnalyseSanguine.Models.Dossier", b =>
-                {
-                    b.Navigation("LstRequetes");
-                });
-
-            modelBuilder.Entity("API_AnalyseSanguine.Models.Medecin", b =>
                 {
                     b.Navigation("LstRequetes");
                 });
