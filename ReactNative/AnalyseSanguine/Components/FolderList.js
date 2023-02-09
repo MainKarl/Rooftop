@@ -10,6 +10,7 @@ import {
   InteractionManager,
   PlatformColor,
   Alert,
+  BackHandler
 } from 'react-native';
 import PatientFolder from './PatientFolder';
 import AddButton from './AddButton';
@@ -20,8 +21,22 @@ const FolderList = props => {
   const [filteredData, setfilteredData] = useState();
   const [currentActive, setcurrentActive] = useState(null);
 
+  const alertConnectionFailed = () => {
+    Alert.alert(
+      'Erreur de connexion au serveur',
+      'Voulez-vous réessayer?',
+      [
+        {
+          text: 'Réessayer',
+          onPress: () => {
+            fetchDossiersSimples();
+          },
+        }
+      ]
+    );
+  }
 
-  useEffect(() => {
+  const fetchDossiersSimples = () => {
     const url = AnalyseConfig.API_URL + 'dossier/getsimple';
     fetch(url)
       .then((response) => {
@@ -35,12 +50,15 @@ const FolderList = props => {
           });
         }
         else {
-          console.log(response);
+          alertConnectionFailed();
         }
-
       }).catch((error) => {
-        console.log(error);
+        alertConnectionFailed();
       });
+  }
+
+  useEffect(() => {
+    fetchDossiersSimples();
   }, [props.actualState]);
 
 
