@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace API_AnalyseSanguine.Models
 {
@@ -14,7 +16,7 @@ namespace API_AnalyseSanguine.Models
 
 
         //Lien
-        [Required]
+        public int TypeAnalyseId { get; set; }
         public TypeAnalyse TypeAnalyse { get; set; }
     }
 }
