@@ -9,3 +9,6 @@ Docs/.obsidian
 ReactNative/AnalyseSanguine/windows/AnalyseSanguine/Package.appxmanifest
 ReactNative/AnalyseSanguine/windows/AnalyseSanguine.sln
 ReactNative/AnalyseSanguine/msbuild.binlog
+/ReactNative/Api/API_AnalyseSanguine/API.Tests/bin/Debug/net6.0
+/ReactNative/Api/API_AnalyseSanguine/API.Tests/obj/Debug/net6.0
+/ReactNative/Api/API_AnalyseSanguine/API.Tests/obj
