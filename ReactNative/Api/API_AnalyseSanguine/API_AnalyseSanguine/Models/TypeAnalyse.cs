@@ -10,11 +10,15 @@ namespace API_AnalyseSanguine.Models
         [Required]
         public string Nom { get; set; }
 
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
+
 
 
         //Lien
         [Required]
         public List<TypeValeur> LstValeurs { get; set; }
+
+        public List<RequeteAnalyse> RequeteAnalyses { get; set; }
     }
 }
