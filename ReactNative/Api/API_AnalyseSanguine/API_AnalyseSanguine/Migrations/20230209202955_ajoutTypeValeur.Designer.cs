@@ -4,6 +4,7 @@ using API_AnalyseSanguine.Context.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_AnalyseSanguine.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230209202955_ajoutTypeValeur")]
+    partial class ajoutTypeValeur
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1222,7 +1224,7 @@ namespace API_AnalyseSanguine.Migrations
                         .IsRequired();
 
                     b.HasOne("API_AnalyseSanguine.Models.Medecin", "Medecin")
-                        .WithMany()
+                        .WithMany("LstRequetes")
                         .HasForeignKey("MedecinIdMedecin")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1289,6 +1291,11 @@ namespace API_AnalyseSanguine.Migrations
                 });
 
             modelBuilder.Entity("API_AnalyseSanguine.Models.Dossier", b =>
+                {
+                    b.Navigation("LstRequetes");
+                });
+
+            modelBuilder.Entity("API_AnalyseSanguine.Models.Medecin", b =>
                 {
                     b.Navigation("LstRequetes");
                 });

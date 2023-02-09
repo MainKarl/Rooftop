@@ -3,6 +3,7 @@ using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
+using API_AnalyseSanguine.Services;
 
 namespace API_AnalyseSanguine.Controllers
 {
@@ -14,22 +15,35 @@ namespace API_AnalyseSanguine.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public DossierController(ApplicationDbContext context)
+        private readonly IDossierService _service;
+
+        public DossierController(IDossierService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        [HttpGet("getsimple")]
-        public ActionResult<IEnumerable<DossierSimpleDto>> GetDossierSimple()
+
+        [HttpGet("Get")]
+        public async Task<IActionResult> Get()
         {
             try
             {
-                List<Dossier> item = _context.Dossiers.ToList();
-                return Ok(item.Select(item => new DossierSimpleDto(
-                    item.IdDossier,
-                    item.Prenom,
-                    item.Nom
-                    )));
+                var result = _service.Get();
+                return StatusCode(200, result);
+            }
+            catch
+            {
+                return Problem();
+            }
+        }
+
+        [HttpGet("getsimple")]
+        public async Task<IActionResult> GetDossierSimple()
+        {
+            try
+            {
+                var result = _service.GetDossierSimple();
+                return StatusCode(200, result);
             }
             catch
             {
@@ -38,35 +52,12 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpGet("getdetaille")]
-        public ActionResult<IEnumerable<DossierDetailleDto>> GetDossierDetaille(int id)
+        public async Task<IActionResult> GetDossierDetaille(int id)
         {
             try
             {
-                Dossier item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
-                List<RequeteAnalyse> lstRequetes = _context.RequeteAnalyses.Where(c => c.DossierIdDossier == id).ToList();
-
-                if (item == null)
-                    return NotFound();
-
-                List<RequeteAnalyseDto> lstRequetesDto = new List<RequeteAnalyseDto>();
-                if (item.LstRequetes != null)
-                {
-                    foreach (var requete in lstRequetes)
-                    {
-                        Medecin medecin = _context.Medecins.Where(a => a.IdMedecin == requete.MedecinIdMedecin).FirstOrDefault();
-                        lstRequetesDto.Add(new RequeteAnalyseDto(requete.IdRequete, requete.CodeAcces, requete.DateEchantillon, medecin.Nom + ", " + medecin.Prenom));
-                    }
-                }
-
-                return Ok(new DossierDetailleDto(
-                    item.IdDossier,
-                    item.Prenom,
-                    item.Nom,
-                    item.DateNaissance,
-                    item.Sexe,
-                    item.Note,
-                    lstRequetesDto
-                ));
+                var result = _service.GetDossierDetaille(id);
+                return StatusCode(200, result);
             }
             catch
             {
@@ -76,14 +67,12 @@ namespace API_AnalyseSanguine.Controllers
 
         [HttpPost("create")]
         [EnableCors("_myAllowSpecificOrigins")]
-        public ActionResult CreateDossier(Dossier dossier)
+        public async Task<IActionResult> CreateDossier(Dossier dossier)
         {
             try
             {
-                _context.Dossiers.Add(dossier);
-                _context.SaveChanges();
-
-                return Ok(dossier);
+                var result = _service.CreateDossier(dossier);
+                return StatusCode(200, result);
             }
             catch
             {
@@ -96,17 +85,7 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-                var item = _context.Dossiers.Where(a => a.IdDossier == dossier.IdDossier).FirstOrDefault();
-
-                if (item == null)
-                    return NotFound();
-
-                item.Prenom = dossier.Prenom;
-                item.Nom = dossier.Nom;
-                item.DateNaissance = dossier.DateNaissance;
-                item.Sexe = dossier.Sexe;
-                item.Note = dossier.Note;
-                _context.SaveChanges();
+                _service.UpdateDossier(dossier.IdDossier, dossier);
 
                 return Ok();
             }
@@ -121,12 +100,7 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-                var item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
-                if (item is null)
-                    return NotFound();
-
-                _context.Dossiers.Remove(item);
-                _context.SaveChanges();
+                _service.DeleteDossier(id);
 
                 return Ok();
             }

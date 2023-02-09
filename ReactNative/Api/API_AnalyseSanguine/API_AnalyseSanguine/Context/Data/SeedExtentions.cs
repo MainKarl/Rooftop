@@ -51,12 +51,12 @@ namespace API_AnalyseSanguine.Context.Data
             {
                 IdTypeValeur = id,
                 Nom= nom,
-                TypeAnalyse = typeAnalyse,
-                Reference=reference
+                TypeAnalyseId = typeAnalyse.IdTypeAnalyse,
+                Reference=reference,
             };
         }
 
-        private static void SeedTypesValeur(this ModelBuilder builder, IEnumerable<TypeAnalyse> typeValeurs)
+        private static void SeedTypesValeur(this ModelBuilder builder, IEnumerable<TypeValeur> typeValeurs)
         { builder.Entity<TypeValeur>().HasData(typeValeurs); }
 
         private static void SeedTypesAnalyse(this ModelBuilder builder, IEnumerable<TypeAnalyse> typesAnalyse)
@@ -119,12 +119,13 @@ namespace API_AnalyseSanguine.Context.Data
             SeedDossiers(builder, dossiers);
             #endregion
 
-
             #region Categories
             List<Category> categories = new List<Category>
             {
                 CreateCategory(1, "Hémostase"),
                 CreateCategory(2, "Hématologie"),
+                CreateCategory(3, "Analyse de biochimie"),
+                CreateCategory(4, "Routine d'urine"),
             };
 
             SeedCategories(builder, categories);
@@ -152,39 +153,87 @@ namespace API_AnalyseSanguine.Context.Data
                 //CreateTypeAnalyse(17, "TSH et algorithme T4L et T3L"),
 
                 //Hémostase
-                CreateTypeAnalyse(18, "TS", categories[0]),
-                CreateTypeAnalyse(19, "To", categories[0]),
-                CreateTypeAnalyse(20, "PTT", categories[0]),
-                CreateTypeAnalyse(21, "PT", categories[0]),
-                CreateTypeAnalyse(22, "TT", categories[0]),
-                CreateTypeAnalyse(23, "Fibrinogène", categories[0]),
-                CreateTypeAnalyse(24, "Facteur", categories[0]),
-                CreateTypeAnalyse(25, "D-dimères", categories[0]),
-                CreateTypeAnalyse(26, "fVW", categories[0]),
-                CreateTypeAnalyse(27, "LA Screen", categories[0]),
-                CreateTypeAnalyse(28, "Anti-Xa", categories[0]),
-                CreateTypeAnalyse(29, "Prt C", categories[0]),
-                CreateTypeAnalyse(30, "Prt S", categories[0]),
-                CreateTypeAnalyse(31, "PLG", categories[0]),
-                CreateTypeAnalyse(32, "AP", categories[0]),
+                CreateTypeAnalyse(1, "TS", categories[0]),
+                CreateTypeAnalyse(2, "To", categories[0]),
+                CreateTypeAnalyse(3, "PTT", categories[0]),
+                CreateTypeAnalyse(4, "PT", categories[0]),
+                CreateTypeAnalyse(5, "TT", categories[0]),
+                CreateTypeAnalyse(6, "Fibrinogène", categories[0]),
+                CreateTypeAnalyse(7, "Facteur", categories[0]),
+                CreateTypeAnalyse(8, "D-dimères", categories[0]),
+                CreateTypeAnalyse(9, "fVW", categories[0]),
+                CreateTypeAnalyse(10, "LA Screen", categories[0]),
+                CreateTypeAnalyse(11, "Anti-Xa", categories[0]),
+                CreateTypeAnalyse(12, "Prt C", categories[0]),
+                CreateTypeAnalyse(13, "Prt S", categories[0]),
+                CreateTypeAnalyse(14, "PLG", categories[0]),
+                CreateTypeAnalyse(15, "AP", categories[0]),
 
                 //Hématologie
-                CreateTypeAnalyse(33, "FSC num.", categories[1]),
-                CreateTypeAnalyse(34, "Plt", categories[1]),
-                CreateTypeAnalyse(35, "Micro", categories[1]),
-                CreateTypeAnalyse(36, "VS", categories[1]),
-                CreateTypeAnalyse(37, "FSC diff.", categories[1]),
+                CreateTypeAnalyse(16, "FSC num.", categories[1]),
+                CreateTypeAnalyse(17, "Plt", categories[1]),
+                CreateTypeAnalyse(18, "Micro", categories[1]),
+                CreateTypeAnalyse(19, "VS", categories[1]),
+                CreateTypeAnalyse(20, "FSC diff.", categories[1]),
+
+                // Analyse de biochimie
+                CreateTypeAnalyse(21, "ALP", categories[2]),
+                CreateTypeAnalyse(22, "ALT", categories[2]),
+                CreateTypeAnalyse(23, "Amylase", categories[2]),
+                CreateTypeAnalyse(24, "AST", categories[2]),
+                CreateTypeAnalyse(25, "GGT", categories[2]),
+                CreateTypeAnalyse(26, "Lipase", categories[2]),
+                CreateTypeAnalyse(27, "Créatinine sérique", categories[2]),
+                CreateTypeAnalyse(28, "Créatinine urinaire", categories[2]),
+                CreateTypeAnalyse(29, "Acide urique", categories[2]),
+                CreateTypeAnalyse(30, "Urée", categories[2]),
+                CreateTypeAnalyse(31, "Clairance de la créatinine", categories[2]),
+                CreateTypeAnalyse(32, "Bilirubine totale", categories[2]),
+                CreateTypeAnalyse(33, "Bilirubine conjuguée", categories[2]),
+                CreateTypeAnalyse(34, "Troponine", categories[2]),
+                CreateTypeAnalyse(35, "Protéine C-réactive", categories[2]),
+                CreateTypeAnalyse(36, "BNP", categories[2]),
+                CreateTypeAnalyse(37, "Potassium", categories[2]),
+                CreateTypeAnalyse(38, "Sodium", categories[2]),
+                CreateTypeAnalyse(39, "Chlorure", categories[2]),
+                CreateTypeAnalyse(40, "HCO3", categories[2]),
+                CreateTypeAnalyse(41, "pH", categories[2]),
+                CreateTypeAnalyse(42, "pCO2", categories[2]),
+                CreateTypeAnalyse(43, "pO2", categories[2]),
+                CreateTypeAnalyse(44, "Excès de bases", categories[2]),
+                CreateTypeAnalyse(45, "Glucose", categories[2]),
+                CreateTypeAnalyse(46, "Triglycérides", categories[2]),
+                CreateTypeAnalyse(47, "HDL-cholestérol", categories[2]),
+                CreateTypeAnalyse(48, "LDL-cholestérol", categories[2]),
+                CreateTypeAnalyse(49, "Cholestérol total", categories[2]),
+                CreateTypeAnalyse(50, "Protéines totales", categories[2]),
+                CreateTypeAnalyse(51, "Albumine", categories[2]),
+                CreateTypeAnalyse(52, "b-HCG qualitatif", categories[2]),
+                CreateTypeAnalyse(53, "Drogues de rue", categories[2]),
+                CreateTypeAnalyse(54, "Éthanol", categories[2]),
+                CreateTypeAnalyse(55, "Microscopie urinaire", categories[2]),
+                CreateTypeAnalyse(56, "Osmolarité urinaire", categories[2]),
+                CreateTypeAnalyse(57, "Osmolarité sérique", categories[2]),
+
+                // Routine urinaire
+                CreateTypeAnalyse(58, "Glucose", categories[3]),
+                CreateTypeAnalyse(59, "Corps cétoniques", categories[3]),
+                CreateTypeAnalyse(60, "Densité", categories[3]),
+                CreateTypeAnalyse(61, "Sang", categories[3]),
+                CreateTypeAnalyse(62, "pH", categories[3]),
+                CreateTypeAnalyse(63, "Protéines", categories[3]),
+                CreateTypeAnalyse(64, "Leucocytes", categories[3]),
+                CreateTypeAnalyse(65, "Nitrites", categories[3]),
+                CreateTypeAnalyse(66, "Bilirubine", categories[3]),
+                CreateTypeAnalyse(67, "Urobilinogène", categories[3]),
             };
-
-
 
             SeedTypesAnalyse(builder, typesAnalyse);
             #endregion
 
             #region TypeValeur
-            List<TypeValeur> typeValeurs = new List<TypeValeur>()
-            {
-                //Hémostase
+            List<TypeValeur> typeValeurs = new List<TypeValeur> {
+                // Hémostase
                 CreateTypeValeur(1, "TS", typesAnalyse.First(x=>x.Nom == "TS"), "4-8 min"),
                 CreateTypeValeur(2, "To", typesAnalyse.First(x=>x.Nom == "To"), "EPI: 80-150 secs,ADP: 60-100 secs"),
                 CreateTypeValeur(3, "PTT", typesAnalyse.First(x=>x.Nom == "PTT"), "22.0-40.0 secs"),
@@ -200,9 +249,61 @@ namespace API_AnalyseSanguine.Context.Data
                 CreateTypeValeur(13, "Prt S", typesAnalyse.First(x=>x.Nom == "Prt S"), "70-130 %"),
                 CreateTypeValeur(14, "PLG", typesAnalyse.First(x=>x.Nom == "PLG"), "80-120 %"),
                 CreateTypeValeur(15, "AP", typesAnalyse.First(x=>x.Nom == "AP"), "80-120 %"),
-                //Hématologie
 
+                // Hémotologie
+
+                // Analyse de biochimie
+                CreateTypeValeur(16, "ALP", typesAnalyse.First(x => x.Nom == "ALP"), "<100 U/L *selon l'âge du patient"),
+                CreateTypeValeur(17, "ALT", typesAnalyse.First(x => x.Nom == "ALT"), "0-37 U/L"),
+                CreateTypeValeur(18, "Amylase", typesAnalyse.First(x => x.Nom == "Amylase"), "<130 U/L"),
+                CreateTypeValeur(19, "AST", typesAnalyse.First(x => x.Nom == "AST"), "5-34 U/L"),
+                CreateTypeValeur(20, "GGT", typesAnalyse.First(x => x.Nom == "GGT"), "<40 U/L"),
+                CreateTypeValeur(21, "Lipase", typesAnalyse.First(x => x.Nom == "Lipase"), "<200 U/L"),
+                CreateTypeValeur(22, "Créatinine sérique", typesAnalyse.First(x => x.Nom == "Créatinine sérique"), "57-92 umol/L"),
+                CreateTypeValeur(23, "Créatinine urinaire", typesAnalyse.First(x => x.Nom == "Créatinine urinaire"), "9-18 mmol/24h"),
+                CreateTypeValeur(24, "Acide urique", typesAnalyse.First(x => x.Nom == "Acide urique"), "210-460 umol/L"),
+                CreateTypeValeur(25, "Urée", typesAnalyse.First(x => x.Nom == "Urée"), "2.5-6.4 mmol/L"),
+                CreateTypeValeur(26, "Clairance de la créatinine", typesAnalyse.First(x => x.Nom == "Clairance de la créatinine"), "1-3 mL/s"),
+                CreateTypeValeur(27, "Bilirubine totale", typesAnalyse.First(x => x.Nom == "Bilirubine totale"), "3.4 - 22 umol/L"),
+                CreateTypeValeur(28, "Bilirubine conjuguée", typesAnalyse.First(x => x.Nom == "Bilirubine conjuguée"), "1.7 - 5 umol/L"),
+                CreateTypeValeur(29, "Troponine", typesAnalyse.First(x => x.Nom == "Troponine"), "< 0.4ug/L"),
+                CreateTypeValeur(30, "Protéine C-réactive", typesAnalyse.First(x => x.Nom == "Protéine C-réactive"), "< 10mg/L"),
+                CreateTypeValeur(31, "BNP", typesAnalyse.First(x => x.Nom == "BNP"), "< 100pg/mL"),
+                CreateTypeValeur(32, "Potassium", typesAnalyse.First(x => x.Nom == "Potassium"), "3.5-5 mmol/L"),
+                CreateTypeValeur(33, "Sodium", typesAnalyse.First(x => x.Nom == "Sodium"), "135-145 mmol/L"),
+                CreateTypeValeur(34, "Chlorure", typesAnalyse.First(x => x.Nom == "Chlorure"), "98-108 mmol/L"),
+                CreateTypeValeur(35, "HCO3", typesAnalyse.First(x => x.Nom == "HCO3"), "22-28 mmol/L"),
+                CreateTypeValeur(36, "pH", typesAnalyse.First(x => x.IdTypeAnalyse == 41), "7.35-7.45"),
+                CreateTypeValeur(37, "pCO2", typesAnalyse.First(x => x.Nom == "pCO2"), "35-45 mmHg"),
+                CreateTypeValeur(38, "pO2", typesAnalyse.First(x => x.Nom == "pO2"), "80-100 mmHg"),
+                CreateTypeValeur(39, "Excès de bases", typesAnalyse.First(x => x.Nom == "Excès de bases"), "-2 à +2 mmol/L"),
+                CreateTypeValeur(40, "Glucose", typesAnalyse.First(x => x.IdTypeAnalyse == 45), "Aci3.5-5"),
+                CreateTypeValeur(41, "Triglycérides", typesAnalyse.First(x => x.Nom == "Triglycérides"), "<1.7 mmol/L"),
+                CreateTypeValeur(42, "HDL-cholestérol", typesAnalyse.First(x => x.Nom == "HDL-cholestérol"), ">1.0 mmol/L"),
+                CreateTypeValeur(43, "LDL-cholestérol", typesAnalyse.First(x => x.Nom == "LDL-cholestérol"), "<2.5 mmol/L"),
+                CreateTypeValeur(44, "Cholestérol total", typesAnalyse.First(x => x.Nom == "Cholestérol total"), "<5.2 mmol/L"),
+                CreateTypeValeur(45, "Protéines totales", typesAnalyse.First(x => x.Nom == "Protéines totales"), "60-80 g/L"),
+                CreateTypeValeur(46, "Albumine", typesAnalyse.First(x => x.Nom == "Albumine"), "35-50 g/L"),
+                CreateTypeValeur(47, "b-HCG qualitatif", typesAnalyse.First(x => x.Nom == "b-HCG qualitatif"), "Négatif"),
+                CreateTypeValeur(48, "Drogues de rue", typesAnalyse.First(x => x.Nom == "Drogues de rue"), "Négatif"),
+                CreateTypeValeur(49, "Éthanol", typesAnalyse.First(x => x.Nom == "Éthanol"), "0 mmol/L"),
+                CreateTypeValeur(50, "Osmolarité urinaire", typesAnalyse.First(x => x.Nom == "Osmolarité urinaire"), "540 mosmol/kg"),
+                CreateTypeValeur(51, "Osmolarité sérique", typesAnalyse.First(x => x.Nom == "Osmolarité sérique"), "290 mosmol/kg"),
+                
+                // Routine d'urine
+                CreateTypeValeur(52, "Glucose", typesAnalyse.First(x => x.IdTypeAnalyse == 58), "Négatif"),
+                CreateTypeValeur(53, "Corps cétoniques", typesAnalyse.First(x => x.Nom == "Corps cétoniques"), "Négatif"),
+                CreateTypeValeur(54, "Densité", typesAnalyse.First(x => x.Nom == "Densité"), "1.005-1.030"),
+                CreateTypeValeur(55, "Sang", typesAnalyse.First(x => x.Nom == "Sang"), "Négatif"),
+                CreateTypeValeur(56, "pH", typesAnalyse.First(x => x.IdTypeAnalyse == 62), "4-8"),
+                CreateTypeValeur(57, "Protéines", typesAnalyse.First(x => x.Nom == "Protéines"), "Négatif"),
+                CreateTypeValeur(58, "Leucocytes", typesAnalyse.First(x => x.Nom == "Leucocytes"), "Négatif"),
+                CreateTypeValeur(59, "Nitrites", typesAnalyse.First(x => x.Nom == "Nitrites"), "Négatif"),
+                CreateTypeValeur(60, "Bilirubine", typesAnalyse.First(x => x.Nom == "Bilirubine"), "Négatif"),
+                CreateTypeValeur(61, "Urobilinogène", typesAnalyse.First(x => x.Nom == "Urobilinogène"), "Négatif"),
             };
+
+            SeedTypesValeur(builder, typeValeurs);
             #endregion
 
             List<RequeteAnalyse> requetes = new List<RequeteAnalyse>
