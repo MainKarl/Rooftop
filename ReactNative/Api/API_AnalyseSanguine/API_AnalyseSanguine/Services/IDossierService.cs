@@ -6,11 +6,10 @@ namespace API_AnalyseSanguine.Services
 {
     public interface IDossierService
     {
-        public List<Dossier> Get();
         public List<DossierSimpleDto> GetDossierSimple();
         public DossierDetailleDto GetDossierDetaille(int id);
         public Dossier CreateDossier(Dossier dossier);
-        public void UpdateDossier(long id, Dossier dossier);
-        public void DeleteDossier(long id);
+        public Dossier UpdateDossier(int id, Dossier dossier);
+        public bool DeleteDossier(long id);
     }
 }

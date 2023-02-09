@@ -22,21 +22,6 @@ namespace API_AnalyseSanguine.Controllers
             _service = service;
         }
 
-
-        [HttpGet("Get")]
-        public async Task<IActionResult> Get()
-        {
-            try
-            {
-                var result = _service.Get();
-                return StatusCode(200, result);
-            }
-            catch
-            {
-                return Problem();
-            }
-        }
-
         [HttpGet("getsimple")]
         public async Task<IActionResult> GetDossierSimple()
         {
@@ -81,13 +66,12 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateDossier(long id, Dossier dossier)
+        public async Task<IActionResult> UpdateDossier(int id, Dossier dossier)
         {
             try
             {
                 _service.UpdateDossier(dossier.IdDossier, dossier);
-
-                return Ok();
+                return StatusCode(200, result);
             }
             catch
             {
@@ -96,13 +80,12 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteDossier(long id)
+        public async Task<IActionResult> DeleteDossier(long id)
         {
             try
             {
-                _service.DeleteDossier(id);
-
-                return Ok();
+                var result = _service.DeleteDossier(id);
+                return StatusCode(200, result);
             }
             catch
             {

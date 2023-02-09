@@ -29,22 +29,6 @@ namespace API.Tests
         }
 
         [TestMethod]
-        public async Task GetDossier()
-        {
-            var dossierList = _fixture.CreateMany<Dossier>(3).ToList();
-
-            _service.Setup(repo => repo.Get()).Returns(dossierList);
-
-            _controller = new DossierController(_service.Object);
-
-            var result = await _controller.Get();
-
-            var obj = result as ObjectResult;
-
-            Assert.AreEqual(200, obj.StatusCode);
-        }
-
-        [TestMethod]
         public async Task GetDossierDetaille()
         {
             var dossier = _fixture.Create<DossierDetailleDto>();
@@ -86,6 +70,36 @@ namespace API.Tests
             _controller = new DossierController(_service.Object);
 
             var result = await _controller.CreateDossier(employee);
+
+            var obj = result as ObjectResult;
+
+            Assert.AreEqual(200, obj.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task UpdateDossier()
+        {
+            var employee = _fixture.Create<Dossier>();
+
+            _service.Setup(repo => repo.UpdateDossier(employee.IdDossier, It.IsAny<Dossier>())).Returns(employee);
+
+            _controller = new DossierController(_service.Object);
+
+            var result = await _controller.UpdateDossier(employee.IdDossier, employee);
+
+            var obj = result as ObjectResult;
+
+            Assert.AreEqual(200, obj.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task DeleteDossier()
+        {
+            _service.Setup(repo => repo.DeleteDossier(It.IsAny<long>())).Returns(true);
+
+            _controller = new DossierController(_service.Object);
+
+            var result = await _controller.DeleteDossier(It.IsAny<long>());
 
             var obj = result as ObjectResult;
 

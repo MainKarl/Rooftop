@@ -22,18 +22,14 @@ namespace API_AnalyseSanguine.Services
                 return dossier;
         }
 
-        public void DeleteDossier(long id)
+        public bool DeleteDossier(long id)
         {
                 var item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
 
                 _context.Dossiers.Remove(item);
                 _context.SaveChanges();
-        }
 
-        public List<Dossier> Get()
-        {
-            var list = _context.Dossiers.ToList();
-            return list;
+                return true;
         }
 
         public DossierDetailleDto GetDossierDetaille(int id)
@@ -72,7 +68,7 @@ namespace API_AnalyseSanguine.Services
                     )).ToList();
         }
 
-        public void UpdateDossier(long id, Dossier dossier)
+        public Dossier UpdateDossier(int id, Dossier dossier)
         {
                 var item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
 
@@ -82,6 +78,8 @@ namespace API_AnalyseSanguine.Services
                 item.Sexe = dossier.Sexe;
                 item.Note = dossier.Note;
                 _context.SaveChanges();
+
+            return item;
         }
     }
 }
