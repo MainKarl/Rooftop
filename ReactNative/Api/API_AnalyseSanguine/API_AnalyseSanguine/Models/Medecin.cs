@@ -12,9 +12,6 @@ namespace API_AnalyseSanguine.Models
         public string Prenom { get; set; }
         [Required]
         public string Nom { get; set; }
-
-        //Lien
-        public List<RequeteAnalyse> LstRequetes { get; set; }
     }
 
     public class MedecinValidator : AbstractValidator<Medecin>
