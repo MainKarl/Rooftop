@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     StyleSheet,
@@ -10,8 +10,10 @@ import {
 import DatetimePicker from '@react-native-community/datetimepicker';
 import CustomRadioButton from './CustomRadioButton';
 import AnalyseConfig from '../analyseConfig.json';
+import { create } from 'react-test-renderer';
 
 const FolderCreateForm = props => {
+    const [patientInfo, setpatientInfo] = useState(null);
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [sexe, setSexe] = useState(0)
@@ -21,6 +23,33 @@ const FolderCreateForm = props => {
         { value: 1, label: 'Femme', selected: false },
         { value: 2, label: 'Autres', selected: false }
     ]);
+
+    useEffect(()=> {
+        if(props.IsEditing){
+            const url = AnalyseConfig.API_URL + 'dossier/getdetaille?id=' + props.selectedFolder;
+            fetch(url)
+            .then((response) => {
+                if (response.ok) {
+                    response.json().then((data) => {
+                        setpatientInfo(data);
+                        onSexeChange(data.sexe)
+                        setFirstName(data.prenom)
+                        setLastName(data.nom)
+                        setDate(new Date(data.dateNaissance))
+                        return
+                    });
+                }
+                else {
+                    console.log(response);
+                    return
+                }
+    
+            }).catch((error) => {
+                console.log(error);
+                return
+            });
+        }
+    }, [])
 
     const onFirstNameChange = (newFirstName) => {
         setFirstName(newFirstName);
@@ -44,9 +73,7 @@ const FolderCreateForm = props => {
         Alert.alert('Création de dossier de patient', 'Voulez-vous vraiment créer le patient \n' + firstName + ' ' + lastName + ' ?', [
             {
                 text: 'Annuler',
-                onPress: () => {
-
-                }
+                onPress: () => {}
             },
             {
                 text: 'Confirmer',
@@ -58,7 +85,8 @@ const FolderCreateForm = props => {
     }
 
     const sendFormToAPI = () => {
-        const url = AnalyseConfig.API_URL + "dossier/create";
+        let method = props.IsEditing ? "update": "create";
+        const url = AnalyseConfig.API_URL + "dossier/" + method;
 
         fetch(url, {
             method: 'POST',
@@ -73,20 +101,18 @@ const FolderCreateForm = props => {
         }).catch((error) => {
             console.log(error);
         })
-
-
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Création d'un dossier de patient</Text>
+            <Text style={styles.title}>{props.IsEditing ? 'Modification' : 'Création'} d'un dossier de patient</Text>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Prénom du patient:</Text>
-                <TextInput style={styles.formInput} onChangeText={newName => onFirstNameChange(newName)} />
+                <TextInput style={styles.formInput} defaultValue={props.IsEditing && patientInfo ? patientInfo.prenom : ""} onChangeText={newName => onFirstNameChange(newName)} />
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Nom du patient:</Text>
-                <TextInput style={styles.formInput} onChangeText={newName => onLastNameChange(newName)} />
+                <TextInput style={styles.formInput} defaultValue={props.IsEditing && patientInfo ? patientInfo.nom : ""} onChangeText={newName => onLastNameChange(newName)} />
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Sexe du patient:</Text>
@@ -106,7 +132,7 @@ const FolderCreateForm = props => {
                     value={date}
                     onChange={(event, value) => { setDate(value); }} />
             </View>
-            <Button title="Créer" onPress={onSubmit}></Button>
+            <Button title={props.IsEditing ? 'Modifer' : 'Créer'} onPress={onSubmit}></Button>
             <Text style={styles.button}></Text>
             <Button title="Annuler" onPress={() => props.onChangeState(0)}></Button>
         </View>
