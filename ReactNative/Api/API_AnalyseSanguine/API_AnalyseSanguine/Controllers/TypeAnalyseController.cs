@@ -1,6 +1,8 @@
 ﻿using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace API_AnalyseSanguine.Controllers
 {
@@ -14,6 +16,20 @@ namespace API_AnalyseSanguine.Controllers
         public TypeAnalyseController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("categories")]
+        public ActionResult<IEnumerable<Category>> GetAllCategoriesAndTypeAnalyse()
+        {
+            try
+            {
+                var item = _context.Categories.Include(x => x.TypeAnalyseList).ToList();
+                return Ok(item);
+            }
+            catch
+            {
+                return Problem();
+            }
         }
 
         [HttpGet]

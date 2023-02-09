@@ -6,9 +6,9 @@
 
 * Maxime Aubin (Chef de Documentation)
 * Victor Turgeon (Chef Livraison)
-* Jean-Philippe Belval (Chef Planification)
+* Jean-Philippe Belval (Chef)
 * Louis Garceau
-* Karl Mainville
+* Karl Mainville (Chef Planification)
 
 ## Documentation/Analyse
 
