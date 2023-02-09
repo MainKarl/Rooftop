@@ -21,14 +21,18 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginTop: 'auto',
         margin: 15,
-        height: 35,
-        aspectRatio:1/1,
         backgroundColor: 'rgb(119, 186, 153)',
         borderRadius: 150,
+        height: 35,
+        aspectRatio:1/1,
     },
     button: {
-        fontSize: 30,
-        textAlign: 'center'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        fontSize: 22,
+        textAlign: 'center',
     }
 });
 
