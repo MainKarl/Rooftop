@@ -96,7 +96,7 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-                var item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
+                var item = _context.Dossiers.Where(a => a.IdDossier == dossier.IdDossier).FirstOrDefault();
 
                 if (item == null)
                     return NotFound();

@@ -31,6 +31,7 @@ const FolderCreateForm = props => {
             .then((response) => {
                 if (response.ok) {
                     response.json().then((data) => {
+                        console.log(data)
                         setpatientInfo(data);
                         onSexeChange(data.sexe)
                         setFirstName(data.prenom)
@@ -88,6 +89,7 @@ const FolderCreateForm = props => {
         let method = props.IsEditing ? "update": "create";
         const url = AnalyseConfig.API_URL + "dossier/" + method;
         const formObj = {
+            IdDossier: patientInfo.idDossier,
             prenom: firstName,
             nom: lastName,
             dateNaissance: date,
@@ -99,11 +101,11 @@ const FolderCreateForm = props => {
         fetch(url, {
             method: 'POST',
             headers: {
-                accept: 'application.json',
+                Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             body: body,
-            Cache: 'default'
+            cache: 'default'
         }).then((response) => {
             if (response.ok) {
                 props.onChangeState(0);
@@ -160,7 +162,7 @@ const FolderCreateForm = props => {
     setIsLiked(updatedState);
     setSexe(newSexe);
   };
-  
+
 const styles = StyleSheet.create({
   container: {
     flex: 0.8,
