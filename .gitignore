@@ -3,6 +3,9 @@ ReactNative/Api/API_AnalyseSanguine/.vs
 ReactNative/Api/API_AnalyseSanguine/API_AnalyseSanguine/bin
 ReactNative/Api/API_AnalyseSanguine/API_AnalyseSanguine/obj
 Docs/.obsidian
+/ReactNative/Api/API_AnalyseSanguine/API_AnalyseSanguine.Tests/bin/Debug/net6.0
+/ReactNative/Api/API_AnalyseSanguine/API_AnalyseSanguine.Tests/obj/Debug/net6.0
+/ReactNative/Api/API_AnalyseSanguine/API_AnalyseSanguine.Tests/obj
 ReactNative/AnalyseSanguine/windows/AnalyseSanguine/Package.appxmanifest
 ReactNative/AnalyseSanguine/windows/AnalyseSanguine.sln
 ReactNative/AnalyseSanguine/msbuild.binlog

@@ -35,14 +35,29 @@ namespace API_AnalyseSanguine.Context.Data
         private static void SeedDossiers(this ModelBuilder builder, IEnumerable<Dossier> dossiers)
         { builder.Entity<Dossier>().HasData(dossiers); }
 
-        private static TypeAnalyse CreateTypeAnalyse(int id, string nom)
+        private static TypeAnalyse CreateTypeAnalyse(int id, string nom, Category category)
         {
             return new TypeAnalyse
             {
                 IdTypeAnalyse = id,
-                Nom = nom
+                Nom = nom,
+                CategoryId = category.Id,
             };
         }
+
+        private static TypeValeur CreateTypeValeur(int id, string nom, TypeAnalyse typeAnalyse, string reference)
+        {
+            return new TypeValeur
+            {
+                IdTypeValeur = id,
+                Nom= nom,
+                TypeAnalyse = typeAnalyse,
+                Reference=reference
+            };
+        }
+
+        private static void SeedTypesValeur(this ModelBuilder builder, IEnumerable<TypeAnalyse> typeValeurs)
+        { builder.Entity<TypeValeur>().HasData(typeValeurs); }
 
         private static void SeedTypesAnalyse(this ModelBuilder builder, IEnumerable<TypeAnalyse> typesAnalyse)
         { builder.Entity<TypeAnalyse>().HasData(typesAnalyse); }
@@ -60,6 +75,18 @@ namespace API_AnalyseSanguine.Context.Data
                 MedecinIdMedecin = idMedecin
             };
         }
+
+        private static Category CreateCategory(int id, string Name)
+        {
+            return new Category
+            {
+                Id = id,
+                Name = Name
+            };
+        }
+
+        private static void SeedCategories(this ModelBuilder builder, IEnumerable<Category> categories)
+        { builder.Entity<Category>().HasData(categories); }
 
         private static void SeedRequeteAnalyse(this ModelBuilder builder, IEnumerable<RequeteAnalyse> requeteAnalyses)
         { builder.Entity<RequeteAnalyse>().HasData(requeteAnalyses); }
@@ -92,28 +119,90 @@ namespace API_AnalyseSanguine.Context.Data
             SeedDossiers(builder, dossiers);
             #endregion
 
-            #region TypesAnalyse
-            List<TypeAnalyse> typesAnalyse = new List<TypeAnalyse> {
-                CreateTypeAnalyse(1, "Albumine"),
-                CreateTypeAnalyse(2, "ALT"),
-                CreateTypeAnalyse(3, "Bilan lipidique"),
-                CreateTypeAnalyse(4, "Bilirubine totale"),
-                CreateTypeAnalyse(5, "Calcium total"),
-                CreateTypeAnalyse(6, "Cortisol"),
-                CreateTypeAnalyse(7, "Cortisol post-dexaméthasone"),
-                CreateTypeAnalyse(8, "Créatinine"),
-                CreateTypeAnalyse(9, "Créatinine kinase"),
-                CreateTypeAnalyse(10, "Électrolytes"),
-                CreateTypeAnalyse(11, "Ferritine"),
-                CreateTypeAnalyse(12, "Magnésium"),
-                CreateTypeAnalyse(13, "Phosphatase alcaline"),
-                CreateTypeAnalyse(14, "Phosphore"),
-                CreateTypeAnalyse(15, "Protéine C réactive"),
-                CreateTypeAnalyse(16, "Protéines totales"),
-                CreateTypeAnalyse(17, "TSH et algorithme T4L et T3L"),
+
+            #region Categories
+            List<Category> categories = new List<Category>
+            {
+                CreateCategory(1, "Hémostase"),
+                CreateCategory(2, "Hématologie"),
             };
 
+            SeedCategories(builder, categories);
+
+            #endregion
+
+            #region TypesAnalyse
+            List<TypeAnalyse> typesAnalyse = new List<TypeAnalyse> {
+                //CreateTypeAnalyse(1, "Albumine"),
+                //CreateTypeAnalyse(2, "ALT"),
+                //CreateTypeAnalyse(3, "Bilan lipidique"),
+                //CreateTypeAnalyse(4, "Bilirubine totale"),
+                //CreateTypeAnalyse(5, "Calcium total"),
+                //CreateTypeAnalyse(6, "Cortisol"),
+                //CreateTypeAnalyse(7, "Cortisol post-dexaméthasone"),
+                //CreateTypeAnalyse(8, "Créatinine"),
+                //CreateTypeAnalyse(9, "Créatinine kinase"),
+                //CreateTypeAnalyse(10, "Électrolytes"),
+                //CreateTypeAnalyse(11, "Ferritine"),
+                //CreateTypeAnalyse(12, "Magnésium"),
+                //CreateTypeAnalyse(13, "Phosphatase alcaline"),
+                //CreateTypeAnalyse(14, "Phosphore"),
+                //CreateTypeAnalyse(15, "Protéine C réactive"),
+                //CreateTypeAnalyse(16, "Protéines totales"),
+                //CreateTypeAnalyse(17, "TSH et algorithme T4L et T3L"),
+
+                //Hémostase
+                CreateTypeAnalyse(18, "TS", categories[0]),
+                CreateTypeAnalyse(19, "To", categories[0]),
+                CreateTypeAnalyse(20, "PTT", categories[0]),
+                CreateTypeAnalyse(21, "PT", categories[0]),
+                CreateTypeAnalyse(22, "TT", categories[0]),
+                CreateTypeAnalyse(23, "Fibrinogène", categories[0]),
+                CreateTypeAnalyse(24, "Facteur", categories[0]),
+                CreateTypeAnalyse(25, "D-dimères", categories[0]),
+                CreateTypeAnalyse(26, "fVW", categories[0]),
+                CreateTypeAnalyse(27, "LA Screen", categories[0]),
+                CreateTypeAnalyse(28, "Anti-Xa", categories[0]),
+                CreateTypeAnalyse(29, "Prt C", categories[0]),
+                CreateTypeAnalyse(30, "Prt S", categories[0]),
+                CreateTypeAnalyse(31, "PLG", categories[0]),
+                CreateTypeAnalyse(32, "AP", categories[0]),
+
+                //Hématologie
+                CreateTypeAnalyse(33, "FSC num.", categories[1]),
+                CreateTypeAnalyse(34, "Plt", categories[1]),
+                CreateTypeAnalyse(35, "Micro", categories[1]),
+                CreateTypeAnalyse(36, "VS", categories[1]),
+                CreateTypeAnalyse(37, "FSC diff.", categories[1]),
+            };
+
+
+
             SeedTypesAnalyse(builder, typesAnalyse);
+            #endregion
+
+            #region TypeValeur
+            List<TypeValeur> typeValeurs = new List<TypeValeur>()
+            {
+                //Hémostase
+                CreateTypeValeur(1, "TS", typesAnalyse.First(x=>x.Nom == "TS"), "4-8 min"),
+                CreateTypeValeur(2, "To", typesAnalyse.First(x=>x.Nom == "To"), "EPI: 80-150 secs,ADP: 60-100 secs"),
+                CreateTypeValeur(3, "PTT", typesAnalyse.First(x=>x.Nom == "PTT"), "22.0-40.0 secs"),
+                CreateTypeValeur(4, "PT", typesAnalyse.First(x=>x.Nom == "PT"), "11.0-14.0 secs"),
+                CreateTypeValeur(5, "TT", typesAnalyse.First(x=>x.Nom == "TT"), "≤ 24.0 secs"),
+                CreateTypeValeur(6, "Fibrinogène", typesAnalyse.First(x=>x.Nom == "Fibrinogène"), "2.0-4.0 g/L"),
+                CreateTypeValeur(7, "Facteur", typesAnalyse.First(x=>x.Nom == "Facteur"), "50-150 %"),
+                CreateTypeValeur(8, "D-dimères", typesAnalyse.First(x=>x.Nom == "D-dimères"), "<0.50 µg/mL"),
+                CreateTypeValeur(9, "fVW", typesAnalyse.First(x=>x.Nom == "fVW"), "50-160 %"),
+                CreateTypeValeur(10, "LA Screen", typesAnalyse.First(x=>x.Nom == "LA Screen"), "≥1.20"),
+                CreateTypeValeur(11, "Anti-Xa", typesAnalyse.First(x=>x.Nom == "Anti-Xa"), "0.50-1.00 Ul-mL"),
+                CreateTypeValeur(12, "Prt C", typesAnalyse.First(x=>x.Nom == "Prt C"), "70-130 %"),
+                CreateTypeValeur(13, "Prt S", typesAnalyse.First(x=>x.Nom == "Prt S"), "70-130 %"),
+                CreateTypeValeur(14, "PLG", typesAnalyse.First(x=>x.Nom == "PLG"), "80-120 %"),
+                CreateTypeValeur(15, "AP", typesAnalyse.First(x=>x.Nom == "AP"), "80-120 %"),
+                //Hématologie
+
+            };
             #endregion
 
             List<RequeteAnalyse> requetes = new List<RequeteAnalyse>

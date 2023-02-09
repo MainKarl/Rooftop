@@ -2,12 +2,14 @@
 using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace API_AnalyseSanguine.Controllers
 {
     [ApiController]
     [Route("api/dossier")]
     [Produces("application/json")]
+    [EnableCors("_myAllowSpecificOrigins")]
     public class DossierController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -52,7 +54,7 @@ namespace API_AnalyseSanguine.Controllers
                     foreach (var requete in lstRequetes)
                     {
                         Medecin medecin = _context.Medecins.Where(a => a.IdMedecin == requete.MedecinIdMedecin).FirstOrDefault();
-                        lstRequetesDto.Add(new RequeteAnalyseDto(requete.IdRequete, requete.CodeAcces, requete.DateEchantillon, medecin.Prenom + ", " + medecin.Prenom));
+                        lstRequetesDto.Add(new RequeteAnalyseDto(requete.IdRequete, requete.CodeAcces, requete.DateEchantillon, medecin.Nom + ", " + medecin.Prenom));
                     }
                 }
 
@@ -73,6 +75,7 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpPost("create")]
+        [EnableCors("_myAllowSpecificOrigins")]
         public ActionResult CreateDossier(Dossier dossier)
         {
             try
@@ -123,24 +126,6 @@ namespace API_AnalyseSanguine.Controllers
                     return NotFound();
 
                 _context.Dossiers.Remove(item);
-                _context.SaveChanges();
-
-                return Ok();
-            }
-            catch
-            {
-                return Problem();
-            }
-        }
-
-        [HttpDelete("clear")]
-        public ActionResult DeleteAllDossier()
-        {
-            try
-            {
-                var dossiers = _context.Dossiers.ToList();
-
-                _context.Dossiers.RemoveRange(dossiers);
                 _context.SaveChanges();
 
                 return Ok();

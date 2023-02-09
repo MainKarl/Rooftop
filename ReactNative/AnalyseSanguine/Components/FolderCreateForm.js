@@ -55,9 +55,9 @@ const FolderCreateForm = props => {
         setFirstName(newFirstName);
     }
 
-    const onLastNameChange = (newLastName) => {
-        setLastName(newLastName);
-    }
+  const onLastNameChange = newLastName => {
+    setLastName(newLastName);
+  };
 
     const onSexeChange = (newSexe) => {
         let updatedState = isLiked.map((isLikedItem) =>
@@ -87,7 +87,15 @@ const FolderCreateForm = props => {
     const sendFormToAPI = () => {
         let method = props.IsEditing ? "update": "create";
         const url = AnalyseConfig.API_URL + "dossier/" + method;
+        const formObj = {
+            prenom: firstName,
+            nom: lastName,
+            dateNaissance: date,
+            sexe: sexe,
+          };
 
+          const body = JSON.stringify(formObj);
+          
         fetch(url, {
             method: 'POST',
             headers: {
@@ -97,7 +105,19 @@ const FolderCreateForm = props => {
             body: body,
             Cache: 'default'
         }).then((response) => {
-            console.log(response);
+            if (response.ok) {
+                props.onChangeState(0);
+              } else {
+                Alert.alert(
+                  'Erreur de connexion',
+                  "Un erreur s'est produite lors de la connexion au serveur.",
+                  [
+                    {
+                      text: 'Ok',
+                    },
+                  ],
+                );
+              }
         }).catch((error) => {
             console.log(error);
         })
@@ -137,45 +157,47 @@ const FolderCreateForm = props => {
             <Button title="Annuler" onPress={() => props.onChangeState(0)}></Button>
         </View>
     );
-}
-
+    setIsLiked(updatedState);
+    setSexe(newSexe);
+  };
+  
 const styles = StyleSheet.create({
-    container: {
-        flex: 0.8,
-        margin: 5,
-        borderColor: '#808080',
-        borderWidth: 2,
-        borderRadius: 5,
-        borderStyle: 'solid',
-        paddingTop: '2%',
-        paddingBottom: '2%',
-        paddingLeft: '5%',
-        paddingRight: '5%',
-    },
-    title: {
-        fontSize: 50,
-        marginBottom: 20,
-    },
-    formRow: {
-        width: '100%',
-        minHeight: 40,
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        marginBottom: '1%',
-    },
-    formLabel: {
-        width: '15%'
-    },
-    formInput: {
-        width: '85%',
-    },
-    radioButton: {
-        marginBottom: '2%'
-    },
-    button: {
-        marginBottom: '30px'
-    }
+  container: {
+    flex: 0.8,
+    margin: 5,
+    borderColor: '#808080',
+    borderWidth: 2,
+    borderRadius: 5,
+    borderStyle: 'solid',
+    paddingTop: '2%',
+    paddingBottom: '2%',
+    paddingLeft: '5%',
+    paddingRight: '5%',
+  },
+  title: {
+    fontSize: 50,
+    marginBottom: 20,
+  },
+  formRow: {
+    width: '100%',
+    minHeight: 40,
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginBottom: '1%',
+  },
+  formLabel: {
+    width: '15%',
+  },
+  formInput: {
+    width: '85%',
+  },
+  radioButton: {
+    marginBottom: '2%',
+  },
+  button: {
+    marginBottom: 30,
+  },
 });
 
 export default FolderCreateForm;
