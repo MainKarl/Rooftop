@@ -1,4 +1,5 @@
 using API_AnalyseSanguine.Context.Data;
+using API_AnalyseSanguine.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,7 @@ builder.Services.AddFluentValidation(options =>
     // Automatic registration of validators in assembly
     options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 });
+builder.Services.AddScoped<IDossierService, DossierService>();
 
 var app = builder.Build();
 

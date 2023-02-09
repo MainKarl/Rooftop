@@ -59,7 +59,7 @@ const RequestDetails = props => {
               </Text>
               <Text style={styles.infoText}>
                 Nom du médecin:{' '}
-                <Text style={styles.actualInfo}>{ }</Text>
+                <Text style={styles.actualInfo}>{request.medecin.prenom + " " + request.medecin.nom}</Text>
               </Text>
               <Text style={styles.infoText}>
                 Nom du technicien:{' '}

@@ -37,7 +37,7 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-                var item = _context.RequeteAnalyses.Find(id);
+                var item = _context.RequeteAnalyses.Include("Medecin").First(x=>x.IdRequete == id);
                 if (item == null)
                     return NotFound();
 
