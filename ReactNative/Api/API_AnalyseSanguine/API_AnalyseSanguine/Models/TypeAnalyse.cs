@@ -10,6 +10,8 @@ namespace API_AnalyseSanguine.Models
         [Required]
         public string Nom { get; set; }
 
+        public Category Category { get; set; }
+
 
         //Lien
         [Required]

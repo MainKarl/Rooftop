@@ -8,9 +8,10 @@ namespace API_AnalyseSanguine.Models
         [Required]
         public int IdTypeValeur { get; set; }
         [Required]
-        public string Unite { get; set; }
+        public string Reference { get; set; }
         [Required]
         public string Nom { get; set; }
+
 
         //Lien
         [Required]
