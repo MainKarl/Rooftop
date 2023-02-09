@@ -10,6 +10,7 @@ import {
 import DatetimePicker from '@react-native-community/datetimepicker';
 import CustomRadioButton from './CustomRadioButton';
 import AnalyseConfig from '../analyseConfig.json';
+import AlertConnectionFailed from './AlertConnectionFailed';
 import { create } from 'react-test-renderer';
 
 const FolderCreateForm = props => {
@@ -26,7 +27,12 @@ const FolderCreateForm = props => {
 
     useEffect(()=> {
         if(props.IsEditing){
-            const url = AnalyseConfig.API_URL + 'dossier/getdetaille?id=' + props.selectedFolder;
+            getDetail()
+        }
+    }, [])
+
+    function getDetail(){
+        const url = AnalyseConfig.API_URL + 'dossier/getdetaille?id=' + props.selectedFolder;
             fetch(url)
             .then((response) => {
                 if (response.ok) {
@@ -41,16 +47,15 @@ const FolderCreateForm = props => {
                     });
                 }
                 else {
-                    console.log(response);
+                    AlertConnectionFailed(getDetail)
                     return
                 }
     
             }).catch((error) => {
-                console.log(error);
+                AlertConnectionFailed(getDetail)
                 return
             });
-        }
-    }, [])
+    }
 
     const onFirstNameChange = (newFirstName) => {
         setFirstName(newFirstName);
@@ -110,18 +115,10 @@ const FolderCreateForm = props => {
             if (response.ok) {
                 props.onChangeState(0);
               } else {
-                Alert.alert(
-                  'Erreur de connexion',
-                  "Un erreur s'est produite lors de la connexion au serveur.",
-                  [
-                    {
-                      text: 'Ok',
-                    },
-                  ],
-                );
+                AlertConnectionFailed(sendFormToAPI)
               }
         }).catch((error) => {
-            console.log(error);
+            AlertConnectionFailed(sendFormToAPI)
         })
     }
 
