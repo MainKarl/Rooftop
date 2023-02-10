@@ -70,7 +70,7 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-                _service.UpdateDossier(dossier.IdDossier, dossier);
+                var result = _service.UpdateDossier(dossier.IdDossier, dossier);
                 return StatusCode(200, result);
             }
             catch

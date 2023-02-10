@@ -116,7 +116,6 @@ const FolderDetails = props => {
                 </View>
               </View>
             </View>
-            <View style={styles.requetesEtResultat}>
               <View style={styles.addButton}>
                 <Button
                   style={{}}
@@ -124,6 +123,7 @@ const FolderDetails = props => {
                   onPress={() => updateformAddRequeteVisible()}
                 />
               </View>
+            <View style={styles.requetesEtResultat}>
               <RequestList requests={patientInfo.lstRequetes} onSelectedRequest={props.onSelectedRequest} onChangeState={props.onChangeState} />
             </View>
           </View>
@@ -168,6 +168,12 @@ const styles = StyleSheet.create({
     marginTop: 300,
   },
   addButton: {
+    borderWidth: 2,
+    borderRadius: 5,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderStyle: 'solid',
+    borderColor:PlatformColor('SystemAccentColor'),
     backgroundColor: PlatformColor('SystemAccentColor'),
     marginBottom: 0,
   },
@@ -185,8 +191,11 @@ const styles = StyleSheet.create({
   requetesEtResultat: {
     flex: 0.8,
     borderColor: '#808080',
+    borderTopWidth: 0,
     borderWidth: 2,
     borderRadius: 5,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     borderStyle: 'solid',
   },
   flexHalf: {

@@ -48,6 +48,16 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             Id = 2,
                             Name = "Hématologie"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Analyse de biochimie"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Routine d'urine"
                         });
                 });
 
@@ -223,7 +233,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 1,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("0710b8a5-b192-493d-88f3-e245ea00169f"),
+                            CodeAcces = new Guid("807f612b-79e2-4c55-9040-4690df4c1d5d"),
                             DateEchantillon = new DateTime(2022, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 1,
                             MedecinIdMedecin = 1,
@@ -233,7 +243,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 2,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("d352e2fa-aa89-4dbf-9cb6-d3e761970212"),
+                            CodeAcces = new Guid("c53cb796-37fe-453b-a36f-cbf13a9afb25"),
                             DateEchantillon = new DateTime(2017, 8, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 1,
                             MedecinIdMedecin = 7,
@@ -243,7 +253,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 3,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("ee29df4b-cd5a-47f5-be14-ef7cc446ab78"),
+                            CodeAcces = new Guid("c1c8ec8a-f41d-4176-936f-0e4554d1b787"),
                             DateEchantillon = new DateTime(2001, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 1,
                             MedecinIdMedecin = 3,
@@ -253,7 +263,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 4,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("a854811a-c216-493c-8d3a-8b807713bef6"),
+                            CodeAcces = new Guid("ab003408-6932-44fa-98d7-475b15715636"),
                             DateEchantillon = new DateTime(2014, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 2,
                             MedecinIdMedecin = 10,
@@ -263,7 +273,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 5,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("df3fd9dd-7ff6-4e4e-86d7-e8513888a884"),
+                            CodeAcces = new Guid("3bb93ca3-2d8d-464c-a7ba-ae74a5df9f1f"),
                             DateEchantillon = new DateTime(2006, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 2,
                             MedecinIdMedecin = 4,
@@ -273,7 +283,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 6,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("cf8bb042-749d-4151-9490-9698a20fe6ca"),
+                            CodeAcces = new Guid("1d7c8c45-6fe4-483a-bade-39444f06f603"),
                             DateEchantillon = new DateTime(2009, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 2,
                             MedecinIdMedecin = 9,
@@ -331,123 +341,405 @@ namespace API_AnalyseSanguine.Migrations
                     b.HasData(
                         new
                         {
-                            IdTypeAnalyse = 18,
+                            IdTypeAnalyse = 1,
                             CategoryId = 1,
                             Nom = "TS"
                         },
                         new
                         {
-                            IdTypeAnalyse = 19,
+                            IdTypeAnalyse = 2,
                             CategoryId = 1,
                             Nom = "To"
                         },
                         new
                         {
-                            IdTypeAnalyse = 20,
+                            IdTypeAnalyse = 3,
                             CategoryId = 1,
                             Nom = "PTT"
                         },
                         new
                         {
-                            IdTypeAnalyse = 21,
+                            IdTypeAnalyse = 4,
                             CategoryId = 1,
                             Nom = "PT"
                         },
                         new
                         {
-                            IdTypeAnalyse = 22,
+                            IdTypeAnalyse = 5,
                             CategoryId = 1,
                             Nom = "TT"
                         },
                         new
                         {
-                            IdTypeAnalyse = 23,
+                            IdTypeAnalyse = 6,
                             CategoryId = 1,
                             Nom = "Fibrinogène"
                         },
                         new
                         {
-                            IdTypeAnalyse = 24,
+                            IdTypeAnalyse = 7,
                             CategoryId = 1,
                             Nom = "Facteur"
                         },
                         new
                         {
-                            IdTypeAnalyse = 25,
+                            IdTypeAnalyse = 8,
                             CategoryId = 1,
                             Nom = "D-dimères"
                         },
                         new
                         {
-                            IdTypeAnalyse = 26,
+                            IdTypeAnalyse = 9,
                             CategoryId = 1,
                             Nom = "fVW"
                         },
                         new
                         {
-                            IdTypeAnalyse = 27,
+                            IdTypeAnalyse = 10,
                             CategoryId = 1,
                             Nom = "LA Screen"
                         },
                         new
                         {
-                            IdTypeAnalyse = 28,
+                            IdTypeAnalyse = 11,
                             CategoryId = 1,
                             Nom = "Anti-Xa"
                         },
                         new
                         {
-                            IdTypeAnalyse = 29,
+                            IdTypeAnalyse = 12,
                             CategoryId = 1,
                             Nom = "Prt C"
                         },
                         new
                         {
-                            IdTypeAnalyse = 30,
+                            IdTypeAnalyse = 13,
                             CategoryId = 1,
                             Nom = "Prt S"
                         },
                         new
                         {
-                            IdTypeAnalyse = 31,
+                            IdTypeAnalyse = 14,
                             CategoryId = 1,
                             Nom = "PLG"
                         },
                         new
                         {
-                            IdTypeAnalyse = 32,
+                            IdTypeAnalyse = 15,
                             CategoryId = 1,
                             Nom = "AP"
                         },
                         new
                         {
-                            IdTypeAnalyse = 33,
+                            IdTypeAnalyse = 16,
                             CategoryId = 2,
                             Nom = "FSC num."
                         },
                         new
                         {
-                            IdTypeAnalyse = 34,
+                            IdTypeAnalyse = 17,
                             CategoryId = 2,
                             Nom = "Plt"
                         },
                         new
                         {
-                            IdTypeAnalyse = 35,
+                            IdTypeAnalyse = 18,
                             CategoryId = 2,
                             Nom = "Micro"
                         },
                         new
                         {
-                            IdTypeAnalyse = 36,
+                            IdTypeAnalyse = 19,
                             CategoryId = 2,
                             Nom = "VS"
                         },
                         new
                         {
-                            IdTypeAnalyse = 37,
+                            IdTypeAnalyse = 20,
                             CategoryId = 2,
                             Nom = "FSC diff."
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 21,
+                            CategoryId = 3,
+                            Nom = "ALP"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 22,
+                            CategoryId = 3,
+                            Nom = "ALT"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 23,
+                            CategoryId = 3,
+                            Nom = "Amylase"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 24,
+                            CategoryId = 3,
+                            Nom = "AST"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 25,
+                            CategoryId = 3,
+                            Nom = "GGT"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 26,
+                            CategoryId = 3,
+                            Nom = "Lipase"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 27,
+                            CategoryId = 3,
+                            Nom = "Créatinine sérique"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 28,
+                            CategoryId = 3,
+                            Nom = "Créatinine urinaire"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 29,
+                            CategoryId = 3,
+                            Nom = "Acide urique"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 30,
+                            CategoryId = 3,
+                            Nom = "Urée"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 31,
+                            CategoryId = 3,
+                            Nom = "Clairance de la créatinine"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 32,
+                            CategoryId = 3,
+                            Nom = "Bilirubine totale"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 33,
+                            CategoryId = 3,
+                            Nom = "Bilirubine conjuguée"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 34,
+                            CategoryId = 3,
+                            Nom = "Troponine"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 35,
+                            CategoryId = 3,
+                            Nom = "Protéine C-réactive"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 36,
+                            CategoryId = 3,
+                            Nom = "BNP"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 37,
+                            CategoryId = 3,
+                            Nom = "Potassium"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 38,
+                            CategoryId = 3,
+                            Nom = "Sodium"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 39,
+                            CategoryId = 3,
+                            Nom = "Chlorure"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 40,
+                            CategoryId = 3,
+                            Nom = "HCO3"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 41,
+                            CategoryId = 3,
+                            Nom = "pH"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 42,
+                            CategoryId = 3,
+                            Nom = "pCO2"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 43,
+                            CategoryId = 3,
+                            Nom = "pO2"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 44,
+                            CategoryId = 3,
+                            Nom = "Excès de bases"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 45,
+                            CategoryId = 3,
+                            Nom = "Glucose"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 46,
+                            CategoryId = 3,
+                            Nom = "Triglycérides"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 47,
+                            CategoryId = 3,
+                            Nom = "HDL-cholestérol"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 48,
+                            CategoryId = 3,
+                            Nom = "LDL-cholestérol"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 49,
+                            CategoryId = 3,
+                            Nom = "Cholestérol total"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 50,
+                            CategoryId = 3,
+                            Nom = "Protéines totales"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 51,
+                            CategoryId = 3,
+                            Nom = "Albumine"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 52,
+                            CategoryId = 3,
+                            Nom = "b-HCG qualitatif"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 53,
+                            CategoryId = 3,
+                            Nom = "Drogues de rue"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 54,
+                            CategoryId = 3,
+                            Nom = "Éthanol"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 55,
+                            CategoryId = 3,
+                            Nom = "Microscopie urinaire"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 56,
+                            CategoryId = 3,
+                            Nom = "Osmolarité urinaire"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 57,
+                            CategoryId = 3,
+                            Nom = "Osmolarité sérique"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 58,
+                            CategoryId = 4,
+                            Nom = "Glucose"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 59,
+                            CategoryId = 4,
+                            Nom = "Corps cétoniques"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 60,
+                            CategoryId = 4,
+                            Nom = "Densité"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 61,
+                            CategoryId = 4,
+                            Nom = "Sang"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 62,
+                            CategoryId = 4,
+                            Nom = "pH"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 63,
+                            CategoryId = 4,
+                            Nom = "Protéines"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 64,
+                            CategoryId = 4,
+                            Nom = "Leucocytes"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 65,
+                            CategoryId = 4,
+                            Nom = "Nitrites"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 66,
+                            CategoryId = 4,
+                            Nom = "Bilirubine"
+                        },
+                        new
+                        {
+                            IdTypeAnalyse = 67,
+                            CategoryId = 4,
+                            Nom = "Urobilinogène"
                         });
                 });
 
@@ -467,14 +759,443 @@ namespace API_AnalyseSanguine.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TypeAnalyseIdTypeAnalyse")
+                    b.Property<int>("TypeAnalyseId")
                         .HasColumnType("int");
 
                     b.HasKey("IdTypeValeur");
 
-                    b.HasIndex("TypeAnalyseIdTypeAnalyse");
+                    b.HasIndex("TypeAnalyseId");
 
                     b.ToTable("TypeValeurs");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTypeValeur = 1,
+                            Nom = "TS",
+                            Reference = "4-8 min",
+                            TypeAnalyseId = 1
+                        },
+                        new
+                        {
+                            IdTypeValeur = 2,
+                            Nom = "To",
+                            Reference = "EPI: 80-150 secs,ADP: 60-100 secs",
+                            TypeAnalyseId = 2
+                        },
+                        new
+                        {
+                            IdTypeValeur = 3,
+                            Nom = "PTT",
+                            Reference = "22.0-40.0 secs",
+                            TypeAnalyseId = 3
+                        },
+                        new
+                        {
+                            IdTypeValeur = 4,
+                            Nom = "PT",
+                            Reference = "11.0-14.0 secs",
+                            TypeAnalyseId = 4
+                        },
+                        new
+                        {
+                            IdTypeValeur = 5,
+                            Nom = "TT",
+                            Reference = "≤ 24.0 secs",
+                            TypeAnalyseId = 5
+                        },
+                        new
+                        {
+                            IdTypeValeur = 6,
+                            Nom = "Fibrinogène",
+                            Reference = "2.0-4.0 g/L",
+                            TypeAnalyseId = 6
+                        },
+                        new
+                        {
+                            IdTypeValeur = 7,
+                            Nom = "Facteur",
+                            Reference = "50-150 %",
+                            TypeAnalyseId = 7
+                        },
+                        new
+                        {
+                            IdTypeValeur = 8,
+                            Nom = "D-dimères",
+                            Reference = "<0.50 µg/mL",
+                            TypeAnalyseId = 8
+                        },
+                        new
+                        {
+                            IdTypeValeur = 9,
+                            Nom = "fVW",
+                            Reference = "50-160 %",
+                            TypeAnalyseId = 9
+                        },
+                        new
+                        {
+                            IdTypeValeur = 10,
+                            Nom = "LA Screen",
+                            Reference = "≥1.20",
+                            TypeAnalyseId = 10
+                        },
+                        new
+                        {
+                            IdTypeValeur = 11,
+                            Nom = "Anti-Xa",
+                            Reference = "0.50-1.00 Ul-mL",
+                            TypeAnalyseId = 11
+                        },
+                        new
+                        {
+                            IdTypeValeur = 12,
+                            Nom = "Prt C",
+                            Reference = "70-130 %",
+                            TypeAnalyseId = 12
+                        },
+                        new
+                        {
+                            IdTypeValeur = 13,
+                            Nom = "Prt S",
+                            Reference = "70-130 %",
+                            TypeAnalyseId = 13
+                        },
+                        new
+                        {
+                            IdTypeValeur = 14,
+                            Nom = "PLG",
+                            Reference = "80-120 %",
+                            TypeAnalyseId = 14
+                        },
+                        new
+                        {
+                            IdTypeValeur = 15,
+                            Nom = "AP",
+                            Reference = "80-120 %",
+                            TypeAnalyseId = 15
+                        },
+                        new
+                        {
+                            IdTypeValeur = 16,
+                            Nom = "ALP",
+                            Reference = "<100 U/L *selon l'âge du patient",
+                            TypeAnalyseId = 21
+                        },
+                        new
+                        {
+                            IdTypeValeur = 17,
+                            Nom = "ALT",
+                            Reference = "0-37 U/L",
+                            TypeAnalyseId = 22
+                        },
+                        new
+                        {
+                            IdTypeValeur = 18,
+                            Nom = "Amylase",
+                            Reference = "<130 U/L",
+                            TypeAnalyseId = 23
+                        },
+                        new
+                        {
+                            IdTypeValeur = 19,
+                            Nom = "AST",
+                            Reference = "5-34 U/L",
+                            TypeAnalyseId = 24
+                        },
+                        new
+                        {
+                            IdTypeValeur = 20,
+                            Nom = "GGT",
+                            Reference = "<40 U/L",
+                            TypeAnalyseId = 25
+                        },
+                        new
+                        {
+                            IdTypeValeur = 21,
+                            Nom = "Lipase",
+                            Reference = "<200 U/L",
+                            TypeAnalyseId = 26
+                        },
+                        new
+                        {
+                            IdTypeValeur = 22,
+                            Nom = "Créatinine sérique",
+                            Reference = "57-92 umol/L",
+                            TypeAnalyseId = 27
+                        },
+                        new
+                        {
+                            IdTypeValeur = 23,
+                            Nom = "Créatinine urinaire",
+                            Reference = "9-18 mmol/24h",
+                            TypeAnalyseId = 28
+                        },
+                        new
+                        {
+                            IdTypeValeur = 24,
+                            Nom = "Acide urique",
+                            Reference = "210-460 umol/L",
+                            TypeAnalyseId = 29
+                        },
+                        new
+                        {
+                            IdTypeValeur = 25,
+                            Nom = "Urée",
+                            Reference = "2.5-6.4 mmol/L",
+                            TypeAnalyseId = 30
+                        },
+                        new
+                        {
+                            IdTypeValeur = 26,
+                            Nom = "Clairance de la créatinine",
+                            Reference = "1-3 mL/s",
+                            TypeAnalyseId = 31
+                        },
+                        new
+                        {
+                            IdTypeValeur = 27,
+                            Nom = "Bilirubine totale",
+                            Reference = "3.4 - 22 umol/L",
+                            TypeAnalyseId = 32
+                        },
+                        new
+                        {
+                            IdTypeValeur = 28,
+                            Nom = "Bilirubine conjuguée",
+                            Reference = "1.7 - 5 umol/L",
+                            TypeAnalyseId = 33
+                        },
+                        new
+                        {
+                            IdTypeValeur = 29,
+                            Nom = "Troponine",
+                            Reference = "< 0.4ug/L",
+                            TypeAnalyseId = 34
+                        },
+                        new
+                        {
+                            IdTypeValeur = 30,
+                            Nom = "Protéine C-réactive",
+                            Reference = "< 10mg/L",
+                            TypeAnalyseId = 35
+                        },
+                        new
+                        {
+                            IdTypeValeur = 31,
+                            Nom = "BNP",
+                            Reference = "< 100pg/mL",
+                            TypeAnalyseId = 36
+                        },
+                        new
+                        {
+                            IdTypeValeur = 32,
+                            Nom = "Potassium",
+                            Reference = "3.5-5 mmol/L",
+                            TypeAnalyseId = 37
+                        },
+                        new
+                        {
+                            IdTypeValeur = 33,
+                            Nom = "Sodium",
+                            Reference = "135-145 mmol/L",
+                            TypeAnalyseId = 38
+                        },
+                        new
+                        {
+                            IdTypeValeur = 34,
+                            Nom = "Chlorure",
+                            Reference = "98-108 mmol/L",
+                            TypeAnalyseId = 39
+                        },
+                        new
+                        {
+                            IdTypeValeur = 35,
+                            Nom = "HCO3",
+                            Reference = "22-28 mmol/L",
+                            TypeAnalyseId = 40
+                        },
+                        new
+                        {
+                            IdTypeValeur = 36,
+                            Nom = "pH",
+                            Reference = "7.35-7.45",
+                            TypeAnalyseId = 41
+                        },
+                        new
+                        {
+                            IdTypeValeur = 37,
+                            Nom = "pCO2",
+                            Reference = "35-45 mmHg",
+                            TypeAnalyseId = 42
+                        },
+                        new
+                        {
+                            IdTypeValeur = 38,
+                            Nom = "pO2",
+                            Reference = "80-100 mmHg",
+                            TypeAnalyseId = 43
+                        },
+                        new
+                        {
+                            IdTypeValeur = 39,
+                            Nom = "Excès de bases",
+                            Reference = "-2 à +2 mmol/L",
+                            TypeAnalyseId = 44
+                        },
+                        new
+                        {
+                            IdTypeValeur = 40,
+                            Nom = "Glucose",
+                            Reference = "Aci3.5-5",
+                            TypeAnalyseId = 45
+                        },
+                        new
+                        {
+                            IdTypeValeur = 41,
+                            Nom = "Triglycérides",
+                            Reference = "<1.7 mmol/L",
+                            TypeAnalyseId = 46
+                        },
+                        new
+                        {
+                            IdTypeValeur = 42,
+                            Nom = "HDL-cholestérol",
+                            Reference = ">1.0 mmol/L",
+                            TypeAnalyseId = 47
+                        },
+                        new
+                        {
+                            IdTypeValeur = 43,
+                            Nom = "LDL-cholestérol",
+                            Reference = "<2.5 mmol/L",
+                            TypeAnalyseId = 48
+                        },
+                        new
+                        {
+                            IdTypeValeur = 44,
+                            Nom = "Cholestérol total",
+                            Reference = "<5.2 mmol/L",
+                            TypeAnalyseId = 49
+                        },
+                        new
+                        {
+                            IdTypeValeur = 45,
+                            Nom = "Protéines totales",
+                            Reference = "60-80 g/L",
+                            TypeAnalyseId = 50
+                        },
+                        new
+                        {
+                            IdTypeValeur = 46,
+                            Nom = "Albumine",
+                            Reference = "35-50 g/L",
+                            TypeAnalyseId = 51
+                        },
+                        new
+                        {
+                            IdTypeValeur = 47,
+                            Nom = "b-HCG qualitatif",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 52
+                        },
+                        new
+                        {
+                            IdTypeValeur = 48,
+                            Nom = "Drogues de rue",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 53
+                        },
+                        new
+                        {
+                            IdTypeValeur = 49,
+                            Nom = "Éthanol",
+                            Reference = "0 mmol/L",
+                            TypeAnalyseId = 54
+                        },
+                        new
+                        {
+                            IdTypeValeur = 50,
+                            Nom = "Osmolarité urinaire",
+                            Reference = "540 mosmol/kg",
+                            TypeAnalyseId = 56
+                        },
+                        new
+                        {
+                            IdTypeValeur = 51,
+                            Nom = "Osmolarité sérique",
+                            Reference = "290 mosmol/kg",
+                            TypeAnalyseId = 57
+                        },
+                        new
+                        {
+                            IdTypeValeur = 52,
+                            Nom = "Glucose",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 58
+                        },
+                        new
+                        {
+                            IdTypeValeur = 53,
+                            Nom = "Corps cétoniques",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 59
+                        },
+                        new
+                        {
+                            IdTypeValeur = 54,
+                            Nom = "Densité",
+                            Reference = "1.005-1.030",
+                            TypeAnalyseId = 60
+                        },
+                        new
+                        {
+                            IdTypeValeur = 55,
+                            Nom = "Sang",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 61
+                        },
+                        new
+                        {
+                            IdTypeValeur = 56,
+                            Nom = "pH",
+                            Reference = "4-8",
+                            TypeAnalyseId = 62
+                        },
+                        new
+                        {
+                            IdTypeValeur = 57,
+                            Nom = "Protéines",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 63
+                        },
+                        new
+                        {
+                            IdTypeValeur = 58,
+                            Nom = "Leucocytes",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 64
+                        },
+                        new
+                        {
+                            IdTypeValeur = 59,
+                            Nom = "Nitrites",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 65
+                        },
+                        new
+                        {
+                            IdTypeValeur = 60,
+                            Nom = "Bilirubine",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 66
+                        },
+                        new
+                        {
+                            IdTypeValeur = 61,
+                            Nom = "Urobilinogène",
+                            Reference = "Négatif",
+                            TypeAnalyseId = 67
+                        });
                 });
 
             modelBuilder.Entity("RequeteAnalyseTypeAnalyse", b =>
@@ -501,7 +1222,7 @@ namespace API_AnalyseSanguine.Migrations
                         .IsRequired();
 
                     b.HasOne("API_AnalyseSanguine.Models.Medecin", "Medecin")
-                        .WithMany("LstRequetes")
+                        .WithMany()
                         .HasForeignKey("MedecinIdMedecin")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -545,7 +1266,7 @@ namespace API_AnalyseSanguine.Migrations
                 {
                     b.HasOne("API_AnalyseSanguine.Models.TypeAnalyse", "TypeAnalyse")
                         .WithMany("LstValeurs")
-                        .HasForeignKey("TypeAnalyseIdTypeAnalyse")
+                        .HasForeignKey("TypeAnalyseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -573,11 +1294,6 @@ namespace API_AnalyseSanguine.Migrations
                 });
 
             modelBuilder.Entity("API_AnalyseSanguine.Models.Dossier", b =>
-                {
-                    b.Navigation("LstRequetes");
-                });
-
-            modelBuilder.Entity("API_AnalyseSanguine.Models.Medecin", b =>
                 {
                     b.Navigation("LstRequetes");
                 });

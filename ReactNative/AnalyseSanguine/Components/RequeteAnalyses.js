@@ -29,12 +29,27 @@ const RequeteAnalyses = props => {
       <View style={styles.flex}>
       {
         props.analyses.map((category) => (
-          <View style={styles.flexItem}>
-            <Text style={{fontWeight: 'bold', fontSize: 30}}>{category.name}</Text>
+          <View style={{marginBottom: 45}}>
+            <View style={{marginBottom:15}}>
+            <Text style={{fontWeight: 'bold', fontSize: 30,}}>{category.name}</Text>
+            <View
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                borderColor: '#808080',
+                borderBottomWidth: 1,
+                paddingLeft: 10,
+                paddingRight: 20,
+              }}
+            />
+            </View>
+          <View style={styles.flexd}>
             {category.typeAnalyseList.map((type) => (
+
               <TypeAnalyse typecourant={type} />
+
             )
             )}
+                </View>
           </View>
           )
         )
@@ -46,13 +61,17 @@ const RequeteAnalyses = props => {
 export const TypeAnalyse = props => {
 
   return (
-    <View style={styles.flex}>
-      <CheckBox 
-        disable={false}
-        value={false}
-      />
-      <Text style={{marginTop:5}}>{props.typecourant.nom}</Text>
+
+    <View style={styles.flex2}>
+      <View style={styles.innerFlex}>
+        <CheckBox 
+          disable={false}
+          value={false}
+        />
+        <Text style={{marginTop:5}}>{props.typecourant.nom}</Text>
+      </View>
     </View>
+
   )
 }
 
@@ -62,20 +81,33 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15
   },
+  flexd: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  flex2: {
+    width: '25%'
+  },
   flex: {
     display:'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     flexWrap:'wrap',
-    paddingLeft: 10,
-    marginBottom: 5
+    marginLeft: 20
   },
   flexItem: {
-    flex: 0.3
+    display:'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   },
   texteErreur: {
     textAlign: 'center',
     marginTop: 300,
   },
+  innerFlex: {
+    display: 'flex',
+    flexDirection: 'row',
+  }
 
 });
 
