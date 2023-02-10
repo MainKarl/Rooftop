@@ -1,4 +1,4 @@
-﻿using API_AnalyseSanguine.Context.Data;
+using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +70,7 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-                var result = _service.UpdateDossier(dossier.IdDossier, dossier);
+                var result =_service.UpdateDossier(dossier.IdDossier, dossier);
                 return StatusCode(200, result);
             }
             catch
