@@ -34,6 +34,9 @@ builder.Services.AddFluentValidation(options =>
     options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 });
 builder.Services.AddScoped<IDossierService, DossierService>();
+builder.Services.AddScoped<IMedecinService, MedecinService>();
+builder.Services.AddScoped<IRequeteService, RequeteService>();
+builder.Services.AddScoped<IResultatService, ResultatService>();
 
 var app = builder.Build();
 

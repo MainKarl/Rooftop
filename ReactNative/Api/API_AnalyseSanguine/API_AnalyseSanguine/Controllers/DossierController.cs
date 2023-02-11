@@ -28,11 +28,15 @@ namespace API_AnalyseSanguine.Controllers
             try
             {
                 var result = _service.GetDossierSimple();
+                if (result == null)
+                {
+                    return Problem();
+                }
                 return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
@@ -42,11 +46,15 @@ namespace API_AnalyseSanguine.Controllers
             try
             {
                 var result = _service.GetDossierDetaille(id);
+                if (result == null)
+                {
+                    return Problem();
+                }
                 return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
@@ -57,11 +65,15 @@ namespace API_AnalyseSanguine.Controllers
             try
             {
                 var result = _service.CreateDossier(dossier);
+                if (result == null)
+                {
+                    return Problem();
+                }
                 return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
@@ -71,11 +83,15 @@ namespace API_AnalyseSanguine.Controllers
             try
             {
                 var result = _service.UpdateDossier(id, dossier);
+                if (result == null)
+                {
+                    return Problem();
+                }
                 return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
@@ -85,11 +101,15 @@ namespace API_AnalyseSanguine.Controllers
             try
             {
                 var result = _service.DeleteDossier(id);
+                if (result == false)
+                {
+                    return Problem();
+                }
                 return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
     }

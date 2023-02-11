@@ -1,5 +1,6 @@
 ﻿using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Models;
+using API_AnalyseSanguine.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_AnalyseSanguine.Controllers
@@ -9,99 +10,100 @@ namespace API_AnalyseSanguine.Controllers
     [Produces("application/json")]
     public class ResultatController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IResultatService _service;
 
-        public ResultatController(ApplicationDbContext context)
+        public ResultatController(IResultatService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Dossier>> GetAllResultat()
+        public async Task<IActionResult> GetAllResultat()
         {
             try
             {
-                var list = _context.ResultatAnalyses.ToList();
-                return Ok(list);
+                var result = _service.GetAllResultat();
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<Dossier>> GetResultat(int id)
+        public async Task<IActionResult> GetResultat(int id)
         {
             try
             {
-                var item = _context.ResultatAnalyses.Find(id);
-                if (item == null)
-                    return NotFound();
-
-                return Ok(item); ;
+                var result = _service.GetResultat(id);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpPost("create")]
-        public ActionResult CreateResultat(ResultatAnalyse resultat)
+        public async Task<IActionResult> CreateResultat(ResultatAnalyse resultat)
         {
             try
             {
-                _context.ResultatAnalyses.Add(resultat);
-                _context.SaveChanges();
-
-                return Ok(resultat);
+                var result = _service.CreateResultat(resultat);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateResultat(int id, ResultatAnalyse resultat)
+        public async Task<IActionResult> UpdateResultat(int id, ResultatAnalyse resultat)
         {
             try
             {
-                var item = _context.ResultatAnalyses.Find(id);
-
-                if (item == null)
-                    return NotFound();
-
-                item.Valeur = resultat.Valeur;
-                _context.SaveChanges();
-
-                return Ok();
+                var result = _service.UpdateResultat(id, resultat);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteDossier(int id)
+        public async Task<IActionResult> DeleteResultat(int id)
         {
             try
             {
-                var item = _context.ResultatAnalyses.Find(id);
-
-                if (item == null)
-                    return NotFound();
-
-                _context.ResultatAnalyses.Remove(item);
-                _context.SaveChanges();
-
-                return Ok();
+                var result = _service.DeleteResultat(id);
+                if (result == false)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
     }

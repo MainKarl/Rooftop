@@ -63,13 +63,13 @@ namespace API.Tests
         [TestMethod]
         public async Task CreateDossier()
         {
-            var employee = _fixture.Create<Dossier>();
+            var dossier = _fixture.Create<Dossier>();
 
-            _service.Setup(repo => repo.CreateDossier(It.IsAny<Dossier>())).Returns(employee);
+            _service.Setup(repo => repo.CreateDossier(It.IsAny<Dossier>())).Returns(dossier);
 
             _controller = new DossierController(_service.Object);
 
-            var result = await _controller.CreateDossier(employee);
+            var result = await _controller.CreateDossier(dossier);
 
             var obj = result as ObjectResult;
 
