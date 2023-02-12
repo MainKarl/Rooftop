@@ -5,6 +5,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +41,7 @@ builder.Services.AddScoped<IRequeteService, RequeteService>();
 builder.Services.AddScoped<IResultatService, ResultatService>();
 builder.Services.AddScoped<ITypeAnalyseService, TypeAnalyseService>();
 builder.Services.AddScoped<ITypeValeurService, TypeValeurService>();
+
 
 var app = builder.Build();
 

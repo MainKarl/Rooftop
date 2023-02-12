@@ -65,7 +65,14 @@ namespace API_AnalyseSanguine.Services
         {
             try
             {
-                return _context.RequeteAnalyses.Include(c => c.Medecin).Where(c => c.IdRequete == id).FirstOrDefault();
+                var result = _context.RequeteAnalyses.Include(a => a.LstTypeAnalyse).Include(c => c.Medecin).Where(c => c.IdRequete == id).FirstOrDefault();
+
+                // Permet d'enlever l'erreur de object cycle
+                foreach (TypeAnalyse item in result.LstTypeAnalyse)
+                {
+                    item.RequeteAnalyses = null;
+                }
+                return result;
             }
             catch (Exception ex)
             {

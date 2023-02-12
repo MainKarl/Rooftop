@@ -1,4 +1,5 @@
 ﻿using API_AnalyseSanguine.Controllers;
+using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using API_AnalyseSanguine.Services.Interfaces;
 using AutoFixture;
@@ -62,13 +63,23 @@ namespace API.Tests
         [TestMethod]
         public async Task CreateRequete()
         {
-            var requete = _fixture.Create<RequeteAnalyse>();
+            var requeteDto = _fixture.Create<CreateRequeteDto>();
+
+            var requete = new RequeteAnalyse()
+            {
+                CodeAcces = Guid.NewGuid(),
+                DateEchantillon = DateTime.Now,
+                DossierIdDossier = requeteDto.DossierIdDossier,
+                MedecinIdMedecin = requeteDto.MedecinIdMedecin,
+                NomTechnicien = requeteDto.NomTechnicien,
+                AnalyseDemande = requeteDto.analyseDemande
+            };
 
             _service.Setup(repo => repo.CreateRequete(It.IsAny<RequeteAnalyse>())).Returns(requete);
 
             _controller = new RequeteController(_service.Object);
 
-            var result = await _controller.CreateRequete(requete);
+            var result = await _controller.CreateRequete(requeteDto);
 
             var obj = result as ObjectResult;
 
