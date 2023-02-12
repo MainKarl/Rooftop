@@ -11,8 +11,6 @@ namespace API_AnalyseSanguine.Controllers
     [Produces("application/json")]
     public class MedecinController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
         private readonly IMedecinService _service;
 
         public MedecinController(IMedecinService service)

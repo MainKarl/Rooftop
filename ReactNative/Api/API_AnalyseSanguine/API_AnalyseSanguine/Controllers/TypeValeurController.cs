@@ -1,5 +1,6 @@
 ﻿using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Models;
+using API_AnalyseSanguine.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_AnalyseSanguine.Controllers
@@ -9,58 +10,64 @@ namespace API_AnalyseSanguine.Controllers
     [Produces("application/json")]
     public class TypeValeurController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITypeValeurService _service;
 
-        public TypeValeurController(ApplicationDbContext context)
+        public TypeValeurController(ITypeValeurService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<TypeValeur>> GetAllTypeValeur()
+        public async Task<IActionResult> GetAllTypeValeur()
         {
             try
             {
-                var item = _context.TypeValeurs.ToList();
-                return Ok(item);
+                var result = _service.GetAllTypeValeur();
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TypeValeur> GetTypeValeur(long id)
+        public async Task<IActionResult> GetTypeValeur(long id)
         {
             try
             {
-                var item = _context.TypeValeurs.Where(a => a.IdTypeValeur == id).FirstOrDefault();
-
-                if (item == null)
-                    return NotFound();
-
-                return Ok(item);
+                var result = _service.GetTypeValeur(id);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpPost("create")]
-        public ActionResult CreateTypeValeur(TypeValeur typeValeur)
+        public async Task<IActionResult> CreateTypeValeur(TypeValeur typeValeur)
         {
             try
             {
-                _context.TypeValeurs.Add(typeValeur);
-                _context.SaveChanges();
-
-                return Ok(typeValeur);
+                var result = _service.CreateTypeValeur(typeValeur);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
     }

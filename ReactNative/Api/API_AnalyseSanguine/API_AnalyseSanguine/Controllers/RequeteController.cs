@@ -11,8 +11,6 @@ namespace API_AnalyseSanguine.Controllers
     [Produces("application/json")]
     public class RequeteController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
         private readonly IRequeteService _service;
 
         public RequeteController(IRequeteService service)

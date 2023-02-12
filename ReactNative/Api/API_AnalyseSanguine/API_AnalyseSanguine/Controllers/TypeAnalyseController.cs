@@ -1,6 +1,9 @@
 ﻿using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Models;
+using API_AnalyseSanguine.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace API_AnalyseSanguine.Controllers
 {
@@ -9,58 +12,82 @@ namespace API_AnalyseSanguine.Controllers
     [Produces("application/json")]
     public class TypeAnalyseController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITypeAnalyseService _service;
 
-        public TypeAnalyseController(ApplicationDbContext context)
+        public TypeAnalyseController(ITypeAnalyseService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<TypeAnalyse>> GetAllTypeAnalyse()
+        [HttpGet("categories")]
+        public async Task<IActionResult> GetAllCategoriesAndTypeAnalyse()
         {
             try
             {
-                var item = _context.TypeAnalyses.ToList();
-                return Ok(item);
+                var result = _service.GetAllCategoriesAndTypeAnalyse();
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllTypeAnalyse()
+        {
+            try
+            {
+                var result = _service.GetAllTypeAnalyse();
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
             }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TypeAnalyse> GetTypeAnalyse(long id)
+        public async Task<IActionResult> GetTypeAnalyse(long id)
         {
             try
             {
-                var item = _context.TypeAnalyses.Where(a => a.IdTypeAnalyse == id).FirstOrDefault();
-
-                if (item == null)
-                    return NotFound();
-
-                return Ok(item);
+                var result = _service.GetTypeAnalyse(id);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpPost("create")]
-        public ActionResult CreateTypeAnalyse(TypeAnalyse typeAnalyse)
+        public async Task<IActionResult> CreateTypeAnalyse(TypeAnalyse typeAnalyse)
         {
             try
             {
-                _context.TypeAnalyses.Add(typeAnalyse);
-                _context.SaveChanges();
-
-                return Ok(typeAnalyse);
+                var result = _service.CreateTypeAnalyse(typeAnalyse);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
     }

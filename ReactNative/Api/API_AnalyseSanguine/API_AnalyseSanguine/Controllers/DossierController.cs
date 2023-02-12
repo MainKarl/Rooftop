@@ -1,4 +1,4 @@
-﻿using API_AnalyseSanguine.Context.Data;
+using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +13,6 @@ namespace API_AnalyseSanguine.Controllers
     [EnableCors("_myAllowSpecificOrigins")]
     public class DossierController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
         private readonly IDossierService _service;
 
         public DossierController(IDossierService service)

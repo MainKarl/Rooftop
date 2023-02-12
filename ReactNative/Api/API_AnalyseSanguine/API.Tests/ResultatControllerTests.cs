@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace API.Tests
 {
+    [TestClass]
     public class ResultatControllerTests
     {
         private Mock<IResultatService> _service;

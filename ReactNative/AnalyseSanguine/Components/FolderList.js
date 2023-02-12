@@ -120,6 +120,7 @@ const FolderList = props => {
   };
 
   const callCreateForm = () => {
+    props.changeEditingMode(false)
     props.onChangeState(1);
   }
 

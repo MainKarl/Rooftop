@@ -37,6 +37,8 @@ builder.Services.AddScoped<IDossierService, DossierService>();
 builder.Services.AddScoped<IMedecinService, MedecinService>();
 builder.Services.AddScoped<IRequeteService, RequeteService>();
 builder.Services.AddScoped<IResultatService, ResultatService>();
+builder.Services.AddScoped<ITypeAnalyseService, TypeAnalyseService>();
+builder.Services.AddScoped<ITypeValeurService, TypeValeurService>();
 
 var app = builder.Build();
 

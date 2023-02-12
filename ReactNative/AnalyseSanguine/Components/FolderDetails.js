@@ -49,42 +49,55 @@ const FolderDetails = props => {
     console.log(formAddRequeteVisible);
   }
 
-  if (DetailVisible) {
+  const callCreateForm = () => {
+    props.changeEditingMode(true)
+    props.onChangeState(1);
+  }
+
+  if (DetailVisible){
     if (patientInfo && patientInfo.idDossier === props.selectedFolder) {
       return (
         <View style={{ flex: 0.8, margin: 5 }}>
           <View style={styles.detailsDisplay}>
             <View style={styles.patientInfo}>
-              <View style={styles.flexHalf}>
-                <Text style={styles.infoText}>
-                  Numéro de dossier:{' '}
-                  <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
-                </Text>
-                <Text style={styles.infoText}>
-                  Nom: <Text style={styles.actualInfo}>{patientInfo.nom}</Text>
-                </Text>
-                <Text style={styles.infoText}>
-                  Prénom:{' '}
-                  <Text style={styles.actualInfo}>{patientInfo.prenom}</Text>
-                </Text>
-                <Text style={styles.infoText}>
-                  Sexe:{' '}
-                  <Text style={styles.actualInfo}>{patientInfo.sexe}</Text>
-                </Text>
-                <Text style={styles.infoText}>
-                  Date de naissance:{' '}
-                  <Text style={styles.actualInfo}>
-                    {patientInfo.dateNaissance}
+            <View style={styles.flexHalf}>
+              <View style={{display:'flex', flexDirection:'row'}}>
+                <View style={{flex:0.7}}>
+                  <Text style={styles.infoText}>
+                    Numéro de dossier:{' '}
+                    <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
                   </Text>
-                </Text>
+                  <Text style={styles.infoText}>
+                    Nom:{' '}
+                    <Text style={styles.actualInfo}>{patientInfo.nom}</Text>
+                  </Text>
+                  <Text style={styles.infoText}>
+                    Prénom:{' '}
+                    <Text style={styles.actualInfo}>{patientInfo.prenom}</Text>
+                  </Text>
+                  <Text style={styles.infoText}>
+                    Sexe:{' '}
+                    <Text style={styles.actualInfo}>{patientInfo.sexe}</Text>
+                  </Text>
+                  <Text style={styles.infoText}>
+                    Date de naissance:{' '}
+                    <Text style={styles.actualInfo}>{patientInfo.dateNaissance}</Text>
+                  </Text>
+                </View>
                 {/* <Text>
-                Numéro d'assurance maladie:{' '}
-                <Text style={styles.actualInfo}>
+                  Numéro d'assurance maladie:{' '}
+                  <Text style={styles.actualInfo}>
                   {patientInfo.NumAssMaladie}
-                </Text>
-              </Text>*/}
-              </View>
-              <View style={styles.flexHalf}>
+                  </Text>
+                </Text>*/}
+                <View style={{flex:0.3}}>
+                  <View style={{width:100}}>
+                    <Button title="Modifier" onPress={callCreateForm}></Button>
+                  </View>
+                </View>
+            </View>
+            </View>
+            <View style={styles.flexHalf}>
                 <Text style={styles.infoText}>Notes:</Text>
                 <TextInput
                   style={{ height: '70%' }}
@@ -103,7 +116,6 @@ const FolderDetails = props => {
                 </View>
               </View>
             </View>
-            <View style={styles.requetesEtResultat}>
               <View style={styles.addButton}>
                 <Button
                   style={{}}
@@ -111,6 +123,7 @@ const FolderDetails = props => {
                   onPress={() => updateformAddRequeteVisible()}
                 />
               </View>
+            <View style={styles.requetesEtResultat}>
               <RequestList requests={patientInfo.lstRequetes} onSelectedRequest={props.onSelectedRequest} onChangeState={props.onChangeState} />
             </View>
           </View>
@@ -155,6 +168,12 @@ const styles = StyleSheet.create({
     marginTop: 300,
   },
   addButton: {
+    borderWidth: 2,
+    borderRadius: 5,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderStyle: 'solid',
+    borderColor:PlatformColor('SystemAccentColor'),
     backgroundColor: PlatformColor('SystemAccentColor'),
     marginBottom: 0,
   },
@@ -172,8 +191,11 @@ const styles = StyleSheet.create({
   requetesEtResultat: {
     flex: 0.8,
     borderColor: '#808080',
+    borderTopWidth: 0,
     borderWidth: 2,
     borderRadius: 5,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     borderStyle: 'solid',
   },
   flexHalf: {
