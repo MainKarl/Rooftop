@@ -4,6 +4,7 @@ import CheckBox from '@react-native-community/checkbox';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AnalyseConfig from '../analyseConfig.json';
 import RequeteAnalyses from './RequeteAnalyses';
+import AlertConnectionFailed from './AlertConnectionFailed';
 
 const ModalAddRequete = props => {
   const CheckboxData = [];
@@ -13,7 +14,49 @@ const ModalAddRequete = props => {
   const [value, setValue] = useState(null);
   const [medecins, setMedecins] = useState([]);
   const [analyses, setAnalyses] = useState([]);
+  const [analyseDemande, setAnalyseDemande] = useState("-");
+  const [nomTechnicien, setNomTechnicien] = useState("");
   const [selectedAnalyses, setselectedAnalyses] = useState([]);
+
+  const onNomTechnicienChange = (nouveauNom) => {
+    setNomTechnicien(nouveauNom);
+  }
+
+
+  function createRequete() {
+      let method = "create";
+      const url = AnalyseConfig.API_URL + "requete/" + method;
+
+      const formObj = {
+        NomTechnicien: nomTechnicien,
+        DossierIdDossier: props.patientInfo.idDossier,
+        MedecinIdMedecin: value,
+        lstAnalyses: selectedAnalyses,
+        analyseDemande: analyseDemande
+      }
+
+      const body = JSON.stringify(formObj);
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: body,
+        cache: 'default'
+      }).then((response) => {
+        if (response.ok) {
+          props.updateformAddRequeteVisible();
+        } else {
+          console.log(response);
+          AlertConnectionFailed(createRequete)
+        }
+      }).catch((error) => {
+        console.log(error);
+        AlertConnectionFailed(createRequete)
+      })
+  }
 
   useEffect(() => {
     if (props.selectedFolder != '') {
@@ -41,6 +84,7 @@ const ModalAddRequete = props => {
         .then(response => {
           if (response.ok) {
             response.json().then(data => {
+              console.log(data);
               setAnalyses(data);
             });
           } else {
@@ -93,7 +137,7 @@ const ModalAddRequete = props => {
                 setItems={setMedecins}
               />
             </View>
-            <TextInput placeholder="Nom du technicien" />
+            <TextInput placeholder="Nom du technicien" onChangeText={newName => onNomTechnicienChange(newName)} />
           </View>
 
         </View>
@@ -105,12 +149,16 @@ const ModalAddRequete = props => {
           marginTop: 10,
           marginBottom: 10,
         }}>
-          <RequeteAnalyses analyses={analyses} />
+          <RequeteAnalyses analyses={analyses} selectedAnalyses={selectedAnalyses} setselectedAnalyses={setselectedAnalyses} />
           <View style={styles.Biologie}>
             <View style={{ flex: 0.1 }}>
             </View>
           </View>
         </ScrollView>
+        <Button
+          title='Créer'
+          onPress={() => createRequete()}
+        />
         <Button
           title="Annuler"
           onPress={() => props.updateformAddRequeteVisible()}

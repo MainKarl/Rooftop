@@ -101,5 +101,17 @@ namespace API_AnalyseSanguine.Services
                 return null;
             }
         }
+
+        public List<TypeAnalyse> GetCorrespondantTypeAnalyses(List<int> analyseIds)
+        {
+            try
+            {
+                return _context.TypeAnalyses.Where(y => analyseIds.Contains(y.IdTypeAnalyse)).ToList();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }
