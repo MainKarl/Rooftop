@@ -37,7 +37,6 @@ const FolderCreateForm = props => {
             .then((response) => {
                 if (response.ok) {
                     response.json().then((data) => {
-                        console.log(data)
                         setpatientInfo(data);
                         onSexeChange(data.sexe)
                         setFirstName(data.prenom)
@@ -93,14 +92,23 @@ const FolderCreateForm = props => {
     const sendFormToAPI = () => {
         let method = props.IsEditing ? "update": "create";
         const url = AnalyseConfig.API_URL + "dossier/" + method;
-        const formObj = {
-            IdDossier: patientInfo.idDossier,
-            prenom: firstName,
-            nom: lastName,
-            dateNaissance: date,
-            sexe: sexe,
-          };
-
+        if(props.IsEditing){
+            const formObj = {
+                prenom: firstName,
+                nom: lastName,
+                dateNaissance: date,
+                sexe: sexe,
+              };    
+        }else{
+            const formObj = {
+                IdDossier: patientInfo.idDossier,
+                prenom: firstName,
+                nom: lastName,
+                dateNaissance: date,
+                sexe: sexe,
+            };
+        }
+            
           const body = JSON.stringify(formObj);
           
         fetch(url, {
