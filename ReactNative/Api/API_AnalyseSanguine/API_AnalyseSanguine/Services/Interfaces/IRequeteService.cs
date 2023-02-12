@@ -9,5 +9,7 @@ namespace API_AnalyseSanguine.Services.Interfaces
         public RequeteAnalyse CreateRequete(RequeteAnalyse RequeteAnalyse);
         public RequeteAnalyse UpdateRequete(int id, RequeteAnalyse RequeteAnalyse);
         public bool DeleteRequete(int id);
+
+        public List<TypeAnalyse> GetCorrespondantTypeAnalyses(List<int> analyseIds);
     }
 }

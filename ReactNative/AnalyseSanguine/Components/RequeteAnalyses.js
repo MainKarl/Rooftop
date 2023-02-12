@@ -45,7 +45,7 @@ const RequeteAnalyses = props => {
           <View style={styles.flexd}>
             {category.typeAnalyseList.map((type) => (
 
-              <TypeAnalyse typecourant={type} />
+              <TypeAnalyse typecourant={type} selectedAnalyses={props.selectedAnalyses} setselectedAnalyses={props.setselectedAnalyses} />
 
             )
             )}
@@ -60,6 +60,32 @@ const RequeteAnalyses = props => {
 
 export const TypeAnalyse = props => {
 
+  function updateSelectedAnalyses(){
+    console.log("In");
+    props.setselectedAnalyses([...props.selectedAnalyses, props.typecourant.idTypeAnalyse]);
+    console.log(props.selectedAnalyses);
+  }
+
+
+  if (props.typecourant.nom == "Drogues de rue" || props.typecourant.nom == "Microscopie urinaire") {
+    return (
+
+      <View style={styles.flex4}>
+        <View style={styles.innerFlex}>
+          <CheckBox 
+            disable={false}
+            value={false}
+            onValueChange={updateSelectedAnalyses}
+          />
+          <Text style={{marginTop:5}}>{props.typecourant.nom}</Text>
+          <TextInput></TextInput>
+        </View>
+      </View>
+  
+    )
+  }
+
+
   return (
 
     <View style={styles.flex2}>
@@ -67,6 +93,7 @@ export const TypeAnalyse = props => {
         <CheckBox 
           disable={false}
           value={false}
+          onValueChange={updateSelectedAnalyses}
         />
         <Text style={{marginTop:5}}>{props.typecourant.nom}</Text>
       </View>
@@ -89,6 +116,9 @@ const styles = StyleSheet.create({
   flex2: {
     width: '25%'
   },
+  flex4: {
+    width: '76%'
+  },  
   flex: {
     display:'flex',
     flexDirection: 'column',

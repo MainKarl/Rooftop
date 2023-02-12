@@ -3,6 +3,7 @@ using API_AnalyseSanguine.Models;
 using API_AnalyseSanguine.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API_AnalyseSanguine.Dtos;
 
 namespace API_AnalyseSanguine.Controllers
 {
@@ -55,16 +56,24 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateRequete(RequeteAnalyse requeteAnalyse)
+        public async Task<IActionResult> CreateRequete(CreateRequeteDto createRequeteDto)
         {
             try
             {
-                var result = _service.CreateRequete(requeteAnalyse);
-                if (result == null)
+                List<TypeAnalyse> typeAnalyses = _service.GetCorrespondantTypeAnalyses(createRequeteDto.lstAnalyses);
+
+                RequeteAnalyse requete = new RequeteAnalyse()
                 {
-                    return Problem();
-                }
-                return StatusCode(200, result);
+                    CodeAcces = Guid.NewGuid(),
+                    DateEchantillon = DateTime.Now,
+                    DossierIdDossier = createRequeteDto.DossierIdDossier,
+                    LstTypeAnalyse = typeAnalyses,
+                    MedecinIdMedecin= createRequeteDto.MedecinIdMedecin,
+                    NomTechnicien = createRequeteDto.NomTechnicien,
+                    AnalyseDemande = createRequeteDto.analyseDemande
+                };
+                var result = _service.CreateRequete(requete);
+                return StatusCode(200);
             }
             catch (Exception e)
             {
