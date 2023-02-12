@@ -60,77 +60,75 @@ const FolderDetails = props => {
   if (DetailVisible) {
     if (patientInfo && patientInfo.idDossier === props.selectedFolder) {
       return (
-        <View style={{ flex: 0.8, margin: 5 }}>
+        <View style={{ flex: 0.8, margin: 5, display: 'flex', flexDirection: 'column' }}>
           <View style={styles.detailsDisplay}>
             <View style={styles.patientInfo}>
               <View style={styles.flexHalf}>
                 <View style={{ display: 'flex', flexDirection: 'row' }}>
-                  <View style={{ flex: 0.7 }}>
-                    <Text style={styles.infoText}>
-                      Numéro de dossier:{' '}
-                      <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
-                    </Text>
-                    <Text style={styles.infoText}>
-                      Nom:{' '}
-                      <Text style={styles.actualInfo}>{patientInfo.nom}</Text>
-                    </Text>
-                    <Text style={styles.infoText}>
-                      Prénom:{' '}
-                      <Text style={styles.actualInfo}>{patientInfo.prenom}</Text>
-                    </Text>
-                    <Text style={styles.infoText}>
-                      Sexe:{' '}
-                      <Text style={styles.actualInfo}>{patientInfo.sexeText}</Text>
-                    </Text>
-                    <Text style={styles.infoText}>
-                      Date de naissance:{' '}
-                      <Text style={styles.actualInfo}>{patientInfo.dateNaissanceText}</Text>
-                    </Text>
-                  </View>
-                  {/* <Text>
-                  Numéro d'assurance maladie:{' '}
-                  <Text style={styles.actualInfo}>
-                  {patientInfo.NumAssMaladie}
-                  </Text>
-                </Text>*/}
-                  <View style={{ flex: 0.3 }}>
-                    <View style={{ width: 100 }}>
-                      <Button title="Modifier" onPress={callCreateForm}></Button>
+                  <View style={{ flex: 0.7, display: 'flex', flexDirection: 'column' }}>
+                    <View style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      <Text style={styles.infoText}>
+                        Numéro de dossier:{' '}
+                        <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
+                      </Text>
+                      <Text style={styles.infoText}>
+                        Nom:{' '}
+                        <Text style={styles.actualInfo}>{patientInfo.nom}</Text>
+                      </Text>
+                      <Text style={styles.infoText}>
+                        Prénom:{' '}
+                        <Text style={styles.actualInfo}>{patientInfo.prenom}</Text>
+                      </Text>
+                      <Text style={styles.infoText}>
+                        Sexe:{' '}
+                        <Text style={styles.actualInfo}>{patientInfo.sexeText}</Text>
+                      </Text>
+                      <Text style={styles.infoText}>
+                        Date de naissance:{' '}
+                        <Text style={styles.actualInfo}>{patientInfo.dateNaissanceText}</Text>
+                      </Text>
                     </View>
+                  </View>
+                  <View style={{ flex: 0.3 }}>
+                    <Button title="Modifier" onPress={callCreateForm}></Button>
                   </View>
                 </View>
               </View>
               <View style={styles.flexHalf}>
-                <Text style={styles.infoText}>Notes:</Text>
-                <TextInput
-                  style={{ height: '70%' }}
-                  multiline
-                  scrollEnabled></TextInput>
-                <View style={{ display: 'flex', flexDirection: 'row' }}>
-                  <View style={{ flex: 0.7 }}>
-                    <Button title="Sauvegarder" disabled></Button>
-                  </View>
-                  <View style={{ flex: 0.3 }}>
-                    <Button
-                      style={{ flex: 0.3 }}
-                      title="Annuler"
-                      disabled></Button>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ marginBottom: 12 }}>Notes:</Text>
+                  <TextInput
+                    style={{ flex: 1 }}
+                    multiline
+                    scrollEnabled>
+                  </TextInput>
+                  <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <View style={{ flex: 0.7 }}>
+                      <Button title="Sauvegarder" disabled></Button>
+                    </View>
+                    <View style={{ flex: 0.3 }}>
+                      <Button
+                        title="Annuler"
+                        disabled></Button>
+                    </View>
                   </View>
                 </View>
               </View>
             </View>
-            <View style={styles.addButton}>
-              <Button
-                style={{}}
-                title="Créer une requête"
-                onPress={() => updateformAddRequeteVisible()}
-              />
-            </View>
-            <View style={styles.requetesEtResultat}>
-              <RequestList requests={patientInfo.lstRequetes} onSelectedRequest={props.onSelectedRequest} onChangeState={props.onChangeState} />
+            <View style={styles.requestsList}>
+              <View style={styles.addButton}>
+                <Button
+                  style={{}}
+                  title="Créer une requête"
+                  onPress={() => updateformAddRequeteVisible()}
+                />
+              </View>
+              <View style={styles.requetesEtResultat}>
+                <RequestList requests={patientInfo.lstRequetes} onSelectedRequest={props.onSelectedRequest} onChangeState={props.onChangeState} />
+              </View>
             </View>
           </View>
-        </View>
+        </View >
       );
     } else {
       return (
@@ -183,16 +181,20 @@ const styles = StyleSheet.create({
   detailsDisplay: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    flex: 1
+  },
+  requestsList: {
+    flex: 0.8,
+    display: 'flex',
+    flexDirection: 'column',
   },
   patientInfo: {
     flex: 0.2,
-    marginBottom: 10,
     display: 'flex',
     flexDirection: 'row',
+    marginBottom: 12,
   },
   requetesEtResultat: {
-    flex: 0.8,
     borderColor: '#808080',
     borderTopWidth: 0,
     borderWidth: 2,
@@ -200,14 +202,14 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     borderStyle: 'solid',
+    flex: 1
   },
   flexHalf: {
     flex: 0.5,
-
-    padding: 15,
+    paddingHorizontal: 12,
   },
   infoText: {
-    marginBottom: 10,
+    margin: 'auto'
   },
   actualInfo: {
     fontWeight: 'bold',

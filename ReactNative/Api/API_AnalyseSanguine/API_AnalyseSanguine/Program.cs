@@ -1,5 +1,6 @@
 using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Services;
+using API_AnalyseSanguine.Services.Interfaces;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,11 @@ builder.Services.AddFluentValidation(options =>
     options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 });
 builder.Services.AddScoped<IDossierService, DossierService>();
+builder.Services.AddScoped<IMedecinService, MedecinService>();
+builder.Services.AddScoped<IRequeteService, RequeteService>();
+builder.Services.AddScoped<IResultatService, ResultatService>();
+builder.Services.AddScoped<ITypeAnalyseService, TypeAnalyseService>();
+builder.Services.AddScoped<ITypeValeurService, TypeValeurService>();
 
 var app = builder.Build();
 

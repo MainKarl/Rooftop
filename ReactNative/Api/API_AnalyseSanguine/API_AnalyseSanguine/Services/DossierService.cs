@@ -1,6 +1,7 @@
 ﻿using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
+using API_AnalyseSanguine.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_AnalyseSanguine.Services
@@ -16,25 +17,49 @@ namespace API_AnalyseSanguine.Services
 
         public Dossier CreateDossier(Dossier dossier)
         {
+            try
+            {
                 _context.Dossiers.Add(dossier);
                 _context.SaveChanges();
 
                 return dossier;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public bool DeleteDossier(long id)
         {
+            try
+            {
                 var item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
+
+                if (item == null)
+                    return false;
 
                 _context.Dossiers.Remove(item);
                 _context.SaveChanges();
 
                 return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public DossierDetailleDto GetDossierDetaille(int id)
         {
+            try
+            {
+
                 Dossier item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
+
+                if (item == null)
+                    return null;
+
                 List<RequeteAnalyse> lstRequetes = _context.RequeteAnalyses.Where(c => c.DossierIdDossier == id).ToList();
 
                 List<RequeteAnalyseDto> lstRequetesDto = new List<RequeteAnalyseDto>();
@@ -56,22 +81,39 @@ namespace API_AnalyseSanguine.Services
                     item.Note,
                     lstRequetesDto
                 );
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public List<DossierSimpleDto> GetDossierSimple()
         {
+            try
+            {
                 List<Dossier> item = _context.Dossiers.ToList();
                 return item.Select(item => new DossierSimpleDto(
                     item.IdDossier,
                     item.Prenom,
                     item.Nom
                     )).ToList();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public Dossier UpdateDossier(int id, Dossier dossier)
         {
+            try
+            {
                 var item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
 
+                if (item == null)
+                    return null;
+                
                 item.Prenom = dossier.Prenom;
                 item.Nom = dossier.Nom;
                 item.DateNaissance = dossier.DateNaissance;
@@ -79,7 +121,12 @@ namespace API_AnalyseSanguine.Services
                 item.Note = dossier.Note;
                 _context.SaveChanges();
 
-            return item;
+                return item;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
     }
 }

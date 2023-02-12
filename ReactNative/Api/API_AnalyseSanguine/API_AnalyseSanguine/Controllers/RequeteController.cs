@@ -1,5 +1,6 @@
 ﻿using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Models;
+using API_AnalyseSanguine.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,109 +11,100 @@ namespace API_AnalyseSanguine.Controllers
     [Produces("application/json")]
     public class RequeteController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRequeteService _service;
 
-        public RequeteController(ApplicationDbContext context)
+        public RequeteController(IRequeteService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<RequeteAnalyse>> GetAllRequete(int idDossier)
+        public async Task<IActionResult> GetAllRequete(int idDossier)
         {
             try
             {
-                //Potentiellement ajouter les includes
-                var list = _context.RequeteAnalyses.Where(c => c.Dossier.IdDossier == idDossier).ToList();
-                return Ok(list);
+                var result = _service.GetAllRequete(idDossier);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<RequeteAnalyse>> GetRequete(int id)
+        public async Task<IActionResult> GetRequete(int id)
         {
             try
             {
-                var item = _context.RequeteAnalyses.Include("Medecin").First(x=>x.IdRequete == id);
-                if (item == null)
-                    return NotFound();
-
-                return Ok(item); ;
+                var result = _service.GetRequete(id);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpPost("create")]
-        public ActionResult CreateRequete(RequeteAnalyse RequeteAnalyse)
+        public async Task<IActionResult> CreateRequete(RequeteAnalyse requeteAnalyse)
         {
             try
             {
-                _context.RequeteAnalyses.Add(RequeteAnalyse);
-                _context.SaveChanges();
-
-                return Ok(RequeteAnalyse);
+                var result = _service.CreateRequete(requeteAnalyse);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateRequete(int id, RequeteAnalyse RequeteAnalyse)
+        public async Task<IActionResult> UpdateRequete(int id, RequeteAnalyse requeteAnalyse)
         {
             try
             {
-                var item = _context.RequeteAnalyses.Find(id);
-
-                if (item == null)
-                    return NotFound();
-                
-                //Probablement qu'il y en a de trop
-                item.AnalyseDemande = RequeteAnalyse.AnalyseDemande; //De trop?
-                item.CodeAcces = RequeteAnalyse.CodeAcces;
-                item.DateEchantillon = RequeteAnalyse.DateEchantillon;
-                item.Dossier = RequeteAnalyse.Dossier; //De trop?
-                item.LstResultats = RequeteAnalyse.LstResultats; //De trop?
-                item.LstTypeAnalyse = RequeteAnalyse.LstTypeAnalyse; //De trop?
-                item.Medecin = RequeteAnalyse.Medecin; //De trop?
-                item.NomTechnicien = RequeteAnalyse.NomTechnicien;
-
-                _context.SaveChanges();
-
-                return Ok();
+                var result = _service.UpdateRequete(id, requeteAnalyse);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteRequete(int id)
+        public async Task<IActionResult> DeleteRequete(int id)
         {
             try
             {
-                var item = _context.RequeteAnalyses.Find(id);
-
-                if (item == null)
-                    return NotFound();
-
-                _context.RequeteAnalyses.Remove(item);
-                _context.SaveChanges();
-
-                return Ok();
+                var result = _service.DeleteRequete(id);
+                if (result == false)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
     }
