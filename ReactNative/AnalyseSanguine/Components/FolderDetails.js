@@ -32,6 +32,8 @@ const FolderDetails = props => {
         .then(response => {
           if (response.ok) {
             response.json().then((data) => {
+              data.dateNaissanceText = String(data.dateNaissance).split('T')[0];
+              data.sexeText = SexeDict[data.sexe];
               setpatientInfo(data);
             });
           } else {
@@ -78,11 +80,11 @@ const FolderDetails = props => {
                     </Text>
                     <Text style={styles.infoText}>
                       Sexe:{' '}
-                      <Text style={styles.actualInfo}>{SexeDict[patientInfo.sexe]}</Text>
+                      <Text style={styles.actualInfo}>{patientInfo.sexeText}</Text>
                     </Text>
                     <Text style={styles.infoText}>
                       Date de naissance:{' '}
-                      <Text style={styles.actualInfo}>{String(patientInfo.dateNaissance).split('T')[0]}</Text>
+                      <Text style={styles.actualInfo}>{patientInfo.dateNaissanceText}</Text>
                     </Text>
                   </View>
                   {/* <Text>
