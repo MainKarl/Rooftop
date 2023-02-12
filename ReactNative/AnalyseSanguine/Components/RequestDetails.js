@@ -55,7 +55,11 @@ const RequestDetails = props => {
               </Text>
               <Text style={styles.infoText}>
                 Date de prélèvement:{' '}
-                <Text style={styles.actualInfo}>{request.dateEchantillon}</Text>
+                <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[0]}</Text>
+              </Text>
+              <Text style={styles.infoText}>
+                Heure de prélèvement:{' '}
+                <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[1].replace("T", "")}</Text>
               </Text>
               <Text style={styles.infoText}>
                 Nom du médecin:{' '}
