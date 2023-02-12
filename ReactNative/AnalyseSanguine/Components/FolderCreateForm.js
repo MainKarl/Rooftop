@@ -107,13 +107,22 @@ const FolderCreateForm = props => {
   const sendFormToAPI = () => {
     let method = props.IsEditing ? "update" : "create";
     const url = AnalyseConfig.API_URL + "dossier/" + method;
-    const formObj = {
-      IdDossier: patientInfo.idDossier,
-      prenom: firstName,
-      nom: lastName,
-      dateNaissance: date,
-      sexe: sexe,
-    };
+    if(props.IsEditing){
+        const formObj = {
+            IdDossier: patientInfo.idDossier,
+            prenom: firstName,
+            nom: lastName,
+            dateNaissance: date,
+            sexe: sexe,
+        };
+    }else{
+        const formObj = {
+            prenom: firstName,
+            nom: lastName,
+            dateNaissance: date,
+            sexe: sexe,
+        };
+    }
 
     const body = JSON.stringify(formObj);
 

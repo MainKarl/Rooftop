@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, TextInput, View, Text, Button, ScrollView, PlatformColor} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, TextInput, View, Text, Button, ScrollView, PlatformColor } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AnalyseConfig from '../analyseConfig.json';
@@ -23,7 +23,7 @@ const ModalAddRequete = props => {
           if (response.ok) {
             response.json().then(data => {
               const medecinItems = data.map(m => {
-                return {label: m.prenom + ' ' + m.nom, value: m.idMedecin};
+                return { label: m.prenom + ' ' + m.nom, value: m.idMedecin };
               });
 
               setMedecins(medecinItems);
@@ -34,16 +34,16 @@ const ModalAddRequete = props => {
         })
         .catch(error => {
           console.log(error);
-      });
+        });
 
       url = AnalyseConfig.API_URL + 'typeanalyse/categories';
       fetch(url)
         .then(response => {
-          if(response.ok){
+          if (response.ok) {
             response.json().then(data => {
               setAnalyses(data);
             });
-          } else{
+          } else {
             console.log(response);
           }
         })
@@ -57,8 +57,8 @@ const ModalAddRequete = props => {
 
   return (
     <View>
-             
-      <Text style={{fontSize: 50, fontWeight: 'bold'}}>Créer une requête</Text>
+
+      <Text style={{ fontSize: 50, fontWeight: 'bold' }}>Créer une requête</Text>
       <View style={styles.Form}>
         <View style={styles.info}>
           <Text style={styles.infoText}>
@@ -73,47 +73,48 @@ const ModalAddRequete = props => {
             <Text style={styles.actualInfo}>{props.patientInfo.prenom}</Text>
           </Text>
           <Text style={styles.infoText}>
-            Sexe: <Text style={styles.actualInfo}>{props.patientInfo.sexe}</Text>
+            Sexe: <Text style={styles.actualInfo}>{props.patientInfo.sexeText}</Text>
           </Text>
           <Text style={styles.infoText}>
             Date de naissance:{' '}
             <Text style={styles.actualInfo}>
-              {props.patientInfo.dateNaissance}
+              {props.patientInfo.dateNaissanceText}
             </Text>
           </Text>
-            <View>
-          <View style={styles.infoText}>
-            <DropDownPicker
-              placeholder="Choisir un médecin associé"
-              open={open}
-              value={value}
-              items={medecins}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setMedecins}
+          <View>
+            <View style={styles.infoText}>
+              <DropDownPicker
+                placeholder="Choisir un médecin associé"
+                open={open}
+                value={value}
+                items={medecins}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setMedecins}
               />
+            </View>
+            <TextInput placeholder="Nom du technicien" />
           </View>
-          <TextInput placeholder="Nom du technicien" />
-            </View>
 
-            </View>
-      <ScrollView style={{borderColor: '#808080',
-    borderWidth: 2,
-    borderRadius: 5,
-    borderStyle: 'solid',
-    marginTop: 10,
-    marginBottom: 10,
-    }}>
+        </View>
+        <ScrollView style={{
+          borderColor: '#808080',
+          borderWidth: 2,
+          borderRadius: 5,
+          borderStyle: 'solid',
+          marginTop: 10,
+          marginBottom: 10,
+        }}>
           <RequeteAnalyses analyses={analyses} />
           <View style={styles.Biologie}>
-            <View style={{flex: 0.1}}>
+            <View style={{ flex: 0.1 }}>
             </View>
           </View>
         </ScrollView>
-          <Button
-            title="Annuler"
-            onPress={() => props.updateformAddRequeteVisible()}
-            />
+        <Button
+          title="Annuler"
+          onPress={() => props.updateformAddRequeteVisible()}
+        />
       </View>
     </View>
   );
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginTop: 30,
     marginLeft: 50,
-    
+
   },
   Biologie: {
     display: 'flex',
@@ -143,8 +144,8 @@ const styles = StyleSheet.create({
   },
   info: {
     zIndex: 1000,
-    elevation:1000,
-    width:'50%'
+    elevation: 1000,
+    width: '50%'
   }
 });
 
