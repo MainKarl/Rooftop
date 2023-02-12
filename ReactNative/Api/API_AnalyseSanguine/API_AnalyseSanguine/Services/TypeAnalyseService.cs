@@ -1,5 +1,6 @@
 ﻿using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Models;
+using API_AnalyseSanguine.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_AnalyseSanguine.Services

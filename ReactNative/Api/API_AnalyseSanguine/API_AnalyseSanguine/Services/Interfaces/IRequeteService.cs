@@ -1,6 +1,6 @@
 ﻿using API_AnalyseSanguine.Models;
 
-namespace API_AnalyseSanguine.Services
+namespace API_AnalyseSanguine.Services.Interfaces
 {
     public interface IRequeteService
     {

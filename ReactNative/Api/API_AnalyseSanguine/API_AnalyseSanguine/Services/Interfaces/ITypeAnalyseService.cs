@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API_AnalyseSanguine.Services
+namespace API_AnalyseSanguine.Services.Interfaces
 {
     public interface ITypeAnalyseService
     {

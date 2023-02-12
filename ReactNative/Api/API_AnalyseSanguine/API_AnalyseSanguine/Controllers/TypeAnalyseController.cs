@@ -1,6 +1,6 @@
 ﻿using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Models;
-using API_AnalyseSanguine.Services;
+using API_AnalyseSanguine.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;

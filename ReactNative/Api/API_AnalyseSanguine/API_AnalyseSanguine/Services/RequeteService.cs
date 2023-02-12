@@ -1,5 +1,7 @@
 ﻿using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Models;
+using API_AnalyseSanguine.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace API_AnalyseSanguine.Services
 {
@@ -63,7 +65,7 @@ namespace API_AnalyseSanguine.Services
         {
             try
             {
-                return _context.RequeteAnalyses.Where(c => c.IdRequete == id).FirstOrDefault();
+                return _context.RequeteAnalyses.Include(c => c.Medecin).Where(c => c.IdRequete == id).FirstOrDefault();
             }
             catch (Exception ex)
             {

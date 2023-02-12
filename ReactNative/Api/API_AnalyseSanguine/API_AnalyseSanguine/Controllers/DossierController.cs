@@ -3,7 +3,7 @@ using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
-using API_AnalyseSanguine.Services;
+using API_AnalyseSanguine.Services.Interfaces;
 
 namespace API_AnalyseSanguine.Controllers
 {

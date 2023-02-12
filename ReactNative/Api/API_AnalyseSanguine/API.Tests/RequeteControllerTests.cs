@@ -1,6 +1,6 @@
 ﻿using API_AnalyseSanguine.Controllers;
 using API_AnalyseSanguine.Models;
-using API_AnalyseSanguine.Services;
+using API_AnalyseSanguine.Services.Interfaces;
 using AutoFixture;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

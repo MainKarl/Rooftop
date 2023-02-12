@@ -1,5 +1,6 @@
 using API_AnalyseSanguine.Context.Data;
 using API_AnalyseSanguine.Services;
+using API_AnalyseSanguine.Services.Interfaces;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
