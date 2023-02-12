@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
-    View,
-    StyleSheet,
-    Text,
-    TextInput,
-    Button,
-    Alert
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Button,
+  Alert
 } from 'react-native';
 import DatetimePicker from '@react-native-community/datetimepicker';
 import CustomRadioButton from './CustomRadioButton';
@@ -14,159 +14,175 @@ import AlertConnectionFailed from './AlertConnectionFailed';
 import { create } from 'react-test-renderer';
 
 const FolderCreateForm = props => {
-    const [patientInfo, setpatientInfo] = useState(null);
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [sexe, setSexe] = useState(0)
-    const [date, setDate] = useState(new Date())
-    const [isLiked, setIsLiked] = useState([
-        { value: 0, label: 'Homme', selected: false },
-        { value: 1, label: 'Femme', selected: false },
-        { value: 2, label: 'Autres', selected: false }
-    ]);
+  const [errorDate, setErrorDate] = useState(false);
 
-    useEffect(()=> {
-        if(props.IsEditing){
-            getDetail()
+  const [patientInfo, setpatientInfo] = useState(null);
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [sexe, setSexe] = useState(0)
+  const [date, setDate] = useState(new Date())
+  const [isLiked, setIsLiked] = useState([
+    { value: 0, label: 'Homme', selected: false },
+    { value: 1, label: 'Femme', selected: false },
+    { value: 2, label: 'Autres', selected: true }
+  ]);
+
+  useEffect(() => {
+    if (props.IsEditing) {
+      getDetail()
+    }
+  }, [])
+
+  function getDetail() {
+    const url = AnalyseConfig.API_URL + 'dossier/getdetaille?id=' + props.selectedFolder;
+    fetch(url)
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
+            console.log(data)
+            setpatientInfo(data);
+            onSexeChange(data.sexe)
+            setFirstName(data.prenom)
+            setLastName(data.nom)
+            setDate(new Date(data.dateNaissance))
+            return
+          });
         }
-    }, [])
+        else {
+          AlertConnectionFailed(getDetail)
+          return
+        }
 
-    function getDetail(){
-        const url = AnalyseConfig.API_URL + 'dossier/getdetaille?id=' + props.selectedFolder;
-            fetch(url)
-            .then((response) => {
-                if (response.ok) {
-                    response.json().then((data) => {
-                        setpatientInfo(data);
-                        onSexeChange(data.sexe)
-                        setFirstName(data.prenom)
-                        setLastName(data.nom)
-                        setDate(new Date(data.dateNaissance))
-                        return
-                    });
-                }
-                else {
-                    AlertConnectionFailed(getDetail)
-                    return
-                }
-    
-            }).catch((error) => {
-                AlertConnectionFailed(getDetail)
-                return
-            });
-    }
+      }).catch((error) => {
+        AlertConnectionFailed(getDetail)
+        return
+      });
+  }
 
-    const onFirstNameChange = (newFirstName) => {
-        setFirstName(newFirstName);
-    }
+  const onFirstNameChange = (newFirstName) => {
+    setFirstName(newFirstName);
+  }
 
   const onLastNameChange = newLastName => {
     setLastName(newLastName);
   };
 
-    const onSexeChange = (newSexe) => {
-        let updatedState = isLiked.map((isLikedItem) =>
-            isLikedItem.value === newSexe
-                ? { ...isLikedItem, selected: true }
-                : { ...isLikedItem, selected: false }
-        );
-        setIsLiked(updatedState);
-        setSexe(newSexe);
-    }
+  const onSetDate = newDate => {
+    var testDate = new Date(newDate);
+    testDate.setHours(0, 0, 0, 0);
+    setErrorDate(false);
+    if (testDate > new Date())
+      setErrorDate(true);
+    else
+      setDate(newDate);
+  }
 
-    const onSubmit = () => {
-        Alert.alert('Création de dossier de patient', 'Voulez-vous vraiment créer le patient \n' + firstName + ' ' + lastName + ' ?', [
-            {
-                text: 'Annuler',
-                onPress: () => {}
-            },
-            {
-                text: 'Confirmer',
-                onPress: () => {
-                    sendFormToAPI();
-                }
-            }
-        ]);
-    }
-
-    const sendFormToAPI = () => {
-        let method = props.IsEditing ? "update": "create";
-        const url = AnalyseConfig.API_URL + "dossier/" + method;
-        if(props.IsEditing){
-            const formObj = {
-                prenom: firstName,
-                nom: lastName,
-                dateNaissance: date,
-                sexe: sexe,
-              };    
-        }else{
-            const formObj = {
-                IdDossier: patientInfo.idDossier,
-                prenom: firstName,
-                nom: lastName,
-                dateNaissance: date,
-                sexe: sexe,
-            };
-        }
-            
-          const body = JSON.stringify(formObj);
-          
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: body,
-            cache: 'default'
-        }).then((response) => {
-            if (response.ok) {
-                props.onChangeState(0);
-              } else {
-                AlertConnectionFailed(sendFormToAPI)
-              }
-        }).catch((error) => {
-            AlertConnectionFailed(sendFormToAPI)
-        })
-    }
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{props.IsEditing ? 'Modification' : 'Création'} d'un dossier de patient</Text>
-            <View style={styles.formRow}>
-                <Text style={styles.formLabel}>Prénom du patient:</Text>
-                <TextInput style={styles.formInput} defaultValue={props.IsEditing && patientInfo ? patientInfo.prenom : ""} onChangeText={newName => onFirstNameChange(newName)} />
-            </View>
-            <View style={styles.formRow}>
-                <Text style={styles.formLabel}>Nom du patient:</Text>
-                <TextInput style={styles.formInput} defaultValue={props.IsEditing && patientInfo ? patientInfo.nom : ""} onChangeText={newName => onLastNameChange(newName)} />
-            </View>
-            <View style={styles.formRow}>
-                <Text style={styles.formLabel}>Sexe du patient:</Text>
-                <View style={styles.formInput}>
-                    {isLiked.map((item) => (
-                        <CustomRadioButton
-                            onSelect={() => onSexeChange(item.value)}
-                            key={item.value}
-                            item={item} />
-                    ))}
-                </View>
-            </View>
-            <View style={styles.formRow}>
-                <Text style={styles.formLabel}>Date de naissance du patient:</Text>
-                <DatetimePicker
-                    mode="date"
-                    value={date}
-                    onChange={(event, value) => { setDate(value); }} />
-            </View>
-            <Button title={props.IsEditing ? 'Modifer' : 'Créer'} onPress={onSubmit}></Button>
-            <Text style={styles.button}></Text>
-            <Button title="Annuler" onPress={() => props.onChangeState(0)}></Button>
-        </View>
+  const onSexeChange = (newSexe) => {
+    let updatedState = isLiked.map((isLikedItem) =>
+      isLikedItem.value === newSexe
+        ? { ...isLikedItem, selected: true }
+        : { ...isLikedItem, selected: false }
     );
     setIsLiked(updatedState);
     setSexe(newSexe);
-  };
+  }
+
+  const onSubmit = () => {
+    if (errorDate)
+      return;
+    Alert.alert('Création de dossier de patient', 'Voulez-vous vraiment créer le patient \n' + firstName + ' ' + lastName + ' ?', [
+      {
+        text: 'Annuler',
+        onPress: () => { }
+      },
+      {
+        text: 'Confirmer',
+        onPress: () => {
+          sendFormToAPI();
+        }
+      }
+    ]);
+  }
+
+  const sendFormToAPI = () => {
+    let method = props.IsEditing ? "update" : "create";
+    const url = AnalyseConfig.API_URL + "dossier/" + method;
+    if(props.IsEditing){
+        const formObj = {
+            IdDossier: patientInfo.idDossier,
+            prenom: firstName,
+            nom: lastName,
+            dateNaissance: date,
+            sexe: sexe,
+        };
+    }else{
+        const formObj = {
+            prenom: firstName,
+            nom: lastName,
+            dateNaissance: date,
+            sexe: sexe,
+        };
+    }
+
+    const body = JSON.stringify(formObj);
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: body,
+      cache: 'default'
+    }).then((response) => {
+      if (response.ok) {
+        props.onChangeState(0);
+      } else {
+        AlertConnectionFailed(sendFormToAPI)
+      }
+    }).catch((error) => {
+      AlertConnectionFailed(sendFormToAPI)
+    })
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{props.IsEditing ? 'Modification' : 'Création'} d'un dossier de patient</Text>
+      <View style={styles.formRow}>
+        <Text style={styles.formLabel}>Prénom du patient:</Text>
+        <TextInput style={styles.formInput} defaultValue={props.IsEditing && patientInfo ? patientInfo.prenom : ""} onChangeText={newName => onFirstNameChange(newName)} />
+      </View>
+      <View style={styles.formRow}>
+        <Text style={styles.formLabel}>Nom du patient:</Text>
+        <TextInput style={styles.formInput} defaultValue={props.IsEditing && patientInfo ? patientInfo.nom : ""} onChangeText={newName => onLastNameChange(newName)} />
+      </View>
+      <View style={styles.formRow}>
+        <Text style={styles.formLabel}>Sexe du patient:</Text>
+        <View style={styles.formInput}>
+          {isLiked.map((item) => (
+            <CustomRadioButton
+              onSelect={() => onSexeChange(item.value)}
+              key={item.value}
+              item={item} />
+          ))}
+        </View>
+      </View>
+      {errorDate && <Text style={styles.error}>La date de naissance ne peut pas être dans le future</Text>}
+      <View style={styles.formRow}>
+        <Text style={styles.formLabel}>Date de naissance du patient:</Text>
+        <DatetimePicker
+          mode="date"
+          value={date}
+          onChange={(event, value) => { onSetDate(value); }} />
+      </View>
+      <Button title={props.IsEditing ? 'Modifer' : 'Créer'} onPress={onSubmit}></Button>
+      <Text style={styles.button}></Text>
+      <Button title="Annuler" onPress={() => props.onChangeState(0)}></Button>
+    </View>
+  );
+  setIsLiked(updatedState);
+  setSexe(newSexe);
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -205,6 +221,11 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 30,
   },
+  error: {
+    color: 'red',
+    marginTop: 10,
+    marginBottom: 10,
+  }
 });
 
 export default FolderCreateForm;

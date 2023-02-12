@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace API_AnalyseSanguine.Models
 {
@@ -10,7 +11,9 @@ namespace API_AnalyseSanguine.Models
         [Required]
         public string Nom { get; set; }
 
+        [JsonIgnore]
         public int CategoryId { get; set; }
+        [JsonIgnore]
         public Category Category { get; set; }
 
 

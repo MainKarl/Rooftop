@@ -15,6 +15,7 @@ namespace API_AnalyseSanguine.Context.Data
         public DbSet<ResultatAnalyse> ResultatAnalyses { get; set; }
         public DbSet<TypeAnalyse> TypeAnalyses { get; set; }
         public DbSet<TypeValeur> TypeValeurs { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
