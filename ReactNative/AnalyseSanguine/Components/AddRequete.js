@@ -24,38 +24,36 @@ const ModalAddRequete = props => {
 
 
   function createRequete() {
-      let method = "create";
-      const url = AnalyseConfig.API_URL + "requete/" + method;
+    let method = "create";
+    const url = AnalyseConfig.API_URL + "requete/" + method;
 
-      const formObj = {
-        NomTechnicien: nomTechnicien,
-        DossierIdDossier: props.patientInfo.idDossier,
-        MedecinIdMedecin: value,
-        lstAnalyses: selectedAnalyses,
-        analyseDemande: analyseDemande
+    const formObj = {
+      NomTechnicien: nomTechnicien,
+      DossierIdDossier: props.patientInfo.idDossier,
+      MedecinIdMedecin: value,
+      lstAnalyses: selectedAnalyses,
+      analyseDemande: analyseDemande
+    }
+
+    const body = JSON.stringify(formObj);
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: body,
+      cache: 'default'
+    }).then((response) => {
+      if (response.ok) {
+        props.updateformAddRequeteVisible();
+      } else {
+        console.log(response);
       }
-
-      const body = JSON.stringify(formObj);
-
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: body,
-        cache: 'default'
-      }).then((response) => {
-        if (response.ok) {
-          props.updateformAddRequeteVisible();
-        } else {
-          console.log(response);
-          AlertConnectionFailed(createRequete)
-        }
-      }).catch((error) => {
-        console.log(error);
-        AlertConnectionFailed(createRequete)
-      })
+    }).catch((error) => {
+      console.log(error);
+    })
   }
 
   useEffect(() => {
