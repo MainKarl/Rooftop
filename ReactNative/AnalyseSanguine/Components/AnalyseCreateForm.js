@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import {
     View,
     Text,
@@ -9,15 +10,25 @@ import {
     Touchable,
     TouchableHighlight,
     TouchableOpacity,
+    ScrollView,
 } from "react-native";
 const AnalyseCreateForm = (props) => {
+
+    useEffect(() => {
+        console.log(props.request);
+    }, [props.request]);
 
     return (
         <View style={styles.container}>
             <Button
                 title={'Retourner à la liste de requêtes'}
-                onPress={() => props.onChangeState(2)}></Button>
-            <Text>Requête: {props.selectedRequest}</Text>
+                onPress={() => props.onChangeMode(false)}></Button>
+            <Text>Requête: </Text>
+            <ScrollView>
+                {
+
+                }
+            </ScrollView>
         </View>
     )
 }

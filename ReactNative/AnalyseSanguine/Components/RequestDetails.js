@@ -12,13 +12,19 @@ import {
 } from 'react-native';
 import AnalyseConfig from "../analyseConfig.json";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import AnalyseCreateForm from './AnalyseCreateForm';
 
 const RequestDetails = props => {
 
   const [request, setRequest] = useState(null);
+  const [resultMode, setResultMode] = useState(false);
   const [testData, setTestData] = useState();
   const [tableHead, setTableHead] = useState(['Test', 'Result', 'Flag', 'Units', 'Reference Interval']);
   const [tableData, setTableData] = useState();
+
+  const onChangeMode = (mode) => {
+    setResultMode(mode);
+  }
 
   const loadResults = () => {
     console.log(request)
@@ -40,7 +46,7 @@ const RequestDetails = props => {
 
   useEffect(() => {
 
-    if (props.requestId != "") {
+    if (props.selectedRequest != "") {
       const url = AnalyseConfig.API_URL + 'requete/' + props.selectedRequest;
       fetch(url)
         .then((response) => {
@@ -57,68 +63,71 @@ const RequestDetails = props => {
           console.log(error);
         });
     }
-  }, [props.requestId]);
+  }, [props.selectedRequest]);
 
   const printRequest = () => {
     console.log(request)
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.detailsPadding}>
-        <View style={styles.returnButton}>
-          <Button
-            title={'Retourner à la liste de requêtes'}
-            onPress={() => props.onChangeState(0)}></Button>
-        </View>
-        {request && (
-          <View style={styles.detailsBox}>
-            <View style={styles.detailsBoxInside}>
-              <View style={styles.displayFlex}>
-                <View>
-                  <Text style={styles.infoText}>
-                    Code d'accès:{' '}
-                    <Text style={styles.actualInfo}>{request.codeAcces}</Text>
-                  </Text>
-                  <Text style={styles.infoText}>
-                    Date de prélèvement:{' '}
-                    <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[0]}</Text>
-                  </Text>
-                  <Text style={styles.infoText}>
-                    Heure de prélèvement:{' '}
-                    <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[1].replace("T", "")}</Text>
-                  </Text>
-                </View>
-                <View style={styles.infoLeft}>
-                  <Text style={styles.infoText}>
-                    Nom du médecin:{' '}
-                    <Text style={styles.actualInfo}>{request.medecin.prenom + " " + request.medecin.nom}</Text>
-                  </Text>
-                  <Text style={styles.infoText}>
-                    Nom du technicien:{' '}
-                    <Text style={styles.actualInfo}>{request.nomTechnicien}</Text>
-                  </Text>
-                  <View style={styles.printButton}>
-                    <Button
-                      title={'Imprimer la requête'}
-                      onPress={() => printRequest()}></Button>
+    <View style={{ flex: 1 }}>
+      {!resultMode && <View style={styles.container}>
+        <View style={styles.detailsPadding}>
+          <View style={styles.returnButton}>
+            <Button
+              title={'Retourner à la liste de requêtes'}
+              onPress={() => props.onChangeState(0)}></Button>
+          </View>
+          {request && (
+            <View style={styles.detailsBox}>
+              <View style={styles.detailsBoxInside}>
+                <View style={styles.displayFlex}>
+                  <View>
+                    <Text style={styles.infoText}>
+                      Code d'accès:{' '}
+                      <Text style={styles.actualInfo}>{request.codeAcces}</Text>
+                    </Text>
+                    <Text style={styles.infoText}>
+                      Date de prélèvement:{' '}
+                      <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[0]}</Text>
+                    </Text>
+                    <Text style={styles.infoText}>
+                      Heure de prélèvement:{' '}
+                      <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[1].replace("T", "")}</Text>
+                    </Text>
+                  </View>
+                  <View style={styles.infoLeft}>
+                    <Text style={styles.infoText}>
+                      Nom du médecin:{' '}
+                      <Text style={styles.actualInfo}>{request.medecin.prenom + " " + request.medecin.nom}</Text>
+                    </Text>
+                    <Text style={styles.infoText}>
+                      Nom du technicien:{' '}
+                      <Text style={styles.actualInfo}>{request.nomTechnicien}</Text>
+                    </Text>
+                    <View style={styles.printButton}>
+                      <Button
+                        title={'Imprimer la requête'}
+                        onPress={() => printRequest()}></Button>
+                    </View>
                   </View>
                 </View>
+                <View style={styles.tableStyle}>
+                  <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
+                    <Row data={tableHead} style={styles.head} textStyle={styles.text} />
+                    <Rows data={tableData} textStyle={styles.text} />
+                  </Table>
+                </View>
               </View>
-              <View style={styles.tableStyle}>
-                <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
-                  <Row data={tableHead} style={styles.head} textStyle={styles.text} />
-                  <Rows data={tableData} textStyle={styles.text} />
-                </Table>
-              </View>
-
             </View>
-          </View>
-        )}
+          )}
+        </View>
+        <Button
+          title={'Entrer les résultats'}
+          onPress={() => onChangeMode(true)} />
       </View>
-      <Button
-        title={'Entrer les résultats'}
-        onPress={() => props.onChangeState(3)} />
+      }
+      {resultMode && <AnalyseCreateForm onChangeMode={onChangeMode} request={request} />}
     </View>
   );
 };
@@ -127,7 +136,7 @@ const styles = StyleSheet.create({
   head: { height: 40, backgroundColor: '#f1f8ff' },
   text: { margin: 6 },
   container: {
-    flex: 0.8,
+    flex: 1,
     margin: 5,
     borderColor: '#808080',
     borderWidth: 2,
