@@ -71,11 +71,7 @@ namespace API_AnalyseSanguine.Controllers
             }
             catch (Exception e)
             {
-<<<<<<< HEAD
-                return BadRequest();
-=======
                 return BadRequest(e);
->>>>>>> f5129faa169e8e58a695bb44bbf223f57ca78139
             }
         }
 
@@ -84,15 +80,11 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 var result = _service.UpdateDossier(dossier.IdDossier, dossier);
-=======
-                var result = _service.UpdateDossier(id, dossier);
                 if (result == null)
                 {
                     return Problem();
                 }
->>>>>>> f5129faa169e8e58a695bb44bbf223f57ca78139
                 return StatusCode(200, result);
             }
             catch (Exception e)
