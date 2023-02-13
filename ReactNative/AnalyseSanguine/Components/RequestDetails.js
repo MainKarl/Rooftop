@@ -10,7 +10,6 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
-import Icon from "react-native-vector-icons/Ionicons";
 import AnalyseConfig from "../analyseConfig.json";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
