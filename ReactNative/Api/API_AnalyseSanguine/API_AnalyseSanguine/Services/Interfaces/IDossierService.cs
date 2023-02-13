@@ -2,7 +2,7 @@
 using API_AnalyseSanguine.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API_AnalyseSanguine.Services
+namespace API_AnalyseSanguine.Services.Interfaces
 {
     public interface IDossierService
     {

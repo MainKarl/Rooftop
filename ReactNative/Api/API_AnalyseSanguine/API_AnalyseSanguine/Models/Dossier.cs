@@ -44,7 +44,7 @@ namespace API_AnalyseSanguine.Models
                 .WithMessage("Veuillez spécifier une date de naissance");
 
             RuleFor(e => e.DateNaissance)
-               .LessThan(DateTime.Now).WithMessage("Veuillez sélectionner une date valide");
+               .LessThanOrEqualTo(DateTime.Now).WithMessage("Veuillez sélectionner une date valide");
         }
 
     }

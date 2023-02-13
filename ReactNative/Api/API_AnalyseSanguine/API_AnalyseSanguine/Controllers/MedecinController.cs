@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using API_AnalyseSanguine.Models;
 using API_AnalyseSanguine.Context.Data;
+using API_AnalyseSanguine.Services.Interfaces;
 
 namespace API_AnalyseSanguine.Controllers
 {
@@ -10,100 +11,100 @@ namespace API_AnalyseSanguine.Controllers
     [Produces("application/json")]
     public class MedecinController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMedecinService _service;
 
-        public MedecinController(ApplicationDbContext context)
+        public MedecinController(IMedecinService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Dossier>> GetAllMedecin()
+        public async Task<IActionResult> GetAllMedecin()
         {
             try
             {
-                var list = _context.Medecins.ToList();
-                return Ok(list);
+                var result = _service.GetAllMedecin();
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return null;
             }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<Dossier>> GetMedecin(int id)
+        public async Task<IActionResult> GetMedecin(int id)
         {
             try
             {
-                var item = _context.Medecins.Find(id);
-                if (item == null)
-                    return NotFound();
-
-                return Ok(item); ;
+                var result = _service.GetMedecin(id);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpPost("create")]
-        public ActionResult CreateMedecin(Medecin medecin)
+        public async Task<IActionResult> CreateMedecin(Medecin medecin)
         {
             try
             {
-                _context.Medecins.Add(medecin);
-                _context.SaveChanges();
-
-                return Ok(medecin);
+                var result = _service.CreateMedecin(medecin);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateMedecin(int id, Medecin medecin)
+        public async Task<IActionResult> UpdateMedecin(int id, Medecin medecin)
         {
             try
             {
-                var item = _context.Medecins.Find(id);
-
-                if (item == null)
-                    return NotFound();
-
-                item.Prenom = medecin.Prenom;
-                item.Nom = medecin.Nom;
-                _context.SaveChanges();
-
-                return Ok();
+                var result = _service.UpdateMedecin(id, medecin);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteDossier(int id)
+        public async Task<IActionResult> DeleteMedecin(int id)
         {
             try
             {
-                var item = _context.Medecins.Find(id);
-
-                if (item == null)
-                    return NotFound();
-
-                _context.Medecins.Remove(item);
-                _context.SaveChanges();
-
-                return Ok();
+                var result = _service.DeleteMedecin(id);
+                if (result == false)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
             }
-            catch
+            catch (Exception e)
             {
-                return Problem();
+                return BadRequest(e);
             }
         }
     }

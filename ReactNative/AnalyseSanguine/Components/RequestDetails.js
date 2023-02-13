@@ -12,10 +12,32 @@ import {
 } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
 import AnalyseConfig from "../analyseConfig.json";
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 const RequestDetails = props => {
 
   const [request, setRequest] = useState(null);
+  const [testData, setTestData] = useState();
+  const [tableHead, setTableHead] = useState(['Test', 'Result', 'Flag', 'Units', 'Reference Interval']);
+  const [tableData, setTableData] = useState();
+
+  const loadResults = () => {
+    console.log(request)
+    let arrayTest = [];
+    request.lstTypeAnalyse.map((analyse) => {
+      arrayTest.push([analyse.nom, '.', '.', '.', '.'])
+    })
+    setTableData(arrayTest)
+  }
+
+  const setValues = (data) => {
+    setRequest(data)
+    let arrayTest = [];
+    data.lstTypeAnalyse.map((analyse) => {
+      arrayTest.push([analyse.nom, '.', '.', '.', '.'])
+    })
+    setTableData(arrayTest)
+  }
 
   useEffect(() => {
 
@@ -25,7 +47,7 @@ const RequestDetails = props => {
         .then((response) => {
           if (response.ok) {
             response.json().then((data) => {
-              setRequest(data);
+              setValues(data)
             });
           }
           else {
@@ -38,6 +60,10 @@ const RequestDetails = props => {
     }
   }, [props.requestId]);
 
+  const printRequest = () => {
+    console.log(request)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.detailsPadding}>
@@ -49,27 +75,43 @@ const RequestDetails = props => {
         {request && (
           <View style={styles.detailsBox}>
             <View style={styles.detailsBoxInside}>
-              <Text style={styles.infoText}>
-                Code d'accès:{' '}
-                <Text style={styles.actualInfo}>{request.codeAcces}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Date de prélèvement:{' '}
-                <Text style={styles.actualInfo}>{request.dateEchantillon}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Nom du médecin:{' '}
-                <Text style={styles.actualInfo}>{request.medecin.prenom + " " + request.medecin.nom}</Text>
-              </Text>
-              <Text style={styles.infoText}>
-                Nom du technicien:{' '}
-                <Text style={styles.actualInfo}>{request.nomTechnicien}</Text>
-              </Text>
-              <View style={styles.printButton}>
-                <Button
-                  title={'Imprimer la requête'}
-                  onPress={() => props.onChangeState(0)}></Button>
-                {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
+              <View style={styles.displayFlex}>
+                <View>
+                  <Text style={styles.infoText}>
+                    Code d'accès:{' '}
+                    <Text style={styles.actualInfo}>{request.codeAcces}</Text>
+                  </Text>
+                  <Text style={styles.infoText}>
+                    Date de prélèvement:{' '}
+                    <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[0]}</Text>
+                  </Text>
+                  <Text style={styles.infoText}>
+                    Heure de prélèvement:{' '}
+                    <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[1].replace("T", "")}</Text>
+                  </Text>
+                  </View>
+                  <View style={styles.infoLeft}>
+                  <Text style={styles.infoText}>
+                    Nom du médecin:{' '}
+                    <Text style={styles.actualInfo}>{request.medecin.prenom + " " + request.medecin.nom}</Text>
+                  </Text>
+                  <Text style={styles.infoText}>
+                    Nom du technicien:{' '}
+                    <Text style={styles.actualInfo}>{request.nomTechnicien}</Text>
+                  </Text>
+                  <View style={styles.printButton}>
+                    <Button
+                      title={'Imprimer la requête'}
+                      onPress={() => printRequest()}></Button>
+                    {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
+                  </View>
+                </View>
+              </View>
+              <View style={styles.tableStyle}>
+              <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
+                <Row data={tableHead} style={styles.head} textStyle={styles.text} />
+                <Rows data={tableData} textStyle={styles.text} />
+              </Table>
               </View>
             </View>
           </View>
@@ -80,13 +122,28 @@ const RequestDetails = props => {
 };
 
 const styles = StyleSheet.create({
+  head: { height: 40, backgroundColor: '#f1f8ff' },
+  text: { margin: 6 },
   container: {
-    height: '100%',
-    width: '100%'
+    flex: 0.8,
+    margin: 5,
+    borderColor: '#808080',
+    borderWidth: 2,
+    borderRadius: 5,
+    borderStyle: 'solid',
+    paddingTop: '2%',
+    paddingBottom: '2%',
+    paddingLeft: '5%',
+    paddingRight: '5%',
   },
   detailsPadding: {
-    paddingLeft: 80,
-    paddingTop: 60,
+  },
+  infoLeft: {
+    marginLeft: 150
+  },
+  displayFlex: {
+    display: 'flex',
+    flexDirection: 'row'
   },
   detailsBox: {
     borderColor: '#808080',
@@ -94,12 +151,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderStyle: 'solid',
     marginTop: 20,
-    width: 1200,
-    height: 600,
+    width: '100%',
+    height: '90%',
   },
   detailsBoxInside: {
     paddingLeft: 40,
     paddingTop: 40,
+    display: 'flex'
   },
   returnButton: {
     width: 300,
@@ -117,6 +175,10 @@ const styles = StyleSheet.create({
     marginLeft: 1,
     marginRight: 0,
     marginTop: 0
+  },
+  tableStyle: {
+    marginTop: 30,
+    marginRight: '5%'
   }
 });
 
