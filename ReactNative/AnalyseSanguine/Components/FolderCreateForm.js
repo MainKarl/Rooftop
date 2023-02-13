@@ -52,6 +52,7 @@ const FolderCreateForm = props => {
                 }
     
             }).catch((error) => {
+                console.log(error);
                 AlertConnectionFailed(getDetail)
                 return
             });
@@ -93,15 +94,15 @@ const FolderCreateForm = props => {
     const sendFormToAPI = () => {
         let method = props.IsEditing ? "update": "create";
         const url = AnalyseConfig.API_URL + "dossier/" + method;
-        const formObj = {
-            IdDossier: patientInfo.idDossier,
+        var formObj = {
             prenom: firstName,
             nom: lastName,
             dateNaissance: date,
             sexe: sexe,
-          };
-
-          const body = JSON.stringify(formObj);
+        };
+        if (method == "update") 
+            formObj.idDossier = patientInfo.idDossier;
+        const body = JSON.stringify(formObj);
           
         fetch(url, {
             method: 'POST',
@@ -112,13 +113,19 @@ const FolderCreateForm = props => {
             body: body,
             cache: 'default'
         }).then((response) => {
+            console.log(response);
+            response.json().then((data) => {
+                console.log(data);
+            });
             if (response.ok) {
                 props.onChangeState(0);
               } else {
-                AlertConnectionFailed(sendFormToAPI)
+                
+                //AlertConnectionFailed(sendFormToAPI)
               }
         }).catch((error) => {
-            AlertConnectionFailed(sendFormToAPI)
+            console.log(error);
+            //AlertConnectionFailed(sendFormToAPI)
         })
     }
 
