@@ -49,14 +49,13 @@ const FolderCreateForm = props => {
           });
         }
         else {
-          AlertConnectionFailed(getDetail)
+          //AlertConnectionFailed(getDetail)
           return
         }
-
       }).catch((error) => {
-        AlertConnectionFailed(getDetail)
+        //AlertConnectionFailed(getDetail)
         return
-      });
+    });
   }
 
   const onFirstNameChange = (newFirstName) => {
@@ -107,21 +106,14 @@ const FolderCreateForm = props => {
   const sendFormToAPI = () => {
     let method = props.IsEditing ? "update" : "create";
     const url = AnalyseConfig.API_URL + "dossier/" + method;
+    var formObj = {
+        prenom: firstName,
+        nom: lastName,
+        dateNaissance: date,
+        sexe: sexe,
+      };
     if(props.IsEditing){
-        const formObj = {
-            IdDossier: patientInfo.idDossier,
-            prenom: firstName,
-            nom: lastName,
-            dateNaissance: date,
-            sexe: sexe,
-        };
-    }else{
-        const formObj = {
-            prenom: firstName,
-            nom: lastName,
-            dateNaissance: date,
-            sexe: sexe,
-        };
+        formObj.idDossier = patientInfo.idDossier
     }
 
     const body = JSON.stringify(formObj);
@@ -135,15 +127,18 @@ const FolderCreateForm = props => {
       body: body,
       cache: 'default'
     }).then((response) => {
-      if (response.ok) {
-        props.onChangeState(0);
-      } else {
-        AlertConnectionFailed(sendFormToAPI)
-      }
+        console.log(response);
+        if (response.ok) {
+            props.onChangeState(0);
+        } else {
+            //AlertConnectionFailed(sendFormToAPI)
+        }
     }).catch((error) => {
-      AlertConnectionFailed(sendFormToAPI)
+        console.log(error);
+      //AlertConnectionFailed(sendFormToAPI)
     })
   }
+
 
   return (
     <View style={styles.container}>
