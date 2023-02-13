@@ -26,7 +26,14 @@ const AnalyseCreateForm = (props) => {
             <Text>Requête: </Text>
             <ScrollView>
                 {
-
+                    props.request && props.request.lstTypeAnalyse &&
+                    <View>
+                        {
+                            props.request.lstTypeAnalyse.map((x) => (
+                                <AnalyseCreateField typeAnalyse={x} />
+                            ))
+                        }
+                    </View>
                 }
             </ScrollView>
         </View>
