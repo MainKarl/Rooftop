@@ -10,7 +10,6 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
-import Icon from "react-native-vector-icons/Ionicons";
 import AnalyseConfig from "../analyseConfig.json";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import linq from "linq";
@@ -130,7 +129,6 @@ const RequestDetails = props => {
                     <Button
                       title={'Imprimer la requête'}
                       onPress={() => printRequest()}></Button>
-                    {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
                   </View>
                 </View>
               </View>
@@ -147,10 +145,20 @@ const RequestDetails = props => {
                   </View>
                 </View>
               })}
+              <View style={styles.tableStyle}>
+                <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
+                  <Row data={tableHead} style={styles.head} textStyle={styles.text} />
+                  <Rows data={tableData} textStyle={styles.text} />
+                </Table>
+              </View>
+
             </View>
           </View>
         )}
       </View>
+      <Button
+        title={'Entrer les résultats'}
+        onPress={() => props.onChangeState(3)} />
     </View>
   );
 };

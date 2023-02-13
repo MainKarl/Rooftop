@@ -80,7 +80,7 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-                var result = _service.UpdateDossier(id, dossier);
+                var result = _service.UpdateDossier(dossier.IdDossier, dossier);
                 if (result == null)
                 {
                     return Problem();
