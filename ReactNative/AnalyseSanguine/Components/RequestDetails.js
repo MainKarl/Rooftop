@@ -13,30 +13,57 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import AnalyseConfig from "../analyseConfig.json";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import linq from "linq";
 
 const RequestDetails = props => {
 
   const [request, setRequest] = useState(null);
   const [testData, setTestData] = useState();
-  const [tableHead, setTableHead] = useState(['Test', 'Result', 'Flag', 'Units', 'Reference Interval']);
+  const [tableHead, setTableHead] = useState(['Test', 'Result', 'Reference']);
   const [tableData, setTableData] = useState();
 
   const loadResults = () => {
     console.log(request)
+    let differentTests = 0
     let arrayTest = [];
+    let arrayFinal = [];
     request.lstTypeAnalyse.map((analyse) => {
-      arrayTest.push([analyse.nom, '.', '.', '.', '.'])
+      arrayTest.push(analyse.idTypeAnalyse)
     })
-    setTableData(arrayTest)
+    console.log("ARRAY TEST")
+    console.log(arrayTest)
+    arrayTest.map((type) => {
+      let result = request.lstResultats.filter(resultat => resultat.typeValeur.typeAnalyseId == type)
+      arrayFinal.push([type, result])
+    })
+    console.log("ARRAY FINAL")
+    console.log(arrayFinal)
+    setTableData(arrayFinal)
+    //setTableData(arrayTest)
   }
 
   const setValues = (data) => {
     setRequest(data)
+    console.log("DATA")
+    console.log(data)
+    let differentTests = 0
     let arrayTest = [];
+    let arrayFinal = [];
     data.lstTypeAnalyse.map((analyse) => {
-      arrayTest.push([analyse.nom, '.', '.', '.', '.'])
+      arrayTest.push(analyse.nom)
     })
-    setTableData(arrayTest)
+    console.log("ARRAY TEST")
+    console.log(arrayTest)
+    arrayTest.map((type) => {
+      let result = request.lstResultats.filter(resultat => resultat.typeValeur.nom == type)
+      let arrayResults = []
+      result.map((result) => {
+        arrayResults.push([result.typeValeur.nom, result.valeur, result.typeValeur.reference])
+      })
+      arrayFinal.push([type, arrayResults])
+    })
+    console.log("ARRAY FINAL")
+    console.log(arrayFinal)
   }
 
   useEffect(() => {
@@ -89,8 +116,8 @@ const RequestDetails = props => {
                     Heure de prélèvement:{' '}
                     <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[1].replace("T", "")}</Text>
                   </Text>
-                  </View>
-                  <View style={styles.infoLeft}>
+                </View>
+                <View style={styles.infoLeft}>
                   <Text style={styles.infoText}>
                     Nom du médecin:{' '}
                     <Text style={styles.actualInfo}>{request.medecin.prenom + " " + request.medecin.nom}</Text>
@@ -107,12 +134,19 @@ const RequestDetails = props => {
                   </View>
                 </View>
               </View>
-              <View style={styles.tableStyle}>
-              <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
-                <Row data={tableHead} style={styles.head} textStyle={styles.text} />
-                <Rows data={tableData} textStyle={styles.text} />
-              </Table>
-              </View>
+              {arrayFinal.map((typeAnalyse) => {
+                <View>
+                  <View>
+                    typeAnalyse[0]
+                  </View>
+                  <View style={styles.tableStyle}>
+                    <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
+                      <Row data={tableHead} style={styles.head} textStyle={styles.text} />
+                      <Rows data={typeAnalyse[0]} textStyle={styles.text} />
+                    </Table>
+                  </View>
+                </View>
+              })}
             </View>
           </View>
         )}
