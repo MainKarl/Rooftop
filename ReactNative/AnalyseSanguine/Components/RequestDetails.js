@@ -89,8 +89,8 @@ const RequestDetails = props => {
                     Heure de prélèvement:{' '}
                     <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[1].replace("T", "")}</Text>
                   </Text>
-                  </View>
-                  <View style={styles.infoLeft}>
+                </View>
+                <View style={styles.infoLeft}>
                   <Text style={styles.infoText}>
                     Nom du médecin:{' '}
                     <Text style={styles.actualInfo}>{request.medecin.prenom + " " + request.medecin.nom}</Text>
@@ -103,20 +103,23 @@ const RequestDetails = props => {
                     <Button
                       title={'Imprimer la requête'}
                       onPress={() => printRequest()}></Button>
-                    {/* <Icon name="print" color="black" size={20} style={styles.customIcon}></Icon> */}
                   </View>
                 </View>
               </View>
               <View style={styles.tableStyle}>
-              <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
-                <Row data={tableHead} style={styles.head} textStyle={styles.text} />
-                <Rows data={tableData} textStyle={styles.text} />
-              </Table>
+                <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
+                  <Row data={tableHead} style={styles.head} textStyle={styles.text} />
+                  <Rows data={tableData} textStyle={styles.text} />
+                </Table>
               </View>
+
             </View>
           </View>
         )}
       </View>
+      <Button
+        title={'Entrer les résultats'}
+        onPress={() => props.onChangeState(3)} />
     </View>
   );
 };
