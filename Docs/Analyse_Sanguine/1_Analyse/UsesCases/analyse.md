@@ -48,46 +48,46 @@
 
 ## Front-end : 51h15-62h15
 
-### Créer la requête de prélévement : 8h15 - 9h15
+### Créer la requête de prélévement : 16h
 
 * *(27)* Validation des informations rentrées : 30 minutes
-* *(28)* Création du formulaire de création d'analyse : 7h-8h
-* *(29)* Requête à l'API : 45 minutes
+* *(28)* Création du formulaire de création d'analyse : 15h
+* *(29)* Requête à l'API : 30 minutes
 
-### Visualiser les requêtes de prélévements : 6h45
+### Visualiser les requêtes de prélévements : 6h30
 
 * *(30)* Création de la liste pour l'affichage : 6h
-* *(31)* Requête à l'API : 45 minutes
+* *(31)* Requête à l'API : 30 minutes
 
 ### Visualiser une requête de prélévement : 5h-6h
 
 * *(32)* Création du visuel de détail d'une requête : 5h-6h
 
-### Visualiser les dossier des patients : 6h45
+### Visualiser les dossier des patients : 6h30
 
 * *(33)* Création de la liste pour l'affichage : 6h
-* *(34)* Requête à l'API : 45 minutes
+* *(34)* Requête à l'API : 30 minutes
 
 ### Visualiser un dossier d'un patient : 5h-6h
 
 * *(35)* Création du visuel de détail d'un dossier d'un patient : 5h-6h
 
-### Rechercher le dossier d'un patient : 4h30-6h
+### Rechercher le dossier d'un patient : 5h-6h
 
-* *(36)* Filtre de la liste : 1h30-2h
+* *(36)* Filtre de la liste : 2h
 * *(37)* Création de la barre de recherche : 3-4h
 
-### Créer le dossier d'un patient : 11h45-13h45
+### Créer le dossier d'un patient : 12h - 14h
 
 * *(38)* Validation des informations rentrées : 6h-7h
 * *(39)* Création du formulaire de création d'un patient : 5h-6h
-* *(40)* Requête de l'API : 45 minutes
+* *(40)* Requête de l'API : 1h
 
-### Modifier le dossier d'un patient : 3h15-4h15
+### Modifier le dossier d'un patient : 8h30
 
-* *(41)* Validation des informations rentrées : 30 minutes
-* *(42)* Création du formulaire de modification d'un patient : 2h-3h
-* *(43)* Requête de l'API : 45 minutes
+* *(41)* Validation des informations rentrées : 5h
+* *(42)* Création du formulaire de modification d'un patient : 3h
+* *(43)* Requête de l'API : 30 minutes
 
 ### Imprimer l'analyse d'une requête : 3h-4h30
 
