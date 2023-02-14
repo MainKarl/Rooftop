@@ -9,12 +9,12 @@ namespace API_AnalyseSanguine.Models
         [Required]
         public int IdResultatAnalyse { get; set; }
         [Required]
-        public float Valeur { get; set; }
+        public string Valeur { get; set; }
 
 
         //Lien
         [Required]
-        public RequeteAnalyse RequeteAnalyse { get; set; }
+        int IdRequete { get; set; }
         [Required]
         public TypeValeur TypeValeur { get; set; }
     }

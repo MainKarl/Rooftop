@@ -44,7 +44,7 @@ const FolderDetails = props => {
           console.log(error);
         });
     }
-  }, [props.selectedFolder, patientInfo]);
+  }, [props.selectedFolder, DetailVisible]);
 
   function updateformAddRequeteVisible() {
     if(formAddRequeteVisible){

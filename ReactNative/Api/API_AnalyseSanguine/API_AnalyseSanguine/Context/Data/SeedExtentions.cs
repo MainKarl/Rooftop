@@ -209,11 +209,11 @@ namespace API_AnalyseSanguine.Context.Data
                 CreateTypeAnalyse(50, "Protéines totales", categories[2]),
                 CreateTypeAnalyse(51, "Albumine", categories[2]),
                 CreateTypeAnalyse(52, "b-HCG qualitatif", categories[2]),
-                CreateTypeAnalyse(53, "Drogues de rue", categories[2]),
-                CreateTypeAnalyse(54, "Éthanol", categories[2]),
-                CreateTypeAnalyse(55, "Microscopie urinaire", categories[2]),
-                CreateTypeAnalyse(56, "Osmolarité urinaire", categories[2]),
-                CreateTypeAnalyse(57, "Osmolarité sérique", categories[2]),
+                CreateTypeAnalyse(53, "Éthanol", categories[2]),
+                CreateTypeAnalyse(54, "Osmolarité urinaire", categories[2]),
+                CreateTypeAnalyse(55, "Osmolarité sérique", categories[2]),
+                CreateTypeAnalyse(56, "Drogues de rue", categories[2]),
+                CreateTypeAnalyse(57, "Microscopie urinaire", categories[2]),
 
                 // Routine urinaire
                 CreateTypeAnalyse(58, "Glucose", categories[3]),
@@ -251,6 +251,31 @@ namespace API_AnalyseSanguine.Context.Data
                 CreateTypeValeur(15, "AP", typesAnalyse.First(x=>x.Nom == "AP"), "80-120 %"),
 
                 // Hémotologie
+                CreateTypeValeur(62, "GB", typesAnalyse.First(x=>x.Nom == "FSC num."), "4.8-10.8 X 10⁹/L"),
+                CreateTypeValeur(63, "GR", typesAnalyse.First(x=>x.Nom == "FSC num."), "♂ : 4.4-6.0 X 10¹²/L,♀ : 4.0-5.6 X 10¹²/L"),
+                CreateTypeValeur(64, "Hb", typesAnalyse.First(x=>x.Nom == "FSC num."), "♂ : 134-170 g/L,♀ : 117-157 g/L"),
+                CreateTypeValeur(65, "Ht", typesAnalyse.First(x=>x.Nom == "FSC num."), "♂ : 0.420-0.500 g/L,♀ : 0.370-0.470 L/L"),
+                CreateTypeValeur(66, "VMC", typesAnalyse.First(x=>x.Nom == "FSC num."), "81-99 fL"),
+                CreateTypeValeur(67, "TGMH", typesAnalyse.First(x=>x.Nom == "FSC num."), "27-33 pg"),
+                CreateTypeValeur(68, "CGMH", typesAnalyse.First(x=>x.Nom == "FSC num."), "323-365 g/L"),
+                CreateTypeValeur(69, "IDC", typesAnalyse.First(x=>x.Nom == "FSC num."), "12.7-16.0 %, 37.6-50.3 fL"),
+                CreateTypeValeur(70, "Plt", typesAnalyse.First(x=>x.Nom == "FSC num."), "140-400 X 10⁹/L"),
+                CreateTypeValeur(71, "VMP", typesAnalyse.First(x=>x.Nom == "FSC num."), "7.4-10.4 fL"),
+                CreateTypeValeur(72, "IDP", typesAnalyse.First(x=>x.Nom == "FSC num."), "15-17 %"),
+
+                CreateTypeValeur(73, "Plt", typesAnalyse.First(x=>x.Nom == "Plt"), "140-400 X 10⁹/L"),
+                CreateTypeValeur(74, "Micro", typesAnalyse.First(x=>x.Nom == "Micro"), "♂ : 0.420-0.500 g/L,♀ : 0.370-0.470 L/L"),
+                CreateTypeValeur(75, "VS", typesAnalyse.First(x=>x.Nom == "VS"), "♂ : 0-10 mm/h,♀ : 0.20 mm/h"),
+
+                CreateTypeValeur(76, "NEUTRO", typesAnalyse.First(x=>x.Nom == "FSC diff."), "50-70 %,2.2-6.5 X 10⁹/L"),
+                CreateTypeValeur(77, "STAB", typesAnalyse.First(x=>x.Nom == "FSC diff."), "0-80 %,0.05-0.10 X 10⁹/L"),
+                CreateTypeValeur(78, "EOSINO", typesAnalyse.First(x=>x.Nom == "FSC diff."), "0.01-4 %,0.02-0.440 X 10⁹/L"),
+                CreateTypeValeur(79, "BASO", typesAnalyse.First(x=>x.Nom == "FSC diff."), "0.01-2 %,0.00-0.15 X 10⁹/L"),
+                CreateTypeValeur(80, "LYMPHO", typesAnalyse.First(x=>x.Nom == "FSC diff."), "17-42 %,1.2-3.6 X 10⁹/L"),
+                CreateTypeValeur(81, "MONO", typesAnalyse.First(x=>x.Nom == "FSC diff."), "1-12 %,0.08-0.870 X 10⁹/L"),
+                CreateTypeValeur(82, "LY.AT.", typesAnalyse.First(x=>x.Nom == "FSC diff."), "0-5 %,< 1.0 X 10⁹/L"),
+
+
 
                 // Analyse de biochimie
                 CreateTypeValeur(16, "ALP", typesAnalyse.First(x => x.Nom == "ALP"), "<100 U/L *selon l'âge du patient"),

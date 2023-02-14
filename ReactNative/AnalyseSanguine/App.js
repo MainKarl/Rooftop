@@ -32,8 +32,7 @@ const App = () => {
     setIsEditing(IsEditing);
   }
 
-  function updateVisible(request)
-  {
+  function updateVisible(request) {
     setInformationState(0)
     setselectedRequest(request)
   }
@@ -49,7 +48,7 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   let rightDetail;
-  if (informationState === 0) { rightDetail = <FolderDetails onChangeState={onChangeInformationState} changeEditingMode={changeEditingMode} onSelectedRequest={onSelectedRequest}  selectedFolder={selectedFolder} />; }
+  if (informationState === 0) { rightDetail = <FolderDetails onChangeState={onChangeInformationState} changeEditingMode={changeEditingMode} onSelectedRequest={onSelectedRequest} selectedFolder={selectedFolder} />; }
   else if (informationState === 1) { rightDetail = <FolderCreate onChangeState={onChangeInformationState} IsEditing={isEditing} selectedFolder={selectedFolder} />; }
   else if (informationState === 2) { rightDetail = <RequestDetails onChangeState={onChangeInformationState} selectedRequest={selectedRequest} />; }
   return (
