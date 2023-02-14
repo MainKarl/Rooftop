@@ -65,7 +65,7 @@ namespace API_AnalyseSanguine.Services
         {
             try
             {
-                var result = _context.RequeteAnalyses.Include(a => a.LstTypeAnalyse).Include(c => c.Medecin).Where(c => c.IdRequete == id).FirstOrDefault();
+                var result = _context.RequeteAnalyses.Include(a => a.LstTypeAnalyse).ThenInclude(x=>x.LstValeurs).Include(c => c.Medecin).Where(c => c.IdRequete == id).FirstOrDefault();
 
                 // Permet d'enlever l'erreur de object cycle
                 foreach (TypeAnalyse item in result.LstTypeAnalyse)
