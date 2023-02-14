@@ -20,6 +20,12 @@ namespace API_AnalyseSanguine.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Récupère l’Id, le prénom et le nom de chaque dossier.
+        /// 
+        /// Retourne une erreur si la liste est null
+        /// </summary>
+        /// <returns>Liste JSON des résultats obtenus</returns>
         [HttpGet("getsimple")]
         public async Task<IActionResult> GetDossierSimple()
         {
@@ -38,6 +44,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Récupère l'Id, le prénom, le nom, la date de naissance, le sexe, la note associée et la liste de requêtes du dossier ayant l'Id passé en paramètre.
+        /// 
+        /// Retourne une erreur si aucun dossier n'a été trouvé avec l'Id fourni
+        /// </summary>
+        /// <param name="id">Id du dossier voulu</param>
+        /// <returns>JSON contenant les informations trouvées</returns>
         [HttpGet("getdetaille")]
         public async Task<IActionResult> GetDossierDetaille(int id)
         {
@@ -56,6 +69,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Crée un dossier avec les informations fournies dans le formulaire de création de dossiers.
+        /// 
+        /// Retourne un message d'erreur en fonction de la valeur invalide
+        /// </summary>
+        /// <param name="dossier">Modèle contenant les informations du formulaire</param>
+        /// <returns>Le dossier créé</returns>
         [HttpPost("create")]
         [EnableCors("_myAllowSpecificOrigins")]
         public async Task<IActionResult> CreateDossier(Dossier dossier)
@@ -75,6 +95,14 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Récupère un dossier avec l'Id fourni et change ses valeurs en fonction des valeurs obtenues du formulaire de modification de dossier.
+        /// 
+        /// Retourne une erreur si aucun dossier n'a été trouvé avec l'Id fourni
+        /// </summary>
+        /// <param name="id">Id du dossier à modifier</param>
+        /// <param name="dossier">Valeur à appliquer au dossier</param>
+        /// <returns>Le dossier avec les nouvelles valeurs</returns>
         [HttpPost("update")]
         public async Task<IActionResult> UpdateDossier(int id, Dossier dossier)
         {
@@ -93,6 +121,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Supprime un dossier en fonction de l'Id fourni.
+        /// 
+        /// Retourne une erreur si aucun dossier n'a été trouvé avec l'Id fourni
+        /// </summary>
+        /// <param name="id">Id du dossier à supprimer</param>
+        /// <returns>True si la suppression a été complétée</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDossier(long id)
         {

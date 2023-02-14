@@ -19,6 +19,12 @@ namespace API_AnalyseSanguine.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Retourne une liste de toutes les catégories ainsi que les types d'analyse qui leur sont assignés
+        /// 
+        /// Retourne une erreur si la liste est vide
+        /// </summary>
+        /// <returns>La liste des toutes les catégorie et les types d'analyse</returns>
         [HttpGet("categories")]
         public async Task<IActionResult> GetAllCategoriesAndTypeAnalyse()
         {
@@ -37,6 +43,12 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Retourne tout les types d'analyse
+        /// 
+        /// Retourne une erreur si la liste est vide
+        /// </summary>
+        /// <returns>La liste des types d'analyse</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllTypeAnalyse()
         {
@@ -55,6 +67,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Retourne un type d'analyse en fonction de l'Id
+        /// 
+        /// Retourne une erreur si aucun type d'analyse n'est trouvé
+        /// </summary>
+        /// <param name="id">l'Id du type d'analyse</param>
+        /// <returns>Le type d'analyse trouvé</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTypeAnalyse(long id)
         {
@@ -73,6 +92,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Crée un type d'analyse
+        /// 
+        /// Retourne une erreur si une valeur n'est pas valide
+        /// </summary>
+        /// <param name="typeAnalyse">Les informations pour le type d'analyse a créer</param>
+        /// <returns>Le type d'analyse créé</returns>
         [HttpPost("create")]
         public async Task<IActionResult> CreateTypeAnalyse(TypeAnalyse typeAnalyse)
         {
