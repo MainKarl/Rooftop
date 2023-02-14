@@ -65,15 +65,7 @@ namespace API.Tests
         {
             var requeteDto = _fixture.Create<CreateRequeteDto>();
 
-            var requete = new RequeteAnalyse()
-            {
-                CodeAcces = Guid.NewGuid(),
-                DateEchantillon = DateTime.Now,
-                DossierIdDossier = requeteDto.DossierIdDossier,
-                MedecinIdMedecin = requeteDto.MedecinIdMedecin,
-                NomTechnicien = requeteDto.NomTechnicien,
-                AnalyseDemande = requeteDto.analyseDemande
-            };
+            var requete = _fixture.Create<RequeteAnalyse>();
 
             _service.Setup(repo => repo.CreateRequete(It.IsAny<RequeteAnalyse>())).Returns(requete);
 
