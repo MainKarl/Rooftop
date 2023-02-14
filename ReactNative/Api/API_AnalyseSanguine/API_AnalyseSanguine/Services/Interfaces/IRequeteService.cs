@@ -1,4 +1,5 @@
-﻿using API_AnalyseSanguine.Models;
+﻿using API_AnalyseSanguine.Dtos;
+using API_AnalyseSanguine.Models;
 
 namespace API_AnalyseSanguine.Services.Interfaces
 {
@@ -11,5 +12,6 @@ namespace API_AnalyseSanguine.Services.Interfaces
         public bool DeleteRequete(int id);
 
         public List<TypeAnalyse> GetCorrespondantTypeAnalyses(List<int> analyseIds);
+        public RequeteAnalyse AddResultatsRequete(List<CreateResultDto> resultats);
     }
 }

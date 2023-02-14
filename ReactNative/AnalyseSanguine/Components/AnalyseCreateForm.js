@@ -11,6 +11,7 @@ import {
     TouchableHighlight,
     TouchableOpacity,
     ScrollView,
+    Alert,
 } from "react-native";
 import AnalyseCreateField from "./AnalyseCreateField";
 import AnalyseConfig from "../analyseConfig.json";
@@ -80,13 +81,66 @@ const AnalyseCreateForm = (props) => {
     const onChangeResultValue = (id, value) => {
     }
 
+    const onSauvegarderResultats = () => {
+        Alert.alert('Sauvegarde des resultats', 'Voulez-vous vraiment sauvegarder les résultats?\r\n(Cette action est irréversible)', [
+            {
+                text: 'Annuler',
+                onPress: () => { }
+            },
+            {
+                text: 'Confirmer',
+                onPress: () => {
+                    sendToAPI();
+                }
+            }
+        ]);
+    }
+
+    const sendToAPI = () => {
+        const url = AnalyseConfig.API_URL + "resultat/create";
+        var formObj = {
+            prenom: firstName,
+            nom: lastName,
+            dateNaissance: date,
+            sexe: sexe,
+        };
+        if (props.IsEditing) {
+            formObj.idDossier = patientInfo.idDossier
+        }
+
+        const body = JSON.stringify(formObj);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: body,
+            cache: 'default'
+        }).then((response) => {
+            console.log(response);
+            if (response.ok) {
+                props.onChangeState(0);
+            } else {
+                //AlertConnectionFailed(sendFormToAPI)
+            }
+        }).catch((error) => {
+            console.log(error);
+            //AlertConnectionFailed(sendFormToAPI)
+        })
+    }
+
     return (
         <View style={styles.container}>
-            <Button
-                title={'Retourner à la liste de requêtes'}
-                onPress={() => props.onChangeMode(false)}></Button>
-            <ScrollView>
+            <View style={styles.returnButton}>
+                <Button
+                    title={'Retourner à la liste de requêtes'}
+                    onPress={() => props.onChangeMode(false)}></Button>
+            </View>
+            <ScrollView style={styles.scroll}>
                 {
+
                     categories && categories.length > 0 &&
                     categories.map((cat) => (
                         <View style={styles.category}>
@@ -110,6 +164,12 @@ const AnalyseCreateForm = (props) => {
                     ))
                 }
             </ScrollView >
+            <View style={styles.returnButton}>
+                <Button
+                    title={'Sauvegarder les resultats'}
+                    onPress={() => onSauvegarderResultats()}></Button>
+            </View>
+
         </View >
     )
 }
@@ -117,7 +177,10 @@ const AnalyseCreateForm = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 12,
         margin: 5,
+        display: 'flex',
+        flexDirection: 'column',
         borderColor: '#808080',
         borderWidth: 2,
         borderRadius: 5,
@@ -144,8 +207,17 @@ const styles = StyleSheet.create({
     typeTitle: {
         fontWeight: "bold",
     },
-    result: {
-
+    returnButton: {
+        width: 300,
+        marginLeft: 32,
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    scroll: {
+        borderColor: '#808080',
+        borderTopWidth: 2,
+        borderTopRadius: 5,
+        borderTopStyle: 'solid',
     }
 })
 
