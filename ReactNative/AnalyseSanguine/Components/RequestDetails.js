@@ -179,9 +179,11 @@ const RequestDetails = props => {
           )}
           {
             canAddResult &&
-            <Button
-              title={'Entrer les résultats'}
-              onPress={() => onChangeMode(true)} />
+            <View style={{ marginTop: 12 }}>
+              <Button
+                title={'Entrer les résultats'}
+                onPress={() => onChangeMode(true)} />
+            </View>
           }
 
         </View>

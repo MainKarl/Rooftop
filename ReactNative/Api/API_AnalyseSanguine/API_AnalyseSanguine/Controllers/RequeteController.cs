@@ -31,7 +31,7 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-                var result = _service.GetAllRequete(idDossier);
+                var result = _service.GetAllRequete(idDossier).OrderByDescending(x => x.DateEchantillon);
                 if (result == null)
                 {
                     return Problem();
