@@ -19,7 +19,7 @@ import AnalyseCreateForm from './AnalyseCreateForm';
 const RequestDetails = props => {
 
   const [request, setRequest] = useState(null);
-  const [resultsExist, setResultsExist] = useState(true);
+  const [resultsExist, setResultsExist] = useState(false);
   const [resultMode, setResultMode] = useState(false);
   const [testData, setTestData] = useState([]);
   const [tableHead, setTableHead] = useState(['Type de valeur', 'Valeur', 'Référence']);
@@ -65,7 +65,7 @@ const RequestDetails = props => {
                         var neededCategoryIds = [];
                         var neededTypeIds = [];
 
-                        dataresult.lstTypeAnalyse.forEach(ta => {
+                        data.lstTypeAnalyse.forEach(ta => {
                             if (!neededCategoryIds.includes(ta.categoryId))
                                 neededCategoryIds.push(ta.categoryId);
                             if (!neededTypeIds.includes(ta.idTypeAnalyse))
@@ -140,6 +140,8 @@ const RequestDetails = props => {
             response.json().then((data) => {
               if (!data.lstResultats || data.lstResultats.length <= 0)
                 setCanAddResult(true);
+              else
+                setResultsExist(true)
               setValues(data)
             });
           }
@@ -157,6 +159,17 @@ const RequestDetails = props => {
     console.log(request)
   }
 
+  const heightBox = () => {
+    if (canAddResult)
+    {
+      return '82%'
+    }
+    else
+    {
+      return '89%'
+    }
+  }
+
   console.log("CATEGORIES")
   console.log(categories)
 
@@ -170,7 +183,7 @@ const RequestDetails = props => {
               onPress={() => props.onChangeState(0)}></Button>
           </View>
           {request && (
-            <View style={styles.detailsBox}>
+            <View style={[styles.detailsBox, {height: heightBox()}]}>
               <View style={styles.detailsBoxInside}>
                 <View style={styles.displayFlex}>
                   <View>
@@ -211,7 +224,8 @@ const RequestDetails = props => {
                     // borderRadius: 5,
                     // borderStyle: 'solid',
                     height: '80%',
-                    marginRight: '5%'
+                    marginRight: '5%',
+                    marginTop: '1%'
                   }}>
                     {
                       categories && categories.length > 0 &&
@@ -221,12 +235,15 @@ const RequestDetails = props => {
                           {
                             cat.typeAnalyseList.map((t) => (
                               <View style={styles.type} >
-                                <Text style={styles.typeTitle}>{t.nom}</Text>
+                                <Text style={styles.typeTitle}>{t.nom} : </Text>
                                 {
                                   request && request.lstResultats && request.lstResultats.length > 0 &&
                                   request.lstResultats.map((r) => (
                                     r.typeValeur.typeAnalyseId == t.idTypeAnalyse &&
-                                    <Text>{r.valeur}</Text>
+                                    <View style={{flexDirection: 'row', paddingTop: 8}}>
+                                    <Text> {r.typeValeur.nom + " : " + r.valeur}</Text>
+                                    <Text style={styles.referenceText}>({r.typeValeur.reference})</Text>
+                                    </View>
                                   ))
                                 }
                               </View>
@@ -289,7 +306,11 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     marginTop: 20,
     width: '100%',
-    height: '85%',
+    height: '82%',
+  },
+  referenceText: {
+    paddingLeft: 6,
+    fontWeight: 'bold'
   },
   detailsBoxInside: {
     paddingLeft: 40,
@@ -336,6 +357,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     borderStyle: 'solid',
+    marginRight: 10
 },
 categoryTitle: {
     fontWeight: "bold",
@@ -346,11 +368,11 @@ type: {
     margin: 5,
     padding: 12,
     borderRadius: 5,
-    flexDirection: 'column'
 },
 typeTitle: {
     fontWeight: "bold",
-    display: 'flex'
+    display: 'flex',
+    fontSize: 16
 },
 returnButton: {
     width: 300,
