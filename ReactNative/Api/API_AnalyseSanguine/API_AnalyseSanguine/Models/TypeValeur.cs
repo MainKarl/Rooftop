@@ -17,6 +17,5 @@ namespace API_AnalyseSanguine.Models
 
         //Lien
         public int TypeAnalyseId { get; set; }
-        public TypeAnalyse TypeAnalyse { get; set; }
     }
 }

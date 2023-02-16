@@ -15,7 +15,6 @@ import {
 import AnalyseConfig from "../analyseConfig.json";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import AnalyseCreateForm from './AnalyseCreateForm';
-import linq from "linq";
 
 const RequestDetails = props => {
 
@@ -26,6 +25,7 @@ const RequestDetails = props => {
   const [tableHead, setTableHead] = useState(['Type de valeur', 'Valeur', 'Référence']);
   const [tableData, setTableData] = useState();
   const [arrayTestReal, setArrayTestReal] = useState();
+  const [canAddResult, setCanAddResult] = useState(false);
 
   const onChangeMode = (mode) => {
     setResultMode(mode);
@@ -58,10 +58,9 @@ const RequestDetails = props => {
     })
     arrayTest.map((type) => {
       let result = []
-      if (data.lstResultats)
-      {
-          setResultsExist(true)
-          result = data.lstResultats.filter(resultat => resultat.typeValeur.nom == type)
+      if (data.lstResultats) {
+        setResultsExist(true)
+        result = data.lstResultats.filter(resultat => resultat.typeValeur.nom == type)
       }
       console.log("ARRAY TEST")
       console.log(arrayTest)
@@ -70,11 +69,11 @@ const RequestDetails = props => {
         arrayResults.push([result.typeValeur.nom, result.valeur, result.typeValeur.reference])
       })
       arrayFinal.push([type, arrayResults])
-     })
-     console.log("WILL IT WORK?")
-     console.log(arrayFinal)
-     setTestData(arrayFinal)
-     //console.log("ARRAY FINAL WORKED")
+    })
+    console.log("WILL IT WORK?")
+    console.log(arrayFinal)
+    setTestData(arrayFinal)
+    //console.log("ARRAY FINAL WORKED")
   }
 
   useEffect(() => {
@@ -85,6 +84,8 @@ const RequestDetails = props => {
         .then((response) => {
           if (response.ok) {
             response.json().then((data) => {
+              if (!data.lstResultats || data.lstResultats.length <= 0)
+                setCanAddResult(true);
               setValues(data)
             });
           }
@@ -105,48 +106,49 @@ const RequestDetails = props => {
   console.log("TEST DATA")
   console.log(testData)
   return (
-    <View style={styles.container}>
-      <View style={styles.detailsPadding}>
-        <View style={styles.returnButton}>
-          <Button
-            title={'Retourner à la liste de requêtes'}
-            onPress={() => props.onChangeState(0)}></Button>
-        </View>
-        {request && (
-          <View style={styles.detailsBox}>
-            <View style={styles.detailsBoxInside}>
-              <View style={styles.displayFlex}>
-                <View>
-                  <Text style={styles.infoText}>
-                    Code d'accès:{' '}
-                    <Text style={styles.actualInfo}>{request.codeAcces}</Text>
-                  </Text>
-                  <Text style={styles.infoText}>
-                    Date de prélèvement:{' '}
-                    <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[0]}</Text>
-                  </Text>
-                  <Text style={styles.infoText}>
-                    Heure de prélèvement:{' '}
-                    <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[1].replace("T", "")}</Text>
-                  </Text>
-                </View>
-                <View style={styles.infoLeft}>
-                  <Text style={styles.infoText}>
-                    Nom du médecin:{' '}
-                    <Text style={styles.actualInfo}>{request.medecin.prenom + " " + request.medecin.nom}</Text>
-                  </Text>
-                  <Text style={styles.infoText}>
-                    Nom du technicien:{' '}
-                    <Text style={styles.actualInfo}>{request.nomTechnicien}</Text>
-                  </Text>
-                  <View style={styles.printButton}>
-                    <Button
-                      title={'Imprimer la requête'}
-                      onPress={() => printRequest()}></Button>
+    <View style={{ flex: 1 }}>
+      {!resultMode && <View style={styles.container}>
+        <View style={styles.detailsPadding}>
+          <View style={styles.returnButton}>
+            <Button
+              title={'Retourner à la liste de requêtes'}
+              onPress={() => props.onChangeState(0)}></Button>
+          </View>
+          {request && (
+            <View style={styles.detailsBox}>
+              <View style={styles.detailsBoxInside}>
+                <View style={styles.displayFlex}>
+                  <View>
+                    <Text style={styles.infoText}>
+                      Code d'accès:{' '}
+                      <Text style={styles.actualInfo}>{request.codeAcces}</Text>
+                    </Text>
+                    <Text style={styles.infoText}>
+                      Date de prélèvement:{' '}
+                      <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[0]}</Text>
+                    </Text>
+                    <Text style={styles.infoText}>
+                      Heure de prélèvement:{' '}
+                      <Text style={styles.actualInfo}>{String(request.dateEchantillon).split("T")[1].replace("T", "")}</Text>
+                    </Text>
+                  </View>
+                  <View style={styles.infoLeft}>
+                    <Text style={styles.infoText}>
+                      Nom du médecin:{' '}
+                      <Text style={styles.actualInfo}>{request.medecin.prenom + " " + request.medecin.nom}</Text>
+                    </Text>
+                    <Text style={styles.infoText}>
+                      Nom du technicien:{' '}
+                      <Text style={styles.actualInfo}>{request.nomTechnicien}</Text>
+                    </Text>
+                    <View style={styles.printButton}>
+                      <Button
+                        title={'Imprimer la requête'}
+                        onPress={() => printRequest()}></Button>
+                    </View>
                   </View>
                 </View>
-              </View>
-              {resultsExist ? (
+                {resultsExist ? (
 
                 <ScrollView
                 style={{
@@ -154,32 +156,40 @@ const RequestDetails = props => {
                   // borderWidth: 2,
                   // borderRadius: 5,
                   // borderStyle: 'solid',
-                  height: '80%'
-                }}>
-                  {testData.map((typeAnalyse) => (
-                    <View>
-                      <View style={styles.tableStyle}>
-                        <Text style={styles.tableTitle}>
-                          {typeAnalyse[0]}
-                        </Text>
-                        <Table borderStyle={{ borderWidth: 2, borderColor: '#808080' }}>
-                          <Row data={tableHead} style={styles.head} textStyle={styles.text} />
-                          <Rows data={typeAnalyse[1]} textStyle={styles.text} />
-                        </Table>
+                      height: '80%'
+                    }}>
+                    {testData.map((typeAnalyse) => (
+                      <View>
+                        <View style={styles.tableStyle}>
+                          <Text style={styles.tableTitle}>
+                            {typeAnalyse[0]}
+                          </Text>
+                          <Table borderStyle={{ borderWidth: 2, borderColor: '#808080' }}>
+                            <Row data={tableHead} style={styles.head} textStyle={styles.text} />
+                            <Rows data={typeAnalyse[1]} textStyle={styles.text} />
+                          </Table>
+                        </View>
                       </View>
-                    </View>
-                  ))}
-                </ScrollView>
-              ) : <Text style={styles.noDataText}>Il n'y a pas de résultats pour cette analyse</Text> }
-              
+                    ))}
+                  </ScrollView>
+                ) : <Text style={styles.noDataText}>Il n'y a pas de résultats pour cette analyse</Text>}
+
+              </View>
             </View>
-            </View>
+
           )}
-        <Button
-          title={'Entrer les résultats'}
-          onPress={() => onChangeMode(true)} />
-      </View>
-      {resultMode && <AnalyseCreateForm onChangeMode={onChangeMode} request={request} />}
+          {
+            canAddResult &&
+            <View style={{ marginTop: 12 }}>
+              <Button
+                title={'Entrer les résultats'}
+                onPress={() => onChangeMode(true)} />
+            </View>
+          }
+
+        </View>
+      </View>}
+      {resultMode && canAddResult && <AnalyseCreateForm changeCanAddResult={setCanAddResult} onChangeMode={onChangeMode} request={request} />}
     </View>
   );
 };

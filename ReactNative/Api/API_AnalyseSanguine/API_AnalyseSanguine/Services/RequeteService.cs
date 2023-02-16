@@ -1,4 +1,5 @@
 ﻿using API_AnalyseSanguine.Context.Data;
+using API_AnalyseSanguine.Dtos;
 using API_AnalyseSanguine.Models;
 using API_AnalyseSanguine.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -65,7 +66,7 @@ namespace API_AnalyseSanguine.Services
         {
             try
             {
-                var result = _context.RequeteAnalyses.Include(a => a.LstTypeAnalyse).Include(c => c.Medecin).Where(c => c.IdRequete == id).FirstOrDefault();
+                var result = _context.RequeteAnalyses.Include(a => a.LstTypeAnalyse).ThenInclude(x => x.LstValeurs).Include(c => c.Medecin).Where(c => c.IdRequete == id).FirstOrDefault();
 
                 // Permet d'enlever l'erreur de object cycle
                 foreach (TypeAnalyse item in result.LstTypeAnalyse)
@@ -118,6 +119,39 @@ namespace API_AnalyseSanguine.Services
             catch (Exception e)
             {
                 return null;
+            }
+        }
+
+        public RequeteAnalyse AddResultatsRequete(List<CreateResultDto> resultats)
+        {
+            try
+            {
+                if (resultats == null || resultats.Count <= 0)
+                    return null;
+
+                int requestId = resultats[0].IdRequete;
+
+                RequeteAnalyse request = _context.RequeteAnalyses.Find(requestId);
+
+                List<ResultatAnalyse> requestResults = new List<ResultatAnalyse>();
+
+                foreach (CreateResultDto r in resultats)
+                {
+                    requestResults.Add(new ResultatAnalyse()
+                    {
+                        TypeValeur = r.TypeValeur,
+                        Valeur = r.Valeur,
+                    });
+                }
+
+                request.LstResultats = requestResults;
+                _context.SaveChanges();
+                return request;
+            }
+            catch (Exception e)
+            {
+                return null;
+                throw;
             }
         }
     }
