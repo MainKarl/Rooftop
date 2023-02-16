@@ -20,6 +20,7 @@ const FolderDetails = props => {
   const [patientInfo, setpatientInfo] = useState(null);
   const [DetailVisible, setDetailVisible] = useState(true);
   const [formAddRequeteVisible, setformAddRequeteVisible] = useState(false);
+  const [nouvelleNote, setNouvelleNote] = useState("");
   const SexeDict = ["Homme", "Femme", "Autre"];
 
   useEffect(() => {
@@ -35,6 +36,7 @@ const FolderDetails = props => {
               data.dateNaissanceText = String(data.dateNaissance).split('T')[0];
               data.sexeText = SexeDict[data.sexe];
               setpatientInfo(data);
+              setNouvelleNote(data.note ? data.note : "")
             });
           } else {
             console.log(response);
@@ -54,6 +56,43 @@ const FolderDetails = props => {
     setDetailVisible(!DetailVisible);
     console.log(formAddRequeteVisible);
   }
+
+  function updateNote(){
+    const url = AnalyseConfig.API_URL + "dossier/updatenote";
+    var formObj = {
+        id: patientInfo.idDossier,
+        note: nouvelleNote,
+      };
+    const body = JSON.stringify(formObj);
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: body,
+      cache: 'default'
+    }).then((response) => {
+        console.log(response);
+        if (response.ok) {
+            //Afficher Confirmation
+            
+            let obj = patientInfo
+            obj.note = nouvelleNote
+            setpatientInfo(obj)
+        } else {
+            //AlertConnectionFailed(sendFormToAPI)
+        }
+    }).catch((error) => {
+        console.log(error);
+      //AlertConnectionFailed(sendFormToAPI)
+    })
+  }
+
+  function setNewNote(text){
+    setNouvelleNote(text)
+  } 
 
   const callCreateForm = () => {
     props.changeEditingMode(true)
@@ -103,16 +142,18 @@ const FolderDetails = props => {
                   <TextInput
                     style={{ flex: 1 }}
                     multiline
+                    value= {nouvelleNote}
+                    onChangeText= {(newNote) => setNewNote(newNote)}
                     scrollEnabled>
                   </TextInput>
                   <View style={{ display: 'flex', flexDirection: 'row' }}>
                     <View style={{ flex: 0.7 }}>
-                      <Button title="Sauvegarder" disabled></Button>
+                      <Button title="Sauvegarder" onPress={() => updateNote()}></Button>
                     </View>
                     <View style={{ flex: 0.3 }}>
                       <Button
                         title="Annuler"
-                        disabled></Button>
+                        onPress={() => setNouvelleNote(patientInfo.note ? patientInfo.note : "")}></Button>
                     </View>
                   </View>
                 </View>

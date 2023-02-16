@@ -122,6 +122,31 @@ namespace API_AnalyseSanguine.Controllers
         }
 
         /// <summary>
+        /// Permet de changer les notes d'un dossier
+        /// 
+        /// Retourne une erreur s'il ne trouve pas de dossier lié a l'Id donné
+        /// </summary>
+        /// <param name="note">Id du dossier et nouvelle note a appliquer au dossier</param>
+        /// <returns>le dossier et sa nouvelle note</returns>
+        [HttpPost("updatenote")]
+        public async Task<IActionResult> updateNote(UpdateNote note)
+        {
+            try
+            {
+                var result = _service.UpdateNote(note.Id, note.Note);
+                if (result == null)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        /// <summary>
         /// Supprime un dossier en fonction de l'Id fourni.
         /// 
         /// Retourne une erreur si aucun dossier n'a été trouvé avec l'Id fourni
