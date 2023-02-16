@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
     container: {
         display: "flex",
         flexDirection: "row",
+        marginLeft: 12,
+        marginTop: 12,
     },
     label: {
         flex: 0.1,
