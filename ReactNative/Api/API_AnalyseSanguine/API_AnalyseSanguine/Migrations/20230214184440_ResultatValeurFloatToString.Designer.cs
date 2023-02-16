@@ -4,6 +4,7 @@ using API_AnalyseSanguine.Context.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_AnalyseSanguine.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230214184440_ResultatValeurFloatToString")]
+    partial class ResultatValeurFloatToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,7 +235,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 1,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("e0d8c6cd-cc64-4594-b0dc-45d4284bc024"),
+                            CodeAcces = new Guid("4b5bea76-58ba-48b3-89a3-66fd582e314a"),
                             DateEchantillon = new DateTime(2022, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 1,
                             MedecinIdMedecin = 1,
@@ -243,7 +245,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 2,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("5d365a9c-1e72-4dfd-a691-4125cce0a5ad"),
+                            CodeAcces = new Guid("720e7a4f-db39-4d33-8315-38b56d851131"),
                             DateEchantillon = new DateTime(2017, 8, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 1,
                             MedecinIdMedecin = 7,
@@ -253,7 +255,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 3,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("0522cf90-17bc-432b-9dd1-7de721da1260"),
+                            CodeAcces = new Guid("672afc48-29e6-4f8e-9cf5-06d2a12cb525"),
                             DateEchantillon = new DateTime(2001, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 1,
                             MedecinIdMedecin = 3,
@@ -263,7 +265,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 4,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("3a37f0fb-f10c-4bab-9122-4d708aa41887"),
+                            CodeAcces = new Guid("5f952717-b349-4926-b35f-1c6d80ecf2d3"),
                             DateEchantillon = new DateTime(2014, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 2,
                             MedecinIdMedecin = 10,
@@ -273,7 +275,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 5,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("df79179e-48f7-4562-ada1-1bd74f710d11"),
+                            CodeAcces = new Guid("905c9ea1-c328-46c2-88a4-fa90ad5350fd"),
                             DateEchantillon = new DateTime(2006, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 2,
                             MedecinIdMedecin = 4,
@@ -283,7 +285,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 6,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("e2046f81-66da-41c3-9884-86349f0e787b"),
+                            CodeAcces = new Guid("3774b1c2-a433-4b7d-b82b-8733b9b4633d"),
                             DateEchantillon = new DateTime(2009, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 2,
                             MedecinIdMedecin = 9,
@@ -299,7 +301,7 @@ namespace API_AnalyseSanguine.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdResultatAnalyse"), 1L, 1);
 
-                    b.Property<int?>("RequeteAnalyseIdRequete")
+                    b.Property<int>("RequeteAnalyseIdRequete")
                         .HasColumnType("int");
 
                     b.Property<int>("TypeValeurIdTypeValeur")
@@ -1382,15 +1384,19 @@ namespace API_AnalyseSanguine.Migrations
 
             modelBuilder.Entity("API_AnalyseSanguine.Models.ResultatAnalyse", b =>
                 {
-                    b.HasOne("API_AnalyseSanguine.Models.RequeteAnalyse", null)
+                    b.HasOne("API_AnalyseSanguine.Models.RequeteAnalyse", "RequeteAnalyse")
                         .WithMany("LstResultats")
-                        .HasForeignKey("RequeteAnalyseIdRequete");
+                        .HasForeignKey("RequeteAnalyseIdRequete")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("API_AnalyseSanguine.Models.TypeValeur", "TypeValeur")
                         .WithMany()
                         .HasForeignKey("TypeValeurIdTypeValeur")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("RequeteAnalyse");
 
                     b.Navigation("TypeValeur");
                 });
@@ -1408,11 +1414,13 @@ namespace API_AnalyseSanguine.Migrations
 
             modelBuilder.Entity("API_AnalyseSanguine.Models.TypeValeur", b =>
                 {
-                    b.HasOne("API_AnalyseSanguine.Models.TypeAnalyse", null)
+                    b.HasOne("API_AnalyseSanguine.Models.TypeAnalyse", "TypeAnalyse")
                         .WithMany("LstValeurs")
                         .HasForeignKey("TypeAnalyseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("TypeAnalyse");
                 });
 
             modelBuilder.Entity("RequeteAnalyseTypeAnalyse", b =>

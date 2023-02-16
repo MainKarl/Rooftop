@@ -17,6 +17,12 @@ namespace API_AnalyseSanguine.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Retourne tout les résultats
+        /// 
+        /// Retourne une erreur si la liste est vide
+        /// </summary>
+        /// <returns>la liste des résultats</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllResultat()
         {
@@ -35,6 +41,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Retourne un résultat en fonction de l'Id
+        /// 
+        /// Retourne une erreur si aucun résultat n'a été trouvé
+        /// </summary>
+        /// <param name="id">Id du résultat</param>
+        /// <returns>Le résultat trouvé</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetResultat(int id)
         {
@@ -53,6 +66,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Crée un résultat
+        /// 
+        /// Retourne une erreur si les valeurs ne sont pas valides
+        /// </summary>
+        /// <param name="resultat">Valeur du résultat a créer</param>
+        /// <returns>Le résultat créé</returns>
         [HttpPost("create")]
         public async Task<IActionResult> CreateResultat(ResultatAnalyse resultat)
         {
@@ -71,6 +91,14 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifier les valeurs d'un résultat en fonction de l'Id
+        /// 
+        /// Retourne une erreur si aucun résultat n'a été trouvé
+        /// </summary>
+        /// <param name="id">Id du résultat a modifier</param>
+        /// <param name="resultat">Nouvelles valeur du résultat</param>
+        /// <returns>Le résultat avec ses nouvelles valeurs</returns>
         [HttpPost("update")]
         public async Task<IActionResult> UpdateResultat(int id, ResultatAnalyse resultat)
         {
@@ -89,6 +117,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Supprime un résultat en fonction de l'Id
+        /// 
+        /// Retourne une erreur si aucun résultat n'est trouvé
+        /// </summary>
+        /// <param name="id">Id du résultat a supprimer</param>
+        /// <returns>Vrai si le résultat a été supprimé</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteResultat(int id)
         {

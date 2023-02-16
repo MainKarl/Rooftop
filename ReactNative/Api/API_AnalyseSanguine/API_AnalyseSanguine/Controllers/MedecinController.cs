@@ -18,6 +18,12 @@ namespace API_AnalyseSanguine.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Récupère tous les médecins.
+        /// 
+        /// Retourne une erreur si la liste est vide
+        /// </summary>
+        /// <returns>Liste de tous les médecins</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllMedecin()
         {
@@ -36,6 +42,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Récupère les informations du médecin ayant l'Id fourni.
+        /// 
+        /// Retourne une erreur si aucun médecin n'a été trouvé avec l'Id fourni
+        /// </summary>
+        /// <param name="id">Id du médecin a trouver</param>
+        /// <returns>Les informations du médecin</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMedecin(int id)
         {
@@ -54,6 +67,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Crée un médecin avec les informations fournis.
+        /// 
+        /// Retourne une erreur si le médecin n'a pas été créé
+        /// </summary>
+        /// <param name="medecin">Information du médecin a être créé</param>
+        /// <returns>le médecin créé</returns>
         [HttpPost("create")]
         public async Task<IActionResult> CreateMedecin(Medecin medecin)
         {
@@ -72,6 +92,14 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifie les informations du médecin lié a l'Id fourni avec les informations fourni.
+        /// 
+        /// Retourne une erreur si aucun médecin n'a été trouvé
+        /// </summary>
+        /// <param name="id">Id du médecin a modifier</param>
+        /// <param name="medecin">Nouvelles informations du médecin</param>
+        /// <returns>Le médecin et ses nouvelles informations</returns>
         [HttpPost("update")]
         public async Task<IActionResult> UpdateMedecin(int id, Medecin medecin)
         {
@@ -90,6 +118,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Supprime le médecin lié a l'Id fourni
+        /// 
+        /// Retourne une erreur si aucun médecin n'a été trouvé
+        /// </summary>
+        /// <param name="id">Id du médecin a supprimer</param>
+        /// <returns>Vrai si le médecin a été supprimé</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedecin(int id)
         {
