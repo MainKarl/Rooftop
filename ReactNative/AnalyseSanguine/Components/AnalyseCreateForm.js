@@ -79,6 +79,14 @@ const AnalyseCreateForm = (props) => {
     }, [props.request]);
 
     const onChangeResultValue = (id, value) => {
+        var newResults = []
+        results.forEach(x => {
+            if (x.typeValeur.idTypeValeur == id)
+                x.valeur = value;
+            newResults.push(x);
+        });
+
+        setResults(newResults);
     }
 
     const onSauvegarderResultats = () => {
@@ -97,17 +105,8 @@ const AnalyseCreateForm = (props) => {
     }
 
     const sendToAPI = () => {
-        const url = AnalyseConfig.API_URL + "resultat/create";
-        var formObj = {
-            prenom: firstName,
-            nom: lastName,
-            dateNaissance: date,
-            sexe: sexe,
-        };
-        if (props.IsEditing) {
-            formObj.idDossier = patientInfo.idDossier
-        }
-
+        const url = AnalyseConfig.API_URL + "requete/addResults";
+        var formObj = results;
         const body = JSON.stringify(formObj);
 
         fetch(url, {
@@ -121,13 +120,13 @@ const AnalyseCreateForm = (props) => {
         }).then((response) => {
             console.log(response);
             if (response.ok) {
-                props.onChangeState(0);
+                props.changeCanAddResult(false);
+                props.onChangeMode(false);
             } else {
-                //AlertConnectionFailed(sendFormToAPI)
+                console.log(response);
             }
         }).catch((error) => {
             console.log(error);
-            //AlertConnectionFailed(sendFormToAPI)
         })
     }
 
@@ -140,7 +139,6 @@ const AnalyseCreateForm = (props) => {
             </View>
             <ScrollView style={styles.scroll}>
                 {
-
                     categories && categories.length > 0 &&
                     categories.map((cat) => (
                         <View style={styles.category}>
@@ -157,7 +155,6 @@ const AnalyseCreateForm = (props) => {
                                             ))
                                         }
                                     </View>
-
                                 ))
                             }
                         </View>

@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ScrollView,
+  PlatformColor
 } from 'react-native';
 import AnalyseConfig from "../analyseConfig.json";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
@@ -18,7 +19,7 @@ import AnalyseCreateForm from './AnalyseCreateForm';
 const RequestDetails = props => {
 
   const [request, setRequest] = useState(null);
-  const [resultsExist, setResultsExist] = useState(true);
+  const [resultsExist, setResultsExist] = useState(false);
   const [resultMode, setResultMode] = useState(false);
   const [testData, setTestData] = useState([]);
   const [tableHead, setTableHead] = useState(['Type de valeur', 'Valeur', 'Référence']);
@@ -38,42 +39,54 @@ const RequestDetails = props => {
       arrayTest.push(analyse.idTypeAnalyse)
     })
     setArrayTestReal(arrayTest)
-    // arrayTest.map((type) => {
-    //   let result = request.lstResultats.filter(resultat => resultat.typeValeur.typeAnalyseId == type)
-    //   arrayFinal.push([type, result])
-    // })
-    // console.log("ARRAY FINAL")
-    // console.log(arrayFinal)
-    // setTableData(arrayFinal)
-    // //setTableData(arrayTest)
   }
 
   const setValues = (data) => {
+
     setRequest(data)
-    let arrayTest = [];
-    let arrayFinal = [];
-    data.lstTypeAnalyse.map((analyse) => {
-      arrayTest.push(analyse.nom)
-    })
-    arrayTest.map((type) => {
-      let result = []
-      if (data.lstResultats) {
-        setResultsExist(true)
-        result = data.lstResultats.filter(resultat => resultat.typeValeur.nom == type)
-      }
-      console.log("ARRAY TEST")
-      console.log(arrayTest)
-      let arrayResults = []
-      result.map((result) => {
-        arrayResults.push([result.typeValeur.nom, result.valeur, result.typeValeur.reference])
+
+    const url = AnalyseConfig.API_URL + 'typeanalyse/categories';
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          response.json().then(dataresult => {
+            var filteredCategories = [];
+            var neededCategoryIds = [];
+            var neededTypeIds = [];
+
+            data.lstTypeAnalyse.forEach(ta => {
+              if (!neededCategoryIds.includes(ta.categoryId))
+                neededCategoryIds.push(ta.categoryId);
+              if (!neededTypeIds.includes(ta.idTypeAnalyse))
+                neededTypeIds.push(ta.idTypeAnalyse);
+            })
+
+            dataresult.forEach(c => {
+              if (neededCategoryIds.includes(c.id)) {
+                var filteredType = [];
+                c.typeAnalyseList.forEach(t => {
+                  if (neededTypeIds.includes(t.idTypeAnalyse))
+                    filteredType.push(t);
+                });
+
+                c.typeAnalyseList = filteredType;
+                filteredCategories.push(c);
+              }
+            });
+
+            setCategories(filteredCategories);
+          });
+        } else {
+          console.log(response);
+        }
       })
-      arrayFinal.push([type, arrayResults])
-    })
-    console.log("WILL IT WORK?")
-    console.log(arrayFinal)
-    setTestData(arrayFinal)
-    //console.log("ARRAY FINAL WORKED")
+      .catch(error => {
+        console.log(error);
+      });
   }
+
+  const [results, setResults] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
 
@@ -85,6 +98,8 @@ const RequestDetails = props => {
             response.json().then((data) => {
               if (!data.lstResultats || data.lstResultats.length <= 0)
                 setCanAddResult(true);
+              else
+                setResultsExist(true)
               setValues(data)
             });
           }
@@ -102,8 +117,13 @@ const RequestDetails = props => {
     console.log(request)
   }
 
-  console.log("TEST DATA")
-  console.log(testData)
+  const heightBox = () => {
+    if (canAddResult)
+      return '82%'
+    else
+      return '89%'
+  }
+
   return (
     <View style={{ flex: 1 }}>
       {!resultMode && <View style={styles.container}>
@@ -114,7 +134,7 @@ const RequestDetails = props => {
               onPress={() => props.onChangeState(0)}></Button>
           </View>
           {request && (
-            <View style={styles.detailsBox}>
+            <View style={[styles.detailsBox]}>
               <View style={styles.detailsBoxInside}>
                 <View style={styles.displayFlex}>
                   <View>
@@ -140,37 +160,45 @@ const RequestDetails = props => {
                       Nom du technicien:{' '}
                       <Text style={styles.actualInfo}>{request.nomTechnicien}</Text>
                     </Text>
-                    <View style={styles.printButton}>
-                      <Button
-                        title={'Imprimer la requête'}
-                        onPress={() => printRequest()}></Button>
-                    </View>
                   </View>
                 </View>
                 {resultsExist ? (
 
-                  <ScrollView
-                    style={{
-                      // borderColor: '#808080',
-                      // borderWidth: 2,
-                      // borderRadius: 5,
-                      // borderStyle: 'solid',
-                      height: '80%'
-                    }}>
-                    {testData.map((typeAnalyse) => (
-                      <View>
-                        <View style={styles.tableStyle}>
-                          <Text style={styles.tableTitle}>
-                            {typeAnalyse[0]}
-                          </Text>
-                          <Table borderStyle={{ borderWidth: 2, borderColor: '#dedede' }}>
-                            <Row data={tableHead} style={styles.head} textStyle={styles.text} />
-                            <Rows data={typeAnalyse[1]} textStyle={styles.text} />
-                          </Table>
+                  <ScrollView style={{
+                    // borderColor: '#808080',
+                    // borderWidth: 2,
+                    // borderRadius: 5,
+                    // borderStyle: 'solid',
+                    height: '80%',
+                    marginRight: '5%',
+                    marginTop: '1%'
+                  }}>
+                    {
+                      categories && categories.length > 0 &&
+                      categories.map((cat) => (
+                        <View style={styles.category}>
+                          <Text style={styles.categoryTitle}>{cat.name}</Text>
+                          {
+                            cat.typeAnalyseList.map((t) => (
+                              <View style={styles.type} >
+                                <Text style={styles.typeTitle}>{t.nom} : </Text>
+                                {
+                                  request && request.lstResultats && request.lstResultats.length > 0 &&
+                                  request.lstResultats.map((r) => (
+                                    r.typeValeur.typeAnalyseId == t.idTypeAnalyse &&
+                                    <View style={{ flexDirection: 'row', paddingTop: 8 }}>
+                                      <Text> {r.typeValeur.nom + " : " + r.valeur}</Text>
+                                      <Text style={styles.referenceText}>({r.typeValeur.reference})</Text>
+                                    </View>
+                                  ))
+                                }
+                              </View>
+                            ))
+                          }
                         </View>
-                      </View>
-                    ))}
-                  </ScrollView>
+                      ))
+                    }
+                  </ScrollView >
                 ) : <Text style={styles.noDataText}>Il n'y a pas de résultats pour cette analyse</Text>}
 
               </View>
@@ -179,9 +207,11 @@ const RequestDetails = props => {
           )}
           {
             canAddResult &&
-            <Button
-              title={'Entrer les résultats'}
-              onPress={() => onChangeMode(true)} />
+            <View style={{ flex:0.1, marginTop: 12 }}>
+              <Button
+                title={'Entrer les résultats'}
+                onPress={() => onChangeMode(true)} />
+            </View>
           }
 
         </View>
@@ -192,8 +222,8 @@ const RequestDetails = props => {
 };
 
 const styles = StyleSheet.create({
-  head: { height: 40, backgroundColor: '#ebebeb' },
-  text: { margin: 6 },
+  head: { height: 40 },
+  text: { margin: 6, color: '#808080' },
   container: {
     flex: 1,
     margin: 5,
@@ -207,6 +237,7 @@ const styles = StyleSheet.create({
     paddingRight: '5%',
   },
   detailsPadding: {
+    flex: 1
   },
   infoLeft: {
     marginLeft: 150
@@ -221,8 +252,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderStyle: 'solid',
     marginTop: 20,
-    width: '100%',
-    height: '85%',
+    flex: 1,
+  },
+  referenceText: {
+    paddingLeft: 6,
+    fontWeight: 'bold'
   },
   detailsBoxInside: {
     paddingLeft: 40,
@@ -261,6 +295,42 @@ const styles = StyleSheet.create({
     marginTop: '8%',
     fontSize: 30,
     textAlign: 'center'
+  },
+  category: {
+    margin: 5,
+    padding: 12,
+    borderColor: '#808080',
+    borderWidth: 2,
+    borderRadius: 5,
+    borderStyle: 'solid',
+    marginRight: 10
+  },
+  categoryTitle: {
+    fontWeight: "bold",
+    fontSize: 20
+
+  },
+  type: {
+    margin: 5,
+    padding: 12,
+    borderRadius: 5,
+  },
+  typeTitle: {
+    fontWeight: "bold",
+    display: 'flex',
+    fontSize: 16
+  },
+  returnButton: {
+    width: 300,
+    marginLeft: 32,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  scroll: {
+    borderColor: '#808080',
+    borderTopWidth: 2,
+    borderTopRadius: 5,
+    borderTopStyle: 'solid',
   }
 });
 

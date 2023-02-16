@@ -9,6 +9,7 @@ import {
   Touchable,
   InteractionManager,
   PlatformColor,
+  ScrollView,
 } from 'react-native';
 import PatientFolder from './PatientFolder';
 import CustomButton from './AddButton';
@@ -16,17 +17,19 @@ import CustomButton from './AddButton';
 const RequestList = props => {
 
   return (
-    <View>
-      <Text style={styles.detailsBoxInside}>Requêtes du patient:</Text>
+    <>
+    <Text style={styles.detailsBoxInside}>Requêtes du patient:</Text>
+    <ScrollView>
       {props.requests && props.requests.length > 0 && props.requests.map(request => (
         <Button
-          title={"(" + String(request.dateEchantillon).replace("T", " ") + ") | " + request.codeAcces + ' | ' + "Médecin: " + request.nomMedecin}
+          title={"(" + String(request.dateEchantillon).replace("T", " ").slice(0, String(request.dateEchantillon).lastIndexOf(':')) + ") | " + request.codeAcces + ' | ' + "Médecin: " + request.nomMedecin}
           onPress={() => {
             props.onSelectedRequest(request.idRequete);
             props.onChangeState(2);
           }}></Button>
       ))}
-    </View>
+    </ScrollView>
+    </>
   );
 };
 
