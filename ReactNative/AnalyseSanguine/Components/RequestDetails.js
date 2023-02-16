@@ -39,92 +39,50 @@ const RequestDetails = props => {
       arrayTest.push(analyse.idTypeAnalyse)
     })
     setArrayTestReal(arrayTest)
-    // arrayTest.map((type) => {
-    //   let result = request.lstResultats.filter(resultat => resultat.typeValeur.typeAnalyseId == type)
-    //   arrayFinal.push([type, result])
-    // })
-    // console.log("ARRAY FINAL")
-    // console.log(arrayFinal)
-    // setTableData(arrayFinal)
-    // //setTableData(arrayTest)
   }
 
   const setValues = (data) => {
 
-    setRequest(data)    
-    console.log("DATA")
-    console.log(data)
+    setRequest(data)
 
-        const url = AnalyseConfig.API_URL + 'typeanalyse/categories';
-        fetch(url)
-            .then(response => {
-                if (response.ok) {
-                    response.json().then(dataresult => {
-                        console.log(dataresult);
-                        var filteredCategories = [];
-                        var neededCategoryIds = [];
-                        var neededTypeIds = [];
+    const url = AnalyseConfig.API_URL + 'typeanalyse/categories';
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          response.json().then(dataresult => {
+            var filteredCategories = [];
+            var neededCategoryIds = [];
+            var neededTypeIds = [];
 
-                        data.lstTypeAnalyse.forEach(ta => {
-                            if (!neededCategoryIds.includes(ta.categoryId))
-                                neededCategoryIds.push(ta.categoryId);
-                            if (!neededTypeIds.includes(ta.idTypeAnalyse))
-                                neededTypeIds.push(ta.idTypeAnalyse);
-                        })
-
-                        dataresult.forEach(c => {
-                            if (neededCategoryIds.includes(c.id)) {
-                                var filteredType = [];
-                                c.typeAnalyseList.forEach(t => {
-                                    if (neededTypeIds.includes(t.idTypeAnalyse))
-                                        filteredType.push(t);
-                                });
-
-                                c.typeAnalyseList = filteredType;
-                                filteredCategories.push(c);
-                            }
-                        });
-
-                        setCategories(filteredCategories);
-                    });
-                } else {
-                    console.log(response);
-                }
+            data.lstTypeAnalyse.forEach(ta => {
+              if (!neededCategoryIds.includes(ta.categoryId))
+                neededCategoryIds.push(ta.categoryId);
+              if (!neededTypeIds.includes(ta.idTypeAnalyse))
+                neededTypeIds.push(ta.idTypeAnalyse);
             })
-            .catch(error => {
-                console.log(error);
+
+            dataresult.forEach(c => {
+              if (neededCategoryIds.includes(c.id)) {
+                var filteredType = [];
+                c.typeAnalyseList.forEach(t => {
+                  if (neededTypeIds.includes(t.idTypeAnalyse))
+                    filteredType.push(t);
+                });
+
+                c.typeAnalyseList = filteredType;
+                filteredCategories.push(c);
+              }
             });
 
-
-
-
-
-    // setRequest(data)
-    // let arrayTest = [];
-    // let arrayFinal = [];
-    // data.lstTypeAnalyse.map((analyse) => {
-    //   arrayTest.push(analyse.nom)
-    // })
-    // console.log("RESULTS")
-    // console.log(data.lstResultats)
-    // arrayTest.map((type) => {
-    //   let result = []
-    //   if (data.lstResultats) {
-    //     setResultsExist(true)
-    //     result = data.lstResultats.filter(resultat => resultat.typeValeur.nom == type)
-    //   }
-    //   console.log("ARRAY TEST")
-    //   console.log(arrayTest)
-    //   let arrayResults = []
-    //   result.map((result) => {
-    //     arrayResults.push([result.typeValeur.nom, result.valeur, result.typeValeur.reference])
-    //   })
-    //   arrayFinal.push([type, arrayResults])
-    // })
-    // console.log("WILL IT WORK?")
-    // console.log(arrayFinal)
-    // setTestData(arrayFinal)
-    //console.log("ARRAY FINAL WORKED")
+            setCategories(filteredCategories);
+          });
+        } else {
+          console.log(response);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   const [results, setResults] = useState([]);
@@ -161,17 +119,10 @@ const RequestDetails = props => {
 
   const heightBox = () => {
     if (canAddResult)
-    {
       return '82%'
-    }
     else
-    {
       return '89%'
-    }
   }
-
-  console.log("CATEGORIES")
-  console.log(categories)
 
   return (
     <View style={{ flex: 1 }}>
@@ -183,7 +134,7 @@ const RequestDetails = props => {
               onPress={() => props.onChangeState(0)}></Button>
           </View>
           {request && (
-            <View style={[styles.detailsBox, {height: heightBox()}]}>
+            <View style={[styles.detailsBox]}>
               <View style={styles.detailsBoxInside}>
                 <View style={styles.displayFlex}>
                   <View>
@@ -209,11 +160,6 @@ const RequestDetails = props => {
                       Nom du technicien:{' '}
                       <Text style={styles.actualInfo}>{request.nomTechnicien}</Text>
                     </Text>
-                    <View style={styles.printButton}>
-                      <Button
-                        title={'Imprimer la requête'}
-                        onPress={() => printRequest()}></Button>
-                    </View>
                   </View>
                 </View>
                 {resultsExist ? (
@@ -240,9 +186,9 @@ const RequestDetails = props => {
                                   request && request.lstResultats && request.lstResultats.length > 0 &&
                                   request.lstResultats.map((r) => (
                                     r.typeValeur.typeAnalyseId == t.idTypeAnalyse &&
-                                    <View style={{flexDirection: 'row', paddingTop: 8}}>
-                                    <Text> {r.typeValeur.nom + " : " + r.valeur}</Text>
-                                    <Text style={styles.referenceText}>({r.typeValeur.reference})</Text>
+                                    <View style={{ flexDirection: 'row', paddingTop: 8 }}>
+                                      <Text> {r.typeValeur.nom + " : " + r.valeur}</Text>
+                                      <Text style={styles.referenceText}>({r.typeValeur.reference})</Text>
                                     </View>
                                   ))
                                 }
@@ -261,7 +207,7 @@ const RequestDetails = props => {
           )}
           {
             canAddResult &&
-            <View style={{ marginTop: 12 }}>
+            <View style={{ flex:0.1, marginTop: 12 }}>
               <Button
                 title={'Entrer les résultats'}
                 onPress={() => onChangeMode(true)} />
@@ -291,6 +237,7 @@ const styles = StyleSheet.create({
     paddingRight: '5%',
   },
   detailsPadding: {
+    flex: 1
   },
   infoLeft: {
     marginLeft: 150
@@ -305,8 +252,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderStyle: 'solid',
     marginTop: 20,
-    width: '100%',
-    height: '82%',
+    flex: 1,
   },
   referenceText: {
     paddingLeft: 6,
@@ -358,34 +304,34 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderStyle: 'solid',
     marginRight: 10
-},
-categoryTitle: {
+  },
+  categoryTitle: {
     fontWeight: "bold",
     fontSize: 20
 
-},
-type: {
+  },
+  type: {
     margin: 5,
     padding: 12,
     borderRadius: 5,
-},
-typeTitle: {
+  },
+  typeTitle: {
     fontWeight: "bold",
     display: 'flex',
     fontSize: 16
-},
-returnButton: {
+  },
+  returnButton: {
     width: 300,
     marginLeft: 32,
     marginTop: 10,
     marginBottom: 10,
-},
-scroll: {
+  },
+  scroll: {
     borderColor: '#808080',
     borderTopWidth: 2,
     borderTopRadius: 5,
     borderTopStyle: 'solid',
-}
+  }
 });
 
 export default RequestDetails;
