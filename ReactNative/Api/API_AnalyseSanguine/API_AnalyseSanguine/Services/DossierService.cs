@@ -130,5 +130,24 @@ namespace API_AnalyseSanguine.Services
                 return null;
             }
         }
+
+        public Dossier UpdateNote(int id, string note)
+        {
+            try
+            {
+                var item = _context.Dossiers.Where(a => a.IdDossier == id).FirstOrDefault();
+
+                if (item == null)
+                    return null;
+                item.Note = note;
+                _context.SaveChanges();
+
+                return item;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

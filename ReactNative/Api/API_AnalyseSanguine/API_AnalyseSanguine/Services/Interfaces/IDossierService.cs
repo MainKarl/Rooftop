@@ -10,6 +10,7 @@ namespace API_AnalyseSanguine.Services.Interfaces
         public DossierDetailleDto GetDossierDetaille(int id);
         public Dossier CreateDossier(Dossier dossier);
         public Dossier UpdateDossier(int id, Dossier dossier);
+        public Dossier UpdateNote(int id, string note);
         public bool DeleteDossier(long id);
     }
 }

@@ -153,6 +153,13 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+        /// <summary>
+        /// Ajoute une liste de résultats a la requête appropriée
+        /// 
+        /// Retourne une erreur si aucune requête n'a été trouvé ou si les valeurs d'un résultat ne sont pas valides
+        /// </summary>
+        /// <param name="resultats">Liste des résultats a lier a la requête</param>
+        /// <returns>Retourne la requête</returns>
         [HttpPost("addResults")]
         public IActionResult AddResultatsRequete(List<CreateResultDto> resultats)
         {
