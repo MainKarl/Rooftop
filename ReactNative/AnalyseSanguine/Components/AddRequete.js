@@ -5,6 +5,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import AnalyseConfig from '../analyseConfig.json';
 import RequeteAnalyses from './RequeteAnalyses';
 import AlertConnectionFailed from './AlertConnectionFailed';
+import CustomAlert from './CustomAlert';
+import customRadioButton from './CustomRadioButton';
 
 const ModalAddRequete = props => {
   const CheckboxData = [];
@@ -31,39 +33,64 @@ const ModalAddRequete = props => {
 
   function createRequete() {
     if (value != null && !errorTechnicien) {
-      let method = "create";
-      const url = AnalyseConfig.API_URL + "requete/" + method;
-  
-      const formObj = {
-        NomTechnicien: nomTechnicien,
-        DossierIdDossier: props.patientInfo.idDossier,
-        MedecinIdMedecin: value,
-        lstAnalyses: selectedAnalyses,
-        analyseDemande: analyseDemande
-      }
-  
-      const body = JSON.stringify(formObj);
-  
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+      CustomAlert({ 
+        type:'alert_confirmation', 
+        title:'Validation de création', 
+        message: 'Est-ce que vous voulez vraiment créer la requête de prélévement?',
+        onSelect: () => {
+          let method = "create";
+          const url = AnalyseConfig.API_URL + "requete/" + method;
+      
+          const formObj = {
+            NomTechnicien: nomTechnicien,
+            DossierIdDossier: props.patientInfo.idDossier,
+            MedecinIdMedecin: value,
+            lstAnalyses: selectedAnalyses,
+            analyseDemande: analyseDemande
+          }
+      
+          const body = JSON.stringify(formObj);
+      
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: body,
+            cache: 'default'
+          }).then((response) => {
+            console.log(response);
+            if (response.ok) {
+              CustomAlert({ 
+                type:'alert_message', 
+                title:'Création', 
+                message:'La requête de prélévement de ' + props.patientInfo.prenom + ' ' + props.patientInfo.nom + ' a été créée!', 
+                onSelect: () => {props.updateformAddRequeteVisible(); } 
+              });
+            } else {
+              response.json().then((item) => {
+                CustomAlert({
+                  type: 'alert_submit_failed',
+                  message: item
+                });
+              });
+            }
+          }).catch((error) => {
+            CustomAlert({
+              type: 'alert_submit_failed',
+              message: error
+            });
+          })
         },
-        body: body,
-        cache: 'default'
-      }).then((response) => {
-        if (response.ok) {
-          props.updateformAddRequeteVisible();
-        } else {
-          console.log(response);
-        }
-      }).catch((error) => {
-        console.log(error);
-      })
+        onCancel: () => {}
+      });
     }
     else {
-      
+      CustomAlert({
+        type: 'alert_submit_failed',
+        message: 'le médecin ou le technicien ne peut pas être vide.'
+      });
     }
   }
 
