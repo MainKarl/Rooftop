@@ -16,44 +16,55 @@ const ModalAddRequete = props => {
   const [analyses, setAnalyses] = useState([]);
   const [analyseDemande, setAnalyseDemande] = useState("-");
   const [nomTechnicien, setNomTechnicien] = useState("");
+  const [errorTechnicien, setErrorTechnicien] = useState(true);
   const [selectedAnalyses, setselectedAnalyses] = useState([]);
 
   const onNomTechnicienChange = (nouveauNom) => {
+    if (nouveauNom == '')
+      setErrorTechnicien(true);
+    else
+      setErrorTechnicien(false);
+    
     setNomTechnicien(nouveauNom);
   }
 
 
   function createRequete() {
-    let method = "create";
-    const url = AnalyseConfig.API_URL + "requete/" + method;
-
-    const formObj = {
-      NomTechnicien: nomTechnicien,
-      DossierIdDossier: props.patientInfo.idDossier,
-      MedecinIdMedecin: value,
-      lstAnalyses: selectedAnalyses,
-      analyseDemande: analyseDemande
-    }
-
-    const body = JSON.stringify(formObj);
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: body,
-      cache: 'default'
-    }).then((response) => {
-      if (response.ok) {
-        props.updateformAddRequeteVisible();
-      } else {
-        console.log(response);
+    if (value != null && !errorTechnicien) {
+      let method = "create";
+      const url = AnalyseConfig.API_URL + "requete/" + method;
+  
+      const formObj = {
+        NomTechnicien: nomTechnicien,
+        DossierIdDossier: props.patientInfo.idDossier,
+        MedecinIdMedecin: value,
+        lstAnalyses: selectedAnalyses,
+        analyseDemande: analyseDemande
       }
-    }).catch((error) => {
-      console.log(error);
-    })
+  
+      const body = JSON.stringify(formObj);
+  
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: body,
+        cache: 'default'
+      }).then((response) => {
+        if (response.ok) {
+          props.updateformAddRequeteVisible();
+        } else {
+          console.log(response);
+        }
+      }).catch((error) => {
+        console.log(error);
+      })
+    }
+    else {
+      
+    }
   }
 
   useEffect(() => {
@@ -98,8 +109,7 @@ const ModalAddRequete = props => {
 
 
   return (
-    <View>
-
+    <ScrollView>
       <Text style={{ fontSize: 50, fontWeight: 'bold' }}>Créer une requête</Text>
       <View style={styles.Form}>
         <View style={styles.info}>
@@ -124,6 +134,7 @@ const ModalAddRequete = props => {
             </Text>
           </Text>
           <View>
+            { value == null && <Text style={styles.error}>Un médecin doit être sélectionné!</Text>}
             <View style={styles.infoText}>
               <DropDownPicker
                 placeholder="Choisir un médecin associé"
@@ -135,6 +146,7 @@ const ModalAddRequete = props => {
                 setItems={setMedecins}
               />
             </View>
+            { errorTechnicien && <Text style={styles.error}>Le nom du technicien ne peut pas être vide!</Text> }
             <TextInput placeholder="Nom du technicien" onChangeText={newName => onNomTechnicienChange(newName)} />
           </View>
 
@@ -149,30 +161,31 @@ const ModalAddRequete = props => {
         }}>
           <RequeteAnalyses analyses={analyses} selectedAnalyses={selectedAnalyses} setselectedAnalyses={setselectedAnalyses} />
           <View style={styles.Biologie}>
-            <View style={{ flex: 0.1 }}>
+            <View>
             </View>
           </View>
         </ScrollView>
         <Button
           title='Créer'
+          style={styles.button}
           onPress={() => createRequete()}
         />
         <Button
           title="Annuler"
+          style={styles.button}
           onPress={() => props.updateformAddRequeteVisible()}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   Form: {
-    height: '90%',
-    width: '90%',
-    marginTop: 30,
+    marginTop: 20,
     marginLeft: 50,
-
+    marginRight: 50,
+    marginBottom: 20
   },
   Biologie: {
     display: 'flex',
@@ -184,14 +197,20 @@ const styles = StyleSheet.create({
   },
   infoText: {
     marginBottom: 10,
+    zIndex: 100
   },
   actualInfo: {
     fontWeight: 'bold',
   },
   info: {
     zIndex: 1000,
-    elevation: 1000,
-    width: '50%'
+    elevation: 1000
+  },
+  error: {
+    color: 'red'
+  },
+  button: {
+    marginBottom: 15
   }
 });
 
