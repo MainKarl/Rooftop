@@ -31,7 +31,7 @@ namespace API_AnalyseSanguine.Controllers
         {
             try
             {
-                var result = _service.GetAllRequete(idDossier).OrderByDescending(x => x.DateEchantillon);
+                var result = _service.GetAllRequete(idDossier);
                 if (result == null)
                 {
                     return Problem();
@@ -94,7 +94,7 @@ namespace API_AnalyseSanguine.Controllers
                     AnalyseDemande = createRequeteDto.analyseDemande
                 };
                 var result = _service.CreateRequete(requete);
-                return StatusCode(200, result);
+                return StatusCode(200);
             }
             catch (Exception e)
             {

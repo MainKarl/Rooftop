@@ -72,6 +72,8 @@ namespace API_AnalyseSanguine.Services
                     }
                 }
 
+                lstRequetesDto = lstRequetesDto.OrderByDescending(c=>c.DateEchantillon).ToList();
+
                 return new DossierDetailleDto(
                     item.IdDossier,
                     item.Prenom,
