@@ -123,7 +123,7 @@ const FolderDetails = props => {
                 <Button
                   style={{}}
                   title="Créer une requête"
-                  onPress={() => updateformAddRequeteVisible()}
+                  onPress={ () => updateformAddRequeteVisible() }
                 />
               </View>
               <View style={styles.requetesEtResultat}>
@@ -148,7 +148,7 @@ const FolderDetails = props => {
         <View style={{ flex: 0.8, margin: 5 }}>
           <ModalAddRequete
             patientInfo={patientInfo}
-            updateformAddRequeteVisible={updateformAddRequeteVisible}
+            updateformAddRequeteVisible={ () => updateformAddRequeteVisible() }
           />
         </View>
       );
@@ -158,7 +158,7 @@ const FolderDetails = props => {
       return (
         <View style={{ flex: 0.8, margin: 5 }}>
           <ModalAddRequete
-            updateformAddRequeteVisible={updateformAddRequeteVisible}
+            updateformAddRequeteVisible={() => updateformAddRequeteVisible() }
           />
         </View>
       );

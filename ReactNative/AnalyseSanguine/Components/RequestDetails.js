@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ScrollView,
+  PlatformColor
 } from 'react-native';
 import AnalyseConfig from "../analyseConfig.json";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
@@ -149,12 +150,12 @@ const RequestDetails = props => {
                 </View>
                 {resultsExist ? (
 
-                  <ScrollView
-                    style={{
-                      // borderColor: '#808080',
-                      // borderWidth: 2,
-                      // borderRadius: 5,
-                      // borderStyle: 'solid',
+                <ScrollView
+                style={{
+                  // borderColor: '#808080',
+                  // borderWidth: 2,
+                  // borderRadius: 5,
+                  // borderStyle: 'solid',
                       height: '80%'
                     }}>
                     {testData.map((typeAnalyse) => (
@@ -163,7 +164,7 @@ const RequestDetails = props => {
                           <Text style={styles.tableTitle}>
                             {typeAnalyse[0]}
                           </Text>
-                          <Table borderStyle={{ borderWidth: 2, borderColor: '#dedede' }}>
+                          <Table borderStyle={{ borderWidth: 2, borderColor: '#808080' }}>
                             <Row data={tableHead} style={styles.head} textStyle={styles.text} />
                             <Rows data={typeAnalyse[1]} textStyle={styles.text} />
                           </Table>
@@ -194,8 +195,8 @@ const RequestDetails = props => {
 };
 
 const styles = StyleSheet.create({
-  head: { height: 40, backgroundColor: '#ebebeb' },
-  text: { margin: 6 },
+  head: { height: 40 },
+  text: { margin: 6, color: '#808080' },
   container: {
     flex: 1,
     margin: 5,
