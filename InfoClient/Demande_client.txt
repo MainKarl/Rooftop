@@ -1,0 +1,11 @@
+PROBLÈME:
+
+	-AJouter numéro de dossier a la création de dossier (Alpha-numérique/Carte santé)
+	-Choisir les drogue dans la création de résultats pas la création de requete
+	-Drogue de rue boite plus grosse pour les valeurs
+	-Documenter les fioles/couleurs nécessaires en fonction des requêtes pour aider l'élève
+	-Nom: AnalyseBiomédicale
+	-Martin veut: Permettre de l'avoir sur mobile (Mais il me semble que le client avait dit que c'était pas nécessaire parce que c'est un labo)
+	
+CODE BARRE
+	-Contient le Nom du patient, Num de dossier, Requêtes/analyses demandé
