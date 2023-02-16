@@ -14,7 +14,7 @@ namespace API_AnalyseSanguine.Models
 
         //Lien
         [Required]
-        int IdRequete { get; set; }
+        public int IdRequete { get; set; }
         [Required]
         public TypeValeur TypeValeur { get; set; }
     }
