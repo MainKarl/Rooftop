@@ -79,10 +79,9 @@ const AnalyseCreateForm = (props) => {
     }, [props.request]);
 
     const onChangeResultValue = (id, value) => {
-        var newResults = [];
-
+        var newResults = []
         results.forEach(x => {
-            if (x.typeValeur.typeAnalyseId == id)
+            if (x.typeValeur.idTypeValeur == id)
                 x.valeur = value;
             newResults.push(x);
         });
