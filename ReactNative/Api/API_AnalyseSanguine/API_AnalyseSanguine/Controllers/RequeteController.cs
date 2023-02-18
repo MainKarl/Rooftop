@@ -94,6 +94,10 @@ namespace API_AnalyseSanguine.Controllers
                     AnalyseDemande = createRequeteDto.analyseDemande
                 };
                 var result = _service.CreateRequete(requete);
+                if (result == null)
+                {
+                    return Problem();
+                }
                 return StatusCode(200);
             }
             catch (Exception e)
