@@ -26,6 +26,7 @@ const RequestDetails = props => {
   const [tableData, setTableData] = useState();
   const [arrayTestReal, setArrayTestReal] = useState();
   const [canAddResult, setCanAddResult] = useState(false);
+  const [noAnalyse, setNoAnalyse] = useState(false);
 
   const onChangeMode = (mode) => {
     setResultMode(mode);
@@ -96,7 +97,10 @@ const RequestDetails = props => {
         .then((response) => {
           if (response.ok) {
             response.json().then((data) => {
-              if (!data.lstResultats || data.lstResultats.length <= 0)
+              console.log(data)
+              if (data.lstTypeAnalyse.length <= 0)
+                setNoAnalyse(true)
+              else if (!data.lstResultats || data.lstResultats.length <= 0)
                 setCanAddResult(true);
               else
                 setResultsExist(true)
@@ -112,17 +116,6 @@ const RequestDetails = props => {
         });
     }
   }, [props.selectedRequest]);
-
-  const printRequest = () => {
-    console.log(request)
-  }
-
-  const heightBox = () => {
-    if (canAddResult)
-      return '82%'
-    else
-      return '89%'
-  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -199,7 +192,7 @@ const RequestDetails = props => {
                       ))
                     }
                   </ScrollView >
-                ) : <Text style={styles.noDataText}>Il n'y a pas de résultats pour cette analyse</Text>}
+                ) : ( noAnalyse ? (<Text style={styles.noDataText}>Il n'y a pas d'analyse demandée pour cette requête</Text>): (<Text style={styles.noDataText}>Il n'y a aucun résultat d'analyse pour cette requête</Text>))}
 
               </View>
             </View>
@@ -303,17 +296,21 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     borderStyle: 'solid',
-    marginRight: 10
+    marginRight: 10,
+    marginBottom: 15,
+    marginRight: 20
   },
   categoryTitle: {
     fontWeight: "bold",
-    fontSize: 20
-
+    fontSize: 25,
+    marginBottom: 15,
+    marginLeft: 8
   },
   type: {
     margin: 5,
     padding: 12,
     borderRadius: 5,
+    marginBottom: 8
   },
   typeTitle: {
     fontWeight: "bold",
