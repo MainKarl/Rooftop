@@ -12,6 +12,7 @@ import CustomRadioButton from './CustomRadioButton';
 import AnalyseConfig from '../analyseConfig.json';
 import AlertConnectionFailed from './AlertConnectionFailed';
 import { create } from 'react-test-renderer';
+import CustomAlert from './CustomAlert';
 
 const FolderCreateForm = props => {
   const [errorDate, setErrorDate] = useState(false);
@@ -19,12 +20,11 @@ const FolderCreateForm = props => {
   const [patientInfo, setpatientInfo] = useState(null);
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [sexe, setSexe] = useState(0)
+  const [sexe, setSexe] = useState(null)
   const [date, setDate] = useState(new Date())
   const [isLiked, setIsLiked] = useState([
     { value: 0, label: 'Homme', selected: false },
     { value: 1, label: 'Femme', selected: false },
-    { value: 2, label: 'Autres', selected: true }
   ]);
 
   useEffect(() => {
@@ -87,20 +87,32 @@ const FolderCreateForm = props => {
   }
 
   const onSubmit = () => {
-    if (errorDate)
-      return;
-    Alert.alert('Création de dossier de patient', 'Voulez-vous vraiment créer le patient \n' + firstName + ' ' + lastName + ' ?', [
-      {
-        text: 'Annuler',
-        onPress: () => { }
-      },
-      {
-        text: 'Confirmer',
-        onPress: () => {
-          sendFormToAPI();
+    if (errorDate) {
+      CustomAlert({
+        type: 'alert_submit_failed',
+        message: 'la date de naissance doit être avant aujourd\'hui'
+      });
+    }
+    else if (!sexe) {
+      CustomAlert({
+        type: 'alert_submit_failed',
+        message: 'le sexe de la personne doit être sélectionné'
+      });
+    }
+    else {
+      Alert.alert('Création de dossier de patient', 'Voulez-vous vraiment créer le patient \n' + firstName + ' ' + lastName + ' ?', [
+        {
+          text: 'Annuler',
+          onPress: () => { }
+        },
+        {
+          text: 'Confirmer',
+          onPress: () => {
+            sendFormToAPI();
+          }
         }
-      }
-    ]);
+      ]);
+    }
   }
 
   const sendFormToAPI = () => {
@@ -143,6 +155,7 @@ const FolderCreateForm = props => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{props.IsEditing ? 'Modification' : 'Création'} d'un dossier de patient</Text>
+      <Text style={styles.button}></Text>
       <View style={styles.formRow}>
         <Text style={styles.formLabel}>Prénom du patient:</Text>
         <TextInput style={styles.formInput} defaultValue={props.IsEditing && patientInfo ? patientInfo.prenom : ""} onChangeText={newName => onFirstNameChange(newName)} />
@@ -170,6 +183,7 @@ const FolderCreateForm = props => {
           value={date}
           onChange={(event, value) => { onSetDate(value); }} />
       </View>
+      <Text style={styles.button}></Text>
       <Button title={props.IsEditing ? 'Modifer' : 'Créer'} onPress={onSubmit}></Button>
       <Text style={styles.button}></Text>
       <Button title="Annuler" onPress={() => props.onChangeState(0)}></Button>
@@ -214,7 +228,7 @@ const styles = StyleSheet.create({
     marginBottom: '2%',
   },
   button: {
-    marginBottom: 30,
+    marginTop: '2%',
   },
   error: {
     color: 'red',
