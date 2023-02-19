@@ -11,6 +11,8 @@ namespace API_AnalyseSanguine.Models
         [Required]
         public string Valeur { get; set; }
 
+        public byte Couleur { get; set; }
+
 
         //Lien
         [Required]
