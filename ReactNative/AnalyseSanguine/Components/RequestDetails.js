@@ -115,6 +115,7 @@ const RequestDetails = props => {
 
     if (props.selectedRequest != "") {
       const url = AnalyseConfig.API_URL + 'requete/' + props.selectedRequest;
+      console.log(props.selectedRequest);
       fetch(url)
         .then((response) => {
           if (response.ok) {
@@ -198,7 +199,11 @@ const RequestDetails = props => {
                                   request.lstResultats.map((r) => (
                                     r.typeValeur.typeAnalyseId == t.idTypeAnalyse &&
                                     <View style={{ flexDirection: 'row', paddingTop: 8 }}>
-                                      <Text> {r.typeValeur.nom + " : " + r.valeur}</Text>
+                                      <Text style={{paddingTop:10, minWidth:30}}> {r.typeValeur.nom + " : "}</Text>
+                                      <Button
+                                        title={r.valeur}
+                                        style={{minWidth: 50}}
+                                      />
                                       <Text style={styles.referenceText}>({r.typeValeur.reference})</Text>
                                     </View>
                                   ))
@@ -267,7 +272,8 @@ const styles = StyleSheet.create({
   },
   referenceText: {
     paddingLeft: 6,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    paddingTop:10, minWidth:30
   },
   detailsBoxInside: {
     paddingLeft: 40,
