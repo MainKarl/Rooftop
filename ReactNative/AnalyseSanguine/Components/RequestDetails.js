@@ -29,17 +29,40 @@ const RequestDetails = props => {
   const [noAnalyse, setNoAnalyse] = useState(false);
 
   const onChangeMode = (mode) => {
-    setResultMode(mode);
+    if (mode == false)
+    {
+      loadResults()
+      setResultMode(mode)
+    }
+    else
+      setResultMode(mode)
   }
 
   const loadResults = () => {
-    let differentTests = 0
-    let arrayFinal = [];
-    let arrayTest = [];
-    request.lstTypeAnalyse.map((analyse) => {
-      arrayTest.push(analyse.idTypeAnalyse)
-    })
-    setArrayTestReal(arrayTest)
+    if (props.selectedRequest != "") {
+      const url = AnalyseConfig.API_URL + 'requete/' + props.selectedRequest;
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((data) => {
+              console.log(data)
+              if (data.lstTypeAnalyse.length <= 0)
+                setNoAnalyse(true)
+              else if (!data.lstResultats || data.lstResultats.length <= 0)
+                setCanAddResult(true);
+              else
+                setResultsExist(true)
+              setValues(data)
+            });
+          }
+          else {
+            console.log(response);
+          }
+
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   const setValues = (data) => {
@@ -86,7 +109,6 @@ const RequestDetails = props => {
       });
   }
 
-  const [results, setResults] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -158,10 +180,6 @@ const RequestDetails = props => {
                 {resultsExist ? (
 
                   <ScrollView style={{
-                    // borderColor: '#808080',
-                    // borderWidth: 2,
-                    // borderRadius: 5,
-                    // borderStyle: 'solid',
                     height: '80%',
                     marginRight: '5%',
                     marginTop: '1%'

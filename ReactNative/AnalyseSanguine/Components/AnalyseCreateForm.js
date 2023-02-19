@@ -163,7 +163,7 @@ const AnalyseCreateForm = (props) => {
             </ScrollView >
             <View style={styles.returnButton}>
                 <Button
-                    title={'Sauvegarder les resultats'}
+                    title={'Sauvegarder les résultats'}
                     onPress={() => onSauvegarderResultats()}></Button>
             </View>
 

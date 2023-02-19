@@ -108,7 +108,7 @@ const FolderDetails = props => {
               <View style={styles.flexHalf}>
                 <View style={{ display: 'flex', flexDirection: 'row' }}>
                   <View style={{ flex: 0.7, display: 'flex', flexDirection: 'column' }}>
-                    <View style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    <View style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingTop: '3%', paddingLeft: '1%' }}>
                       <Text style={styles.infoText}>
                         Numéro de dossier:{' '}
                         <Text style={styles.actualInfo}>{patientInfo.idDossier}</Text>
@@ -131,7 +131,7 @@ const FolderDetails = props => {
                       </Text>
                     </View>
                   </View>
-                  <View style={{ flex: 0.3 }}>
+                  <View style={{ flex: 0.3, paddingTop: '2%' }}>
                     <Button title="Modifier" onPress={callCreateForm}></Button>
                   </View>
                 </View>
@@ -253,7 +253,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   infoText: {
-    margin: 'auto'
+    margin: 'auto',
+    fontSize: 17
   },
   actualInfo: {
     fontWeight: 'bold',
