@@ -326,6 +326,7 @@ namespace API_AnalyseSanguine.Context.Data
                 CreateTypeValeur(59, "Nitrites", typesAnalyse.First(x => x.Nom == "Nitrites"), "Négatif"),
                 CreateTypeValeur(60, "Bilirubine", typesAnalyse.First(x => x.Nom == "Bilirubine"), "Négatif"),
                 CreateTypeValeur(61, "Urobilinogène", typesAnalyse.First(x => x.Nom == "Urobilinogène"), "Négatif"),
+                CreateTypeValeur(83, "Microscopie urinaire", typesAnalyse.First(x=>x.Nom == "Microscopie urinaire"),"Négatif"),
             };
 
             SeedTypesValeur(builder, typeValeurs);
