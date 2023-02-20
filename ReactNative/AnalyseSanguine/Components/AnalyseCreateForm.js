@@ -122,6 +122,7 @@ const AnalyseCreateForm = (props) => {
             if (response.ok) {
                 props.changeCanAddResult(false);
                 props.onChangeMode(false);
+                props.setForceReload(true);
             } else {
                 console.log(response);
             }
@@ -163,7 +164,7 @@ const AnalyseCreateForm = (props) => {
             </ScrollView >
             <View style={styles.returnButton}>
                 <Button
-                    title={'Sauvegarder les resultats'}
+                    title={'Sauvegarder les résultats'}
                     onPress={() => onSauvegarderResultats()}></Button>
             </View>
 

@@ -66,26 +66,6 @@ export const TypeAnalyse = props => {
     console.log(props.selectedAnalyses);
   }
 
-
-  if (props.typecourant.nom == "Drogues de rue" || props.typecourant.nom == "Microscopie urinaire") {
-    return (
-
-      <View style={styles.flex4}>
-        <View style={styles.innerFlex}>
-          <CheckBox 
-            disable={false}
-            value={false}
-            onValueChange={updateSelectedAnalyses}
-          />
-          <Text style={{marginTop:5}}>{props.typecourant.nom}</Text>
-          <TextInput></TextInput>
-        </View>
-      </View>
-  
-    )
-  }
-
-
   return (
 
     <View style={styles.flex2}>

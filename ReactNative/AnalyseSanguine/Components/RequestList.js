@@ -28,6 +28,11 @@ const RequestList = props => {
             props.onChangeState(2);
           }}></Button>
       ))}
+      {props.requests && props.requests.length < 1 && (
+        <View>
+          <Text style={styles.noDataText}>Ce dossier ne contient aucune requête</Text>
+        </View>
+      )}
     </ScrollView>
     </>
   );
@@ -38,6 +43,13 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingTop: 15,
     paddingBottom: 15
+  },
+  noDataText: {
+    marginBottom: 10,
+    marginLeft: 10,
+    marginTop: '8%',
+    fontSize: 30,
+    textAlign: 'center'
   },
 });
 

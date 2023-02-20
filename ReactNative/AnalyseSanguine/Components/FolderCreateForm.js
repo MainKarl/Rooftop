@@ -12,6 +12,7 @@ import CustomRadioButton from './CustomRadioButton';
 import AnalyseConfig from '../analyseConfig.json';
 import AlertConnectionFailed from './AlertConnectionFailed';
 import { create } from 'react-test-renderer';
+import CustomAlert from './CustomAlert';
 
 const FolderCreateForm = props => {
   const [errorDate, setErrorDate] = useState(false);
@@ -19,12 +20,11 @@ const FolderCreateForm = props => {
   const [patientInfo, setpatientInfo] = useState(null);
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [sexe, setSexe] = useState(0)
+  const [sexe, setSexe] = useState(null)
   const [date, setDate] = useState(new Date())
   const [isLiked, setIsLiked] = useState([
     { value: 0, label: 'Homme', selected: false },
     { value: 1, label: 'Femme', selected: false },
-    { value: 2, label: 'Autres', selected: true }
   ]);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ const FolderCreateForm = props => {
   }, [])
 
   function getDetail() {
+    props.setIsLoading(true);
     const url = AnalyseConfig.API_URL + 'dossier/getdetaille?id=' + props.selectedFolder;
     fetch(url)
       .then((response) => {
@@ -45,6 +46,7 @@ const FolderCreateForm = props => {
             setFirstName(data.prenom)
             setLastName(data.nom)
             setDate(new Date(data.dateNaissance))
+            props.setIsLoading(false);
             return
           });
         }
@@ -55,7 +57,7 @@ const FolderCreateForm = props => {
       }).catch((error) => {
         //AlertConnectionFailed(getDetail)
         return
-    });
+      });
   }
 
   const onFirstNameChange = (newFirstName) => {
@@ -87,33 +89,45 @@ const FolderCreateForm = props => {
   }
 
   const onSubmit = () => {
-    if (errorDate)
-      return;
-    Alert.alert('Création de dossier de patient', 'Voulez-vous vraiment créer le patient \n' + firstName + ' ' + lastName + ' ?', [
-      {
-        text: 'Annuler',
-        onPress: () => { }
-      },
-      {
-        text: 'Confirmer',
-        onPress: () => {
-          sendFormToAPI();
+    if (errorDate) {
+      CustomAlert({
+        type: 'alert_submit_failed',
+        message: 'la date de naissance doit être avant aujourd\'hui'
+      });
+    }
+    else if (!sexe) {
+      CustomAlert({
+        type: 'alert_submit_failed',
+        message: 'le sexe de la personne doit être sélectionné'
+      });
+    }
+    else {
+      Alert.alert('Création de dossier de patient', 'Voulez-vous vraiment créer le patient \n' + firstName + ' ' + lastName + ' ?', [
+        {
+          text: 'Annuler',
+          onPress: () => { }
+        },
+        {
+          text: 'Confirmer',
+          onPress: () => {
+            sendFormToAPI();
+          }
         }
-      }
-    ]);
+      ]);
+    }
   }
 
   const sendFormToAPI = () => {
     let method = props.IsEditing ? "update" : "create";
     const url = AnalyseConfig.API_URL + "dossier/" + method;
     var formObj = {
-        prenom: firstName,
-        nom: lastName,
-        dateNaissance: date,
-        sexe: sexe,
-      };
-    if(props.IsEditing){
-        formObj.idDossier = patientInfo.idDossier
+      prenom: firstName,
+      nom: lastName,
+      dateNaissance: date,
+      sexe: sexe,
+    };
+    if (props.IsEditing) {
+      formObj.idDossier = patientInfo.idDossier
     }
 
     const body = JSON.stringify(formObj);
@@ -127,14 +141,14 @@ const FolderCreateForm = props => {
       body: body,
       cache: 'default'
     }).then((response) => {
-        console.log(response);
-        if (response.ok) {
-            props.onChangeState(0);
-        } else {
-            //AlertConnectionFailed(sendFormToAPI)
-        }
+      console.log(response);
+      if (response.ok) {
+        props.onChangeState(0);
+      } else {
+        //AlertConnectionFailed(sendFormToAPI)
+      }
     }).catch((error) => {
-        console.log(error);
+      console.log(error);
       //AlertConnectionFailed(sendFormToAPI)
     })
   }
@@ -143,6 +157,7 @@ const FolderCreateForm = props => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{props.IsEditing ? 'Modification' : 'Création'} d'un dossier de patient</Text>
+      <Text style={styles.button}></Text>
       <View style={styles.formRow}>
         <Text style={styles.formLabel}>Prénom du patient:</Text>
         <TextInput style={styles.formInput} defaultValue={props.IsEditing && patientInfo ? patientInfo.prenom : ""} onChangeText={newName => onFirstNameChange(newName)} />
@@ -170,6 +185,7 @@ const FolderCreateForm = props => {
           value={date}
           onChange={(event, value) => { onSetDate(value); }} />
       </View>
+      <Text style={styles.button}></Text>
       <Button title={props.IsEditing ? 'Modifer' : 'Créer'} onPress={onSubmit}></Button>
       <Text style={styles.button}></Text>
       <Button title="Annuler" onPress={() => props.onChangeState(0)}></Button>
@@ -214,7 +230,7 @@ const styles = StyleSheet.create({
     marginBottom: '2%',
   },
   button: {
-    marginBottom: 30,
+    marginTop: '2%',
   },
   error: {
     color: 'red',

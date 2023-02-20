@@ -137,7 +137,7 @@ const ModalAddRequete = props => {
 
   return (
     <ScrollView>
-      <Text style={{ fontSize: 50, fontWeight: 'bold' }}>Créer une requête</Text>
+      <Text style={{ fontSize: 50, fontWeight: 'bold', paddingLeft: 45 }}>Créer une requête</Text>
       <View style={styles.Form}>
         <View style={styles.info}>
           <Text style={styles.infoText}>

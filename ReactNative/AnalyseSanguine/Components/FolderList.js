@@ -24,6 +24,7 @@ const FolderList = props => {
 
   const fetchDossiersSimples = () => {
     const url = AnalyseConfig.API_URL + 'dossier/getsimple';
+    props.setIsLoading(true);
     fetch(url)
       .then((response) => {
         if (response.ok) {
@@ -33,6 +34,7 @@ const FolderList = props => {
             });
             setInitialData(data);
             setfilteredData(data);
+            props.setIsLoading(false);
           });
         }
         else {

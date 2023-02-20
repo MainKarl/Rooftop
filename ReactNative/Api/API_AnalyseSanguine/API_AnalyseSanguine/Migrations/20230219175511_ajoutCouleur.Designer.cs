@@ -4,6 +4,7 @@ using API_AnalyseSanguine.Context.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_AnalyseSanguine.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230219175511_ajoutCouleur")]
+    partial class ajoutCouleur
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,7 +235,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 1,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("5c29d346-02aa-414d-9ab6-9d3e9959a6fd"),
+                            CodeAcces = new Guid("8d396a21-4ffa-43e8-b2f4-4725335abf0f"),
                             DateEchantillon = new DateTime(2022, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 1,
                             MedecinIdMedecin = 1,
@@ -243,7 +245,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 2,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("82c061d3-afbf-4246-bbb7-381a27640b8c"),
+                            CodeAcces = new Guid("7fa20290-4a5c-40f7-bed5-5352d0774ad2"),
                             DateEchantillon = new DateTime(2017, 8, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 1,
                             MedecinIdMedecin = 7,
@@ -253,7 +255,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 3,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("f6646404-a7b4-4e8a-a8d1-caca8722b03a"),
+                            CodeAcces = new Guid("b819c47b-d6ae-4f52-9ca2-c03a691d7842"),
                             DateEchantillon = new DateTime(2001, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 1,
                             MedecinIdMedecin = 3,
@@ -263,7 +265,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 4,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("7d49f211-7dae-4fe0-9424-395f3fc1e9ef"),
+                            CodeAcces = new Guid("0a139cf0-8bd6-4372-bf20-b554f67c7222"),
                             DateEchantillon = new DateTime(2014, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 2,
                             MedecinIdMedecin = 10,
@@ -273,7 +275,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 5,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("5d567ab4-f8a8-45fc-97ba-556a97aadaab"),
+                            CodeAcces = new Guid("42e6e021-1719-49d7-aea0-c5d00488e577"),
                             DateEchantillon = new DateTime(2006, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 2,
                             MedecinIdMedecin = 4,
@@ -283,7 +285,7 @@ namespace API_AnalyseSanguine.Migrations
                         {
                             IdRequete = 6,
                             AnalyseDemande = "",
-                            CodeAcces = new Guid("658bed7e-d8a1-45d8-a734-583d310f23db"),
+                            CodeAcces = new Guid("ab81b200-0931-45d6-b83a-db2cb2551f6b"),
                             DateEchantillon = new DateTime(2009, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DossierIdDossier = 2,
                             MedecinIdMedecin = 9,
@@ -1349,13 +1351,6 @@ namespace API_AnalyseSanguine.Migrations
                             Nom = "Urobilinogène",
                             Reference = "Négatif",
                             TypeAnalyseId = 67
-                        },
-                        new
-                        {
-                            IdTypeValeur = 83,
-                            Nom = "Microscopie urinaire",
-                            Reference = "Négatif",
-                            TypeAnalyseId = 57
                         });
                 });
 
