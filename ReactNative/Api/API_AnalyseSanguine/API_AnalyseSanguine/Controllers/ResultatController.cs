@@ -91,6 +91,25 @@ namespace API_AnalyseSanguine.Controllers
             }
         }
 
+
+        [HttpPost("updatebulk")]
+        public async Task<IActionResult> UpdateCouleurResultatBulk(List<ResultatColor> resultatAnalyses)
+        {
+            try
+            {
+                var result = _service.UpdateCouleurResultatBulk(resultatAnalyses);
+                if(result == false)
+                {
+                    return Problem();
+                }
+                return StatusCode(200, result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
         /// <summary>
         /// Modifier les valeurs d'un résultat en fonction de l'Id
         /// 

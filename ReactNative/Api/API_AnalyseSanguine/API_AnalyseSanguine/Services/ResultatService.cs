@@ -95,5 +95,24 @@ namespace API_AnalyseSanguine.Services
                 return null;
             }
         }
+
+        public bool UpdateCouleurResultatBulk(List<ResultatColor> resultatAnalyses)
+        {
+            try
+            {
+                foreach (var resultat in resultatAnalyses)
+                {
+                    var item = _context.ResultatAnalyses.Find(resultat.ResultatID);
+                    item.Couleur = resultat.Color;
+                }
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }
