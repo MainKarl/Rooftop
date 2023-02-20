@@ -10,7 +10,8 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ScrollView,
-  PlatformColor
+  PlatformColor,
+  ActivityIndicator
 } from 'react-native';
 import AnalyseConfig from "../analyseConfig.json";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
@@ -31,6 +32,7 @@ const RequestDetails = props => {
   const [couleurIdResultat, setcouleurIdResultat] = useState([]);
   const [disabledButton, setDisabledButton] = useState(true);
   const [forceReload, setForceReload] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onChangeMode = (mode) => {
     setResultMode(mode);
@@ -171,6 +173,9 @@ const RequestDetails = props => {
 
     const body = JSON.stringify(resultatColor);
 
+    setDisabledButton(true);
+    setLoading(true);
+
     fetch(url, {
       method: 'POST',
       headers: {
@@ -180,12 +185,11 @@ const RequestDetails = props => {
       body: body,
       cache: 'default'
     }).then((response) => {
-      console.log(response);
       if (response.status == 200) {
-        setDisabledButton(true);
-        console.log("in");
+        setLoading(false);
       } else {
-        console.log(response);
+        setLoading(false);
+        setDisabledButton(false);
       }
     }).catch((error) => {
       console.log(error);
@@ -260,22 +264,26 @@ const RequestDetails = props => {
                     </Text>
                   </View>
                 </View>
+                {loading ? (
+                  <ActivityIndicator></ActivityIndicator>
+                ) : <></>
+              }
+              <View style={{display: 'flex', flexDirection: 'row'}}>
+                <View style={{flex:0.6}}></View>
+                <View style={{flex: 0.4, paddingRight: 60}}>
                 {!disabledButton ? (
                   <Button
-                    title='Sauvegarder'
-                    style={{ width: '10%' }}
-                    onPress={() => sauvegarderCouleurs()}
+                  title='Sauvegarder'
+                  onPress={() => sauvegarderCouleurs()}
                   />
-                ) :
+                  ) :
                   (
-                    <Button
-                      title='Sauvegarder'
-                      style={{ width: '10%' }}
-                      disabled='true'
-                    />
-                  )
-
-                }
+                    <></>
+                    )
+                    
+                  }
+                  </View>
+              </View>
                 {resultsExist ? (
 
                   <ScrollView style={{
