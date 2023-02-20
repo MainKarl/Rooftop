@@ -122,6 +122,7 @@ const AnalyseCreateForm = (props) => {
             if (response.ok) {
                 props.changeCanAddResult(false);
                 props.onChangeMode(false);
+                props.setForceReload(true);
             } else {
                 console.log(response);
             }
