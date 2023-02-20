@@ -10,6 +10,8 @@ namespace API_AnalyseSanguine.Services.Interfaces
         public ResultatAnalyse GetResultat(int id);
         public ResultatAnalyse CreateResultat(ResultatAnalyse resultat);
         public ResultatAnalyse UpdateResultat(int id, ResultatAnalyse resultat);
+
+        public bool UpdateCouleurResultatBulk(List<ResultatColor> resultat);
         public bool DeleteResultat(int id);
     }
 }

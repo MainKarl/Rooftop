@@ -22,7 +22,8 @@ const App = () => {
   const [selectedRequest, setselectedRequest] = useState(null);
   const [elementVisible, setElementVisible] = useState(true);
   const [informationState, setInformationState] = useState(0);
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChangeInformationState = (informationState) => {
     setInformationState(informationState);
@@ -48,13 +49,13 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   let rightDetail;
-  if (informationState === 0) { rightDetail = <FolderDetails onChangeState={onChangeInformationState} changeEditingMode={changeEditingMode} onSelectedRequest={onSelectedRequest} selectedFolder={selectedFolder} />; }
-  else if (informationState === 1) { rightDetail = <FolderCreate onChangeState={onChangeInformationState} IsEditing={isEditing} selectedFolder={selectedFolder} />; }
-  else if (informationState === 2) { rightDetail = <RequestDetails onChangeState={onChangeInformationState} selectedRequest={selectedRequest} />; }
+  if (informationState === 0) { rightDetail = <FolderDetails setIsLoading={setIsLoading} isLoading={isLoading} onChangeState={onChangeInformationState} changeEditingMode={changeEditingMode} onSelectedRequest={onSelectedRequest} selectedFolder={selectedFolder} />; }
+  else if (informationState === 1) { rightDetail = <FolderCreate setIsLoading={setIsLoading} onChangeState={onChangeInformationState} IsEditing={isEditing} selectedFolder={selectedFolder} />; }
+  else if (informationState === 2) { rightDetail = <RequestDetails setIsLoading={setIsLoading} onChangeState={onChangeInformationState} selectedRequest={selectedRequest} />; }
   return (
     // eslint-disable-next-line no-undef
     <View style={styles.container}>
-      <FolderList actualState={informationState} onChangeState={onChangeInformationState} onSelectedFolder={onSelectedFolder} changeEditingMode={changeEditingMode} />
+      <FolderList setIsLoading={setIsLoading} actualState={informationState} onChangeState={onChangeInformationState} onSelectedFolder={onSelectedFolder} changeEditingMode={changeEditingMode} />
       {rightDetail}
     </View>
   );

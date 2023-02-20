@@ -27,6 +27,10 @@ const RequestDetails = props => {
   const [arrayTestReal, setArrayTestReal] = useState();
   const [canAddResult, setCanAddResult] = useState(false);
   const [noAnalyse, setNoAnalyse] = useState(false);
+  const [couleurChanged, setCouleurChanged] = useState(false);
+  const [couleurIdResultat, setcouleurIdResultat] = useState([]);
+  const [disabledButton, setDisabledButton] = useState(true);
+  const [forceReload, setForceReload] = useState(false);
 
   const onChangeMode = (mode) => {
     if (mode == false)
@@ -70,6 +74,7 @@ const RequestDetails = props => {
     setRequest(data)
 
     const url = AnalyseConfig.API_URL + 'typeanalyse/categories';
+    props.setIsLoading(true);
     fetch(url)
       .then(response => {
         if (response.ok) {
@@ -99,6 +104,7 @@ const RequestDetails = props => {
             });
 
             setCategories(filteredCategories);
+            props.setIsLoading(false);
           });
         } else {
           console.log(response);
@@ -109,7 +115,106 @@ const RequestDetails = props => {
       });
   }
 
+  const changeColors = (resultId, couleurCourante) => {
+
+    setDisabledButton(false);
+    // 1: Vert,
+    // 2: Rouge
+    let nouvelleCouleur = 0;
+    if (couleurCourante == 2) {
+      nouvelleCouleur = 1;
+    } else {
+      nouvelleCouleur = couleurCourante + 1;
+    }
+    const newResultats = {
+      lstResultats: request.lstResultats.map((resultat, i) => {
+        if (resultat.idResultatAnalyse == resultId) {
+          const newColor = { couleur: nouvelleCouleur }
+          return { ...resultat, ...newColor };
+        } else {
+          return resultat;
+        }
+      })
+    };
+    console.log(newResultats);
+    const newRequete = { ...request, ...newResultats };
+    console.log(newRequete);
+    setRequest(newRequete);
+
+  }
+
+  const [results, setResults] = useState([]);
   const [categories, setCategories] = useState([]);
+
+
+  const renderButtonColor = (r) => {
+
+    if (r.couleur == 0) {
+      return (
+        <Button
+          title={r.valeur}
+          style={{ flex: 0.3, width: '100%' }}
+          onPress={() => changeColors(r.idResultatAnalyse, r.couleur)}
+        />
+      )
+    }
+
+    if (r.couleur == 1) {
+      return (
+        <Button
+          title={r.valeur}
+          style={{ flex: 0.3, width: 100 }}
+          color="#7fba00"
+          onPress={() => changeColors(r.idResultatAnalyse, r.couleur)}
+        />
+      )
+    }
+
+    if (r.couleur == 2) {
+      return (
+        <Button
+          title={r.valeur}
+          style={{ flex: 0.3, width: '100%' }}
+          color="#f04e1f"
+          onPress={() => changeColors(r.idResultatAnalyse, r.couleur)}
+        />
+      )
+    }
+
+  }
+
+  const sauvegarderCouleurs = () => {
+
+    let method = "updatebulk";
+    const url = AnalyseConfig.API_URL + "resultat/" + method;
+
+    const resultatColor = request.lstResultats.map((res, i) => {
+      return { ResultatID: res.idResultatAnalyse, Color: res.couleur }
+    });
+
+    const body = JSON.stringify(resultatColor);
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: body,
+      cache: 'default'
+    }).then((response) => {
+      console.log(response);
+      if (response.status == 200) {
+        setDisabledButton(true);
+        console.log("in");
+      } else {
+        console.log(response);
+      }
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+
 
   useEffect(() => {
 
@@ -138,7 +243,7 @@ const RequestDetails = props => {
           console.log(error);
         });
     }
-  }, [props.selectedRequest]);
+  }, [props.selectedRequest, forceReload]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -178,6 +283,22 @@ const RequestDetails = props => {
                     </Text>
                   </View>
                 </View>
+                {!disabledButton ? (
+                  <Button
+                    title='Sauvegarder'
+                    style={{ width: '10%' }}
+                    onPress={() => sauvegarderCouleurs()}
+                  />
+                ) :
+                  (
+                    <Button
+                      title='Sauvegarder'
+                      style={{ width: '10%' }}
+                      disabled='true'
+                    />
+                  )
+
+                }
                 {resultsExist ? (
 
                   <ScrollView style={{
@@ -199,11 +320,12 @@ const RequestDetails = props => {
                                   request.lstResultats.map((r) => (
                                     r.typeValeur.typeAnalyseId == t.idTypeAnalyse &&
                                     <View style={{ flexDirection: 'row', paddingTop: 8 }}>
-                                      <Text style={{paddingTop:10, minWidth:30}}> {r.typeValeur.nom + " : "}</Text>
-                                      <Button
-                                        title={r.valeur}
-                                        style={{minWidth: 50}}
-                                      />
+                                      <Text style={{ paddingTop: 10, flex: 0.2 }}> {r.typeValeur.nom + " : "}</Text>
+                                      <View style={{ width: '15%' }}>
+                                        {
+                                          renderButtonColor(r)
+                                        }
+                                      </View>
                                       <Text style={styles.referenceText}>({r.typeValeur.reference})</Text>
                                     </View>
                                   ))
@@ -215,7 +337,7 @@ const RequestDetails = props => {
                       ))
                     }
                   </ScrollView >
-                ) : ( noAnalyse ? (<Text style={styles.noDataText}>Il n'y a pas d'analyse demandée pour cette requête</Text>): (<Text style={styles.noDataText}>Il n'y a aucun résultat d'analyse pour cette requête</Text>))}
+                ) : (noAnalyse ? (<Text style={styles.noDataText}>Il n'y a pas d'analyse demandée pour cette requête</Text>) : (<Text style={styles.noDataText}>Il n'y a aucun résultat d'analyse pour cette requête</Text>))}
 
               </View>
             </View>
@@ -223,7 +345,7 @@ const RequestDetails = props => {
           )}
           {
             canAddResult &&
-            <View style={{ flex:0.1, marginTop: 12 }}>
+            <View style={{ flex: 0.1, marginTop: 12 }}>
               <Button
                 title={'Entrer les résultats'}
                 onPress={() => onChangeMode(true)} />
@@ -232,7 +354,7 @@ const RequestDetails = props => {
 
         </View>
       </View>}
-      {resultMode && canAddResult && <AnalyseCreateForm changeCanAddResult={setCanAddResult} onChangeMode={onChangeMode} request={request} />}
+      {resultMode && canAddResult && <AnalyseCreateForm setForceReload={setForceReload} changeCanAddResult={setCanAddResult} onChangeMode={onChangeMode} request={request} />}
     </View>
   );
 };
@@ -273,7 +395,8 @@ const styles = StyleSheet.create({
   referenceText: {
     paddingLeft: 6,
     fontWeight: 'bold',
-    paddingTop:10, minWidth:30
+    paddingTop: 10,
+    flex: 0.4
   },
   detailsBoxInside: {
     paddingLeft: 40,

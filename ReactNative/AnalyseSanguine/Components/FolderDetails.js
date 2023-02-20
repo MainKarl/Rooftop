@@ -29,6 +29,7 @@ const FolderDetails = props => {
         AnalyseConfig.API_URL +
         'dossier/getdetaille?id=' +
         props.selectedFolder;
+      props.setIsLoading(true);
       fetch(url)
         .then(response => {
           if (response.ok) {
@@ -37,6 +38,7 @@ const FolderDetails = props => {
               data.sexeText = SexeDict[data.sexe];
               setpatientInfo(data);
               setNouvelleNote(data.note ? data.note : "")
+              props.setIsLoading(false);
             });
           } else {
             console.log(response);
@@ -49,7 +51,7 @@ const FolderDetails = props => {
   }, [props.selectedFolder, DetailVisible]);
 
   function updateformAddRequeteVisible() {
-    if(formAddRequeteVisible){
+    if (formAddRequeteVisible) {
       setpatientInfo("Dirty");
     }
     setformAddRequeteVisible(!formAddRequeteVisible);
@@ -57,12 +59,12 @@ const FolderDetails = props => {
     console.log(formAddRequeteVisible);
   }
 
-  function updateNote(){
+  function updateNote() {
     const url = AnalyseConfig.API_URL + "dossier/updatenote";
     var formObj = {
-        id: patientInfo.idDossier,
-        note: nouvelleNote,
-      };
+      id: patientInfo.idDossier,
+      note: nouvelleNote,
+    };
     const body = JSON.stringify(formObj);
 
     fetch(url, {
@@ -74,25 +76,25 @@ const FolderDetails = props => {
       body: body,
       cache: 'default'
     }).then((response) => {
-        console.log(response);
-        if (response.ok) {
-            //Afficher Confirmation
-            
-            let obj = patientInfo
-            obj.note = nouvelleNote
-            setpatientInfo(obj)
-        } else {
-            //AlertConnectionFailed(sendFormToAPI)
-        }
+      console.log(response);
+      if (response.ok) {
+        //Afficher Confirmation
+
+        let obj = patientInfo
+        obj.note = nouvelleNote
+        setpatientInfo(obj)
+      } else {
+        //AlertConnectionFailed(sendFormToAPI)
+      }
     }).catch((error) => {
-        console.log(error);
+      console.log(error);
       //AlertConnectionFailed(sendFormToAPI)
     })
   }
 
-  function setNewNote(text){
+  function setNewNote(text) {
     setNouvelleNote(text)
-  } 
+  }
 
   const callCreateForm = () => {
     props.changeEditingMode(true)
@@ -142,8 +144,8 @@ const FolderDetails = props => {
                   <TextInput
                     style={{ flex: 1 }}
                     multiline
-                    value= {nouvelleNote}
-                    onChangeText= {(newNote) => setNewNote(newNote)}
+                    value={nouvelleNote}
+                    onChangeText={(newNote) => setNewNote(newNote)}
                     scrollEnabled>
                   </TextInput>
                   <View style={{ display: 'flex', flexDirection: 'row' }}>
@@ -164,7 +166,7 @@ const FolderDetails = props => {
                 <Button
                   style={{}}
                   title="Créer une requête"
-                  onPress={ () => updateformAddRequeteVisible() }
+                  onPress={() => updateformAddRequeteVisible()}
                 />
               </View>
               <View style={styles.requetesEtResultat}>
@@ -174,7 +176,7 @@ const FolderDetails = props => {
           </View>
         </View >
       );
-    } else {
+    } else if (props.isLoading) {
       return (
         <View style={{ flex: 0.8, margin: 5 }}>
           <View style={styles.texteErreur}>
@@ -189,7 +191,7 @@ const FolderDetails = props => {
         <View style={{ flex: 0.8, margin: 5 }}>
           <ModalAddRequete
             patientInfo={patientInfo}
-            updateformAddRequeteVisible={ () => updateformAddRequeteVisible() }
+            updateformAddRequeteVisible={() => updateformAddRequeteVisible()}
           />
         </View>
       );
@@ -199,7 +201,7 @@ const FolderDetails = props => {
       return (
         <View style={{ flex: 0.8, margin: 5 }}>
           <ModalAddRequete
-            updateformAddRequeteVisible={() => updateformAddRequeteVisible() }
+            updateformAddRequeteVisible={() => updateformAddRequeteVisible()}
           />
         </View>
       );
