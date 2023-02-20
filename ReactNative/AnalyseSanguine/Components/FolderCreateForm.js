@@ -86,6 +86,7 @@ const FolderCreateForm = props => {
     );
     setIsLiked(updatedState);
     setSexe(newSexe);
+    console.log(newSexe)
   }
 
   const onSubmit = () => {
@@ -95,7 +96,7 @@ const FolderCreateForm = props => {
         message: 'la date de naissance doit être avant aujourd\'hui'
       });
     }
-    else if (!sexe) {
+    else if (sexe != 0 && !sexe) {
       CustomAlert({
         type: 'alert_submit_failed',
         message: 'le sexe de la personne doit être sélectionné'
