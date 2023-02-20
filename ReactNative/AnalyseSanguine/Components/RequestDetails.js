@@ -51,6 +51,7 @@ const RequestDetails = props => {
     setRequest(data)
 
     const url = AnalyseConfig.API_URL + 'typeanalyse/categories';
+    props.setIsLoading(true);
     fetch(url)
       .then(response => {
         if (response.ok) {
@@ -80,6 +81,7 @@ const RequestDetails = props => {
             });
 
             setCategories(filteredCategories);
+            props.setIsLoading(false);
           });
         } else {
           console.log(response);
