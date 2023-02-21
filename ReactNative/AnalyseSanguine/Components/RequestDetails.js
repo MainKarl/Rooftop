@@ -390,7 +390,8 @@ const styles = StyleSheet.create({
   },
   displayFlex: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    width: '50%'
   },
   detailsBox: {
     borderColor: '#808080',
