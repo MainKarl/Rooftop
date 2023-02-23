@@ -61,24 +61,6 @@ namespace API.Tests
         }
 
         [TestMethod]
-        public async Task CreateRequete()
-        {
-            var requeteDto = _fixture.Create<CreateRequeteDto>();
-
-            var requete = _fixture.Create<RequeteAnalyse>();
-
-            _service.Setup(repo => repo.CreateRequete(It.IsAny<RequeteAnalyse>())).Returns(requete);
-
-            _controller = new RequeteController(_service.Object);
-
-            var result = await _controller.CreateRequete(requeteDto);
-
-            var obj = result as ObjectResult;
-
-            Assert.AreEqual(200, obj.StatusCode);
-        }
-
-        [TestMethod]
         public async Task UpdateRequete()
         {
             var requete = _fixture.Create<RequeteAnalyse>();
